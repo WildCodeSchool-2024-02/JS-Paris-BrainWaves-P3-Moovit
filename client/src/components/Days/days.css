@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -52,6 +53,7 @@
   width: 25px;
   height: 25px;
   border-radius: 5px;
+  border-color: var(--main);
 }
 
 .days-current-button {
@@ -62,4 +64,50 @@
   border-radius: 5px;
   width: 40%;
   height: 30px;
+  border-color: var(--main);
+}
+
+.days-statut-desktop {
+  display: none;
+}
+
+.days-day-desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .days-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .days-buttons {
+    position: relative;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    height: 40px;
+  }
+  .days-statut {
+    display: none;
+  }
+
+  .days-number {
+    font-size: 1em;
+  }
+
+  .days-day {
+    display: none;
+  }
+
+  .days-statut-desktop {
+    display: block;
+    position: absolute;
+    right: 10px;
+    font-size: 0.6em;
+  }
+  .days-day-desktop {
+    display: block;
+  }
 }

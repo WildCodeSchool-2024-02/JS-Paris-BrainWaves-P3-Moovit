@@ -24,11 +24,13 @@ export default function Days({ daysOfWeek, handlePrev, handleNext }) {
             key={day.date}
             value={day.date}
           >
-            <p className="days-day">{day.day}</p>
+            <p className="days-day-desktop">{day.day}</p>
+            <p className="days-day">{day.day.slice(0, 3)}</p>
             <p className="days-number">
               {day.date.slice(day.date.length - 2, day.date.length)}
             </p>
             <p className="days-statut">statut</p>
+            <p className="days-statut-desktop">1 entrainement</p>
           </button>
         ))}
       </div>

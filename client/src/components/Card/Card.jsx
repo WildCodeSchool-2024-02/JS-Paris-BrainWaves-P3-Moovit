@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
@@ -5,10 +6,10 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 import "./card.css";
 
-export default function Card() {
+export default function Card({ card }) {
   return (
     <section id="card">
-      <h1 className="card-title">Entraînement du matin</h1>
+      <h1 className="card-title">{card.title}</h1>
       <div className="card-type-training">
         <IoMdFitness />
         <p>Entraînement | Fitness</p>
@@ -16,19 +17,32 @@ export default function Card() {
       <div className="card-time-training">
         <div className="card-plus">
           <TbSunset2 />
-          <p>Matin</p>
+          <p>{card.time_of_day}</p>
         </div>
         <div className="card-plus">
           <CiClock2 />
-          <p>30 min</p>
+          <p>{card.duration}</p>
         </div>
       </div>
-      <button type="button" className="card-button-validate">
-        Valider cet entrainement
-      </button>
+      {card.is_completed == null ? (
+        <button type="button" className="card-button-validate">
+          Valider cet entrainement
+        </button>
+      ) : (
+        <p>Feeback enregistré</p>
+      )}
       <div className="card-points">
         <BsThreeDotsVertical />
       </div>
     </section>
   );
 }
+
+Card.propTypes = {
+  card: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    time_of_day: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+    is_completed: PropTypes.bool,
+  }).isRequired,
+};

@@ -81,10 +81,11 @@ button {
   border-radius: 10px;
   font-size: 1.2em;
   font-weight: 600;
-  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
   margin: 5px;
   padding: 10px 20px;
   border-width: 0.5px;
+  cursor: pointer;
 }
 
 .primary-button {

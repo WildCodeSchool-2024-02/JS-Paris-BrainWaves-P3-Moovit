@@ -75,6 +75,10 @@
   display: none;
 }
 
+.day-active {
+  transform: scale(1.1);
+}
+
 @media (min-width: 1024px) {
   .days-container {
     flex-direction: column;

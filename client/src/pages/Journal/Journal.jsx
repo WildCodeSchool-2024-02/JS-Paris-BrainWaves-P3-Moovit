@@ -8,9 +8,15 @@ import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
 
 export default function Journal() {
+
   // Current date of today
   const [currentDate, setCurrentDate] = useState(new Date());
+  // All the trainings
   const [trainings, setTrainings] = useState([]);
+  // Day clicked
+  const [activeButton, setActiveButton] = useState(
+    datefns.format(new Date(), "yyyy-MM-dd")
+  );
 
   useEffect(() => {
     fetch("http://localhost:3310/api/trainings")
@@ -18,18 +24,36 @@ export default function Journal() {
       .then((response) => setTrainings(response));
   }, []);
 
+  // Days of the week
+  const daysWeek = [
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi",
+    "Dimanche",
+  ];
+
+  // Months of the year
+  const monthList = [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
+  ];
+
   // Formated day function "yyyy-MM-dd"
   const formated = (daysList) => {
     const resultList = [];
-    const daysWeek = [
-      "Lundi",
-      "Mardi",
-      "Mercredi",
-      "Jeudi",
-      "Vendredi",
-      "Samedi",
-      "Dimanche",
-    ];
     for (let i = 0; i < daysList.length; i += 1) {
       resultList.push({
         date: datefns.format(daysList[i], "yyyy-MM-dd"),
@@ -38,6 +62,28 @@ export default function Journal() {
     }
     return resultList;
   };
+
+  // Function that convert a date from yyyy-MM-dd to an object with 3 string (Ex: 2024-06-11 -> {'Tuesday', '11', 'June')
+  const convert = (date) => {
+    const newDate = new Date(
+      date.slice(0, 4),
+      date.slice(5, 7) - 1,
+      date.slice(8, 10)
+    );
+    let day = newDate.getDay();
+    if (day === 0) {
+      day = 7;
+    }
+    const month = newDate.getMonth();
+    return {
+      day: daysWeek[day - 1],
+      month: monthList[month],
+      numb: date.slice(8, 10),
+    };
+  };
+
+  // Function convert apply on the state activeButton which refer to the day clicked
+  const { day, month, numb } = convert(activeButton);
 
   // Display the previous week
   const handlePrev = () => {
@@ -77,7 +123,9 @@ export default function Journal() {
           <div className="journal-elements">
             <p className="journal-day-mobile">Name</p>
             <p className="journal-day-mobile">Sportif de haut niveau</p>
-            <h1 className="journal-day-desktop">Mercredi 12 Juin</h1>
+            <h1 className="journal-day-desktop">
+              {day} {numb} {month}
+            </h1>
           </div>
           <p className="journal-motivation">
             Aujourd’hui, tu as 2 entraînements de prévu ! Courage, tu peux le
@@ -103,6 +151,8 @@ export default function Journal() {
             daysOfWeek={daysOfWeek}
             handlePrev={handlePrev}
             handleNext={handleNext}
+            activeButton={activeButton}
+            setActiveButton={setActiveButton}
           />
         </div>
       </div>

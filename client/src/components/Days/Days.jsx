@@ -4,25 +4,49 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import "./days.css";
 
-export default function Days({ daysOfWeek, handlePrev, handleNext }) {
+export default function Days({
+  daysOfWeek,
+  handlePrev,
+  handleNext,
+  activeButton,
+  setActiveButton,
+}) {
   return (
     <section id="days">
       <div className="days-monitor">
-        <button type="button" className='days-prev-button' aria-label="require" onClick={handlePrev}>
+        <button
+          type="button"
+          className="days-prev-button"
+          aria-label="require"
+          onClick={handlePrev}
+        >
           <IoIosArrowBack />
         </button>
-        <button type="button" className="days-current-button"> Cette semaine </button>
-        <button type="button" className='days-next-button' aria-label="require" onClick={handleNext}>
+        <button type="button" className="days-current-button">
+          {" "}
+          Cette semaine{" "}
+        </button>
+        <button
+          type="button"
+          className="days-next-button"
+          aria-label="require"
+          onClick={handleNext}
+        >
           <IoIosArrowForward />
         </button>
       </div>
       <div className="days-container">
         {daysOfWeek.map((day) => (
           <button
-            className="days-buttons"
+            className={
+              activeButton === day.date
+                ? "days-buttons day-active"
+                : "days-buttons"
+            }
             type="button"
             key={day.date}
             value={day.date}
+            onClick={() => setActiveButton(day.date)}
           >
             <p className="days-day-desktop">{day.day}</p>
             <p className="days-day">{day.day.slice(0, 3)}</p>
@@ -45,5 +69,7 @@ Days.propTypes = {
     })
   ).isRequired,
   handleNext: PropTypes.func.isRequired,
-  handlePrev: PropTypes.func.isRequired
+  handlePrev: PropTypes.func.isRequired,
+  activeButton: PropTypes.string.isRequired,
+  setActiveButton: PropTypes.func.isRequired,
 };

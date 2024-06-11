@@ -17,10 +17,10 @@ class TrainingSeeder extends AbstractSeeder {
     for (let i = 0; i < 2; i += 1) {
       // Generate fake item data
       const fakeTraining = {
-        title: `Entrainement-test${i}`,
+        title: `Entrainement-test ${i}`,
         date: new Date(),
         duration: '2h',
-        details: `${i}Ceci est mon programme test pour m'entraîner`,
+        details: `${i} Ceci est mon programme test pour m'entraîner`,
         time_of_day: 'morning',
         user_id: this.getRef(`user_${i}`).insertId, // Get the insertId of the corresponding user from UserSeeder
       };

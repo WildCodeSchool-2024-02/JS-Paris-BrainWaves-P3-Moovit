@@ -7,16 +7,21 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const { browse, read, add } = require("../../../controllers/itemActions");
+const { browse, readById, readToday, add, edit, destroy } = require("../../../controllers/trainingActions");
 
 // Route to get a list of items
 router.get("/", browse);
+router.get("/:id", readById);
 
-// Route to get a specific item by ID
-router.get("/:id", read);
+// Route to get all trainings for a user by current day
+router.get("/:id", readToday);
 
 // Route to add a new item
 router.post("/", add);
+
+router.put("/:id", edit);
+
+router.delete("/:id", destroy);
 
 /* ************************************************************************* */
 

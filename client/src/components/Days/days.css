@@ -1,0 +1,65 @@
+#days {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.days-container {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
+
+.days-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 0;
+  width: 14.3%;
+  height: 75px;
+  border-radius: 5px;
+}
+
+.days-statut {
+  font-size: 0.5em;
+}
+
+.days-number {
+  font-size: 0.6em;
+}
+
+.days-day {
+  font-size: 0.6em;
+}
+
+.days-monitor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 15px;
+}
+
+.days-prev-button,
+.days-next-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 0.7em;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+}
+
+.days-current-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  border-radius: 5px;
+  width: 40%;
+  height: 30px;
+}

@@ -10,6 +10,10 @@ const trainingRouter = require("./training/router");
 
 router.use("/trainings", trainingRouter);
 
+const userRouter = require("./user/router");
+
+router.use("/users", userRouter);
+
 /* ************************************************************************* */
 
 module.exports = router;

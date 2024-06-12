@@ -4,20 +4,7 @@ class TrainingRepository extends AbstractRepository {
   constructor() {
     super({ table: "training" });
   }
-
-  async readAll() {
-    const [rows] = await this.database.query(
-        `select * from ${this.table}`
-    )
-    return rows;
-  }
-
-  async readOne(id) {
-    const [training] = await this.database.query(
-        `select * from ${this.table} WHERE id = ?`, [id]
-    )
-    return training;
-  }
+ 
 
   async readToday(id) {
     const [rows] = await this.database.query(
@@ -33,20 +20,6 @@ class TrainingRepository extends AbstractRepository {
         `, [title, date, duration, details, timeOfDay, userId]
     );
     return newTraining
-  }
-
-  async update(training, id) {
-    const updatedTraining = await this.database.query(
-        `UPDATE ${this.table} SET ? WHERE id = ?`, [training, id]
-    );
-    return updatedTraining;
-  }
-
-  async deleteOne(id) {
-    const deletedTraining = await this.database.query(
-        `DELETE FROM ${this.table} WHERE id = ?`, [id]
-    );
-    return deletedTraining;
   }
 }
 

@@ -21,8 +21,9 @@ class TrainingSeeder extends AbstractSeeder {
         date: new Date(),
         duration: '2h',
         details: `${i} Ceci est mon programme test pour m'entraîner`,
-        time_of_day: 'morning',
+        time_of_day: 'Matin',
         user_id: this.getRef(`user_${i}`).insertId, // Get the insertId of the corresponding user from UserSeeder
+        sport_id: this.getRef(`sport_${i}`).insertId // Get the insertId of the corresponding sport from SportSeeder
       };
 
       // Insert the fakeItem data into the 'item' table

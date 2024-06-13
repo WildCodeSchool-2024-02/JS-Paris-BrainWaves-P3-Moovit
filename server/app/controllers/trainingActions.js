@@ -39,9 +39,9 @@ const readToday = async (req, res, next) => {
 
 const add = async (req, res, next) => {
     try {
-        const {title, date, duration, details, timeOfDay, userId} = req.body;
+        const {title, date, duration, details} = req.body;
         const newTraining = await tables.training.create(
-            title, date, duration, details, timeOfDay, userId
+            title, date, duration, details, req.body.time_of_day, req.body.user_id, req.body.sport_id
         )
         res.status(201).json(newTraining)
     } catch(err) {

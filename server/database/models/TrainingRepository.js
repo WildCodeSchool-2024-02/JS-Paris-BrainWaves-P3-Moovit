@@ -13,11 +13,11 @@ class TrainingRepository extends AbstractRepository {
     return rows;
   }
 
-  async create(title, date, duration, details, timeOfDay, userId) {
+  async create(title, date, duration, details, timeOfDay, userId, sportId) {
     const newTraining = await this.database.query(
         `INSERT INTO ${this.table} 
-        (title, date, duration, details, time_of_day, user_id) VALUE (?, ?, ?, ?, ?, ?)
-        `, [title, date, duration, details, timeOfDay, userId]
+        (title, date, duration, details, time_of_day, user_id, sport_id) VALUE (?, ?, ?, ?, ?, ?, ?)
+        `, [title, date, duration, details, timeOfDay, userId, sportId]
     );
     return newTraining
   }

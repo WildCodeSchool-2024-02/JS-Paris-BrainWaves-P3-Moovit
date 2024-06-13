@@ -1,12 +1,15 @@
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
 
 function App() {
+  // Contexte DarkMode
+  const { mode } = useContext(DarkModeContext);
+
   return (
-    <main className="container">
-      <p>Hello World</p>
-      <button className="primary-button">Bouton 1</button>
-      <button className="second-button">Bouton 2</button>
-      <input placeholder="Veuillez renseigner un texte"></input>
+    <main className={`container ${mode}`}>
+      <Outlet />
     </main>
   );
 }

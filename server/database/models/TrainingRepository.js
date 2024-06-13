@@ -26,6 +26,13 @@ class TrainingRepository extends AbstractRepository {
     return rows;
   }
 
+  async readOneDay(id, day) {
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE date = ? AND user_id = ?`, [day, id],
+    );
+    return rows;
+  }
+
   async create(title, date, duration, details, timeOfDay, userId) {
     const newTraining = await this.database.query(
         `INSERT INTO ${this.table} 

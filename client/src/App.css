@@ -81,10 +81,17 @@ button {
   border-radius: 10px;
   font-size: 1.2em;
   font-weight: 600;
-  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
   margin: 5px;
   padding: 10px 20px;
   border-width: 0.5px;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.03);
 }
 
 .primary-button {
@@ -96,4 +103,20 @@ button {
 .second-button {
   color: var(--dark);
   border-color: var(--second);
+}
+
+.dark {
+  background-color: rgb(41, 41, 49);
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.light {
+  background-color: transparent;
+  color: black;
+  transition: all 0.3s ease-in-out;
+}
+
+main {
+  min-height: 100vh;
 }

@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `moovit`.`training` ;
 CREATE TABLE IF NOT EXISTS `moovit`.`training` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL,
-  `date` DATETIME NOT NULL,
+  `date` DATE NOT NULL,
   `duration` VARCHAR(45) NOT NULL,
   `details` LONGTEXT NULL,
   `time_of_day` ENUM('morning', 'afternoon', 'evening') NULL,

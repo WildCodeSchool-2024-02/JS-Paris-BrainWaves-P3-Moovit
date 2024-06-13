@@ -1,0 +1,126 @@
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../assets/images/LandingPage2.png");
+  background-size: cover;
+  background-position: bottom;
+}
+
+.landing-background {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  z-index: -1;
+}
+
+.landing-logo {
+  width: 220px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+  background-color: white;
+  border-radius: 0 0 20% 20%;
+}
+
+.header-description {
+  text-align: center;
+  width: 70%;
+  font-weight: 600;
+}
+
+.header-title {
+  line-height: 30px;
+  font-size: 1.8em;
+  width: 80%;
+}
+
+.landing-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 50px;
+  button:nth-child(1) {
+    background-color: var(--main);
+    color: white;
+  }
+  button:nth-child(2) {
+    background-color: var(--second);
+    color: white;
+  }
+}
+
+.landing-demo {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .landing-logo {
+    width: 300px;
+  }
+  .landing-container {
+    background-position: center;
+  }
+  .header-title {
+    font-size: 2.2em;
+  }
+  .header-description {
+    font-size: 1.3em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-demo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 55%;
+    height: 100vh;
+  }
+  .landing-demo-img {
+    background-image: url("../../assets/images/LandingPage2.png");
+    height: 90%;
+    width: 90%;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: bottom;
+  }
+  .landing-container {
+    background-image: none;
+    width: 45%;
+  }
+  .header-container {
+    background-color: transparent;
+  }
+  .landing-buttons-container {
+    button:nth-child(1) {
+      width: 300px;
+      height: 50px;
+    }
+    button:nth-child(2) {
+      width: 300px;
+      height: 50px;
+    }
+  }
+  .landing-page {
+    display: flex;
+  }
+  .header-title {
+    line-height: 45px;
+    font-size: 2.6em;
+  }
+  .header-description {
+    font-size: 1.3em;
+  }
+}

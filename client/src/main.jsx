@@ -6,6 +6,7 @@ import { DarkModeContextProvider } from "./services/DarkModeContext";
 
 import App from "./App";
 import Journal from "./pages/Journal/Journal";
+import Landing from "./pages/Landing/Landing";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <Landing />,
+      },
+      {
+        path: "/journal",
         element: <Journal />,
       },
     ],

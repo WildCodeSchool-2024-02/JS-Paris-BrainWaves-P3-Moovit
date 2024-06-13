@@ -37,6 +37,20 @@ const readToday = async (req, res, next) => {
     }
   };
 
+  const readDay = async (req, res, next) => {
+    try {
+      const todaysTrainings = await tables.training.readOneDay(req.params.id, req.params.day);
+      if (todaysTrainings == null) {
+        res.sendStatus(404);
+      } else {
+        res.json(todaysTrainings);
+      }
+    } catch (err) {
+      // Pass any errors to the error-handling middleware
+      next(err);
+    }
+  };
+
 const add = async (req, res, next) => {
     try {
         const {title, date, duration, details, timeOfDay, userId} = req.body;
@@ -73,5 +87,6 @@ const destroy = async (req, res, next) => {
     readToday,
     add,
     edit,
-    destroy
+    destroy,
+    readDay,
   }

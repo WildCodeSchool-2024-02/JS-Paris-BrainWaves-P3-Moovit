@@ -1,14 +1,17 @@
 import PropTypes from "prop-types";
+import { useContext } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import DarkModeContext from "../../services/DarkModeContext";
 
 import "./card.css";
 
 export default function Card({ card }) {
+  const { mode } = useContext(DarkModeContext);
   return (
-    <section id="card">
+    <section id={`card-${mode}`}>
       <h1 className="card-title">{card.title}</h1>
       <div className="card-type-training">
         <IoMdFitness />

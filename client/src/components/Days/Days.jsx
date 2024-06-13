@@ -1,5 +1,6 @@
 /* eslint-disable import/no-duplicates */
 import PropTypes from "prop-types";
+import * as datefns from "date-fns";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import "./days.css";
@@ -10,7 +11,17 @@ export default function Days({
   handleNext,
   activeButton,
   setActiveButton,
+  setDayTraining,
+  weekCounter,
+  handleReturnToday,
 }) {
+  
+  // Function that handle display
+  const handleDisplay = (day) => {
+    setActiveButton(day.date);
+    setDayTraining(day.date);
+  };
+
   return (
     <section id="days">
       <div className="days-monitor">
@@ -22,10 +33,21 @@ export default function Days({
         >
           <IoIosArrowBack />
         </button>
-        <button type="button" className="days-current-button">
-          {" "}
-          Cette semaine{" "}
-        </button>
+        {weekCounter === 0 && (
+          <button type="button" className="days-current-button">
+            Cette semaine
+          </button>
+        )}
+        {weekCounter < 0 && (
+          <button type="button" className="days-current-button">
+            Il y a {-weekCounter} semaine(s)
+          </button>
+        )}
+        {weekCounter > 0 && (
+          <button type="button" className="days-current-button">
+            Dans {weekCounter} semaine(s)
+          </button>
+        )}
         <button
           type="button"
           className="days-next-button"
@@ -46,7 +68,7 @@ export default function Days({
             type="button"
             key={day.date}
             value={day.date}
-            onClick={() => setActiveButton(day.date)}
+            onClick={() => handleDisplay(day)}
           >
             <p className="days-day-desktop">{day.day}</p>
             <p className="days-day">{day.day.slice(0, 3)}</p>
@@ -58,6 +80,15 @@ export default function Days({
           </button>
         ))}
       </div>
+      {activeButton !== datefns.format(new Date(), "yyyy-MM-dd") && (
+        <button
+          type="button"
+          className="days-button-today"
+          onClick={handleReturnToday}
+        >
+          Retour à aujourd'hui
+        </button>
+      )}
     </section>
   );
 }
@@ -72,4 +103,7 @@ Days.propTypes = {
   handlePrev: PropTypes.func.isRequired,
   activeButton: PropTypes.string.isRequired,
   setActiveButton: PropTypes.func.isRequired,
+  setDayTraining: PropTypes.func.isRequired,
+  weekCounter: PropTypes.number.isRequired,
+  handleReturnToday: PropTypes.func.isRequired,
 };

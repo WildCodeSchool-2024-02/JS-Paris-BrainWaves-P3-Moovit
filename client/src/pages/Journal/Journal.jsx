@@ -1,14 +1,16 @@
+/* eslint-disable import/no-unresolved */
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
+import { Toaster, toast } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
+import DarkMode from "../../components/DarkMode/DarkMode";
 
 export default function Journal() {
-
   // Current date of today
   const [currentDate, setCurrentDate] = useState(new Date());
   // All the trainings
@@ -17,11 +19,29 @@ export default function Journal() {
   const [activeButton, setActiveButton] = useState(
     datefns.format(new Date(), "yyyy-MM-dd")
   );
+  // State qui contient la date cliquer (initialement à today)
+  const [dayTraining, setDayTraining] = useState("today");
 
+  // State to count
+  const [weekCounter, setWeekCounter] = useState(0);
+
+  // Get datas to get trainings for a giving day
   useEffect(() => {
-    fetch("http://localhost:3310/api/trainings")
+    fetch(`http://localhost:3310/api/trainings/${dayTraining}/1`)
       .then((response) => response.json())
       .then((response) => setTrainings(response));
+  }, [dayTraining]);
+
+  useEffect(() => {
+    if (trainings.length > 0) {
+      toast.info(
+        `Tu as ${trainings.length} entraînement(s) aujourd'hui. Courage tu peux le faire !`
+      );
+    } else {
+      toast.info(
+        "Tu n'as pas d'entraînement aujourd'hui. Profites en pour te reposer !"
+      );
+    }
   }, []);
 
   // Days of the week
@@ -87,24 +107,36 @@ export default function Journal() {
 
   // Display the previous week
   const handlePrev = () => {
-    setCurrentDate(
-      new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() - 7
-      )
+    const date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - 7
     );
+    setCurrentDate(date);
+    setActiveButton(datefns.format(date, "yyyy-MM-dd"));
+    setWeekCounter((prev) => prev - 1);
+    setDayTraining(datefns.format(date, "yyyy-MM-dd"));
   };
 
   // Display the next week
   const handleNext = () => {
-    setCurrentDate(
-      new Date(
-        currentDate.getFullYear(),
-        currentDate.getMonth(),
-        currentDate.getDate() + 7
-      )
+    const date = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 7
     );
+    setCurrentDate(date);
+    setActiveButton(datefns.format(date, "yyyy-MM-dd"));
+    setWeekCounter((prev) => prev + 1);
+    setDayTraining(datefns.format(date, "yyyy-MM-dd"));
+  };
+
+  // Function to return to today
+  const handleReturnToday = () => {
+    setDayTraining(datefns.format(new Date(), "yyyy-MM-dd"));
+    setActiveButton(datefns.format(new Date(), "yyyy-MM-dd"));
+    setCurrentDate(new Date());
+    setWeekCounter(0);
   };
 
   // First day of the week
@@ -117,20 +149,28 @@ export default function Journal() {
   );
 
   return (
-    <section id="journal">
+    <section className="journal">
       <div className="journal-first-container">
+        <div className="journal-dark-button-mobile">
+          <DarkMode />
+        </div>
         <div className="journal-orange-block">
           <div className="journal-elements">
-            <p className="journal-day-mobile">Name</p>
-            <p className="journal-day-mobile">Sportif de haut niveau</p>
             <h1 className="journal-day-desktop">
               {day} {numb} {month}
             </h1>
           </div>
-          <p className="journal-motivation">
-            Aujourd’hui, tu as 2 entraînements de prévu ! Courage, tu peux le
-            faire
-          </p>
+          {trainings.length === 0 ? (
+            <p className="journal-motivation">
+              Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer.
+            </p>
+          ) : (
+            <p className="journal-motivation">
+              Aujourd’hui, tu as {trainings.length} entraînement
+              {trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
+              faire.
+            </p>
+          )}
         </div>
         <button type="button" className="journal-add-button">
           <p>Ajouter une activité</p>
@@ -144,6 +184,15 @@ export default function Journal() {
         <div className="journal-card">
           <TipsCard />
         </div>
+        {activeButton !== datefns.format(new Date(), "yyyy-MM-dd") && (
+          <button
+            type="button"
+            className="days-button-today-mobile"
+            onClick={handleReturnToday}
+          >
+            Retour à aujourd'hui
+          </button>
+        )}
       </div>
       <div className="journal-second-container">
         <div className="journal-days-container">
@@ -153,12 +202,19 @@ export default function Journal() {
             handleNext={handleNext}
             activeButton={activeButton}
             setActiveButton={setActiveButton}
+            setDayTraining={setDayTraining}
+            weekCounter={weekCounter}
+            handleReturnToday={handleReturnToday}
           />
         </div>
       </div>
       <div className="journal-third-container">
         <SideBar />
+        <div className="journal-dark-button-desktop">
+          <DarkMode />
+        </div>
       </div>
+      <Toaster />
     </section>
   );
 }

@@ -21,6 +21,7 @@
   width: 14.3%;
   height: 75px;
   border-radius: 5px;
+  transition: all 0.2s ease-in-out;
 }
 
 .days-statut {
@@ -28,11 +29,11 @@
 }
 
 .days-number {
-  font-size: 0.6em;
+  font-size: 0.8em;
 }
 
 .days-day {
-  font-size: 0.6em;
+  font-size: 0.7em;
 }
 
 .days-monitor {
@@ -50,8 +51,8 @@
   align-items: center;
   padding: 0;
   font-size: 0.7em;
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   border-radius: 5px;
   border-color: var(--main);
 }
@@ -62,9 +63,10 @@
   align-items: center;
   font-size: 0.8em;
   border-radius: 5px;
-  width: 40%;
-  height: 30px;
+  width: 50%;
+  height: 40px;
   border-color: var(--main);
+  font-size: 1em;
 }
 
 .days-statut-desktop {
@@ -77,6 +79,14 @@
 
 .day-active {
   transform: scale(1.1);
+}
+
+.day-active:hover {
+  transform: scale(1.1);
+}
+
+.days-button-today {
+  display: none;
 }
 
 @media (min-width: 1024px) {
@@ -113,5 +123,12 @@
   }
   .days-day-desktop {
     display: block;
+  }
+  .days-button-today {
+    display: block;
+    background-color: var(--main);
+    margin: 30px 0;
+    color: white;
+    font-weight: 700;
   }
 }

@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import TrainingForm from "../TrainingForm/TrainingForm";
 
-function PopUp({open, handleOpen, handleClose, getEditForm, id, training}) {
+function PopUp({ open, handleOpen, handleClose, getEditForm, id, training }) {
   return (
-    
     <>
       <button type="button" className="second-button" onClick={handleOpen}>
         Open modal
       </button>
       <Modal open={open} onClose={handleClose}>
-        <TrainingForm getEditForm={getEditForm} id={id} training={training}/>
+        <TrainingForm getEditForm={getEditForm} id={id} training={training} handleClose={handleClose}/>
       </Modal>
     </>
   );
@@ -30,6 +29,6 @@ PopUp.propTypes = {
     timeOfDay: PropTypes.string.isRequired, // Moment de la journée de l'activité
     duration: PropTypes.string.isRequired, // Durée de l'activité
     details: PropTypes.string.isRequired, // Détails de l'activité
-    sport: PropTypes.number.isRequired // ID du sport associé à l'activité
-  }).isRequired
+    sport: PropTypes.number.isRequired, // ID du sport associé à l'activité
+  }).isRequired,
 };

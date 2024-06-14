@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import "./trainingForm.css";
 import { useState } from "react";
 
-function TrainingForm({getEditForm, id, training}) {
+function TrainingForm({getEditForm, id, training, handleClose}) {
   const api = import.meta.env.VITE_API_URL;
 
   const [title, setTitle] = useState(training.title);
@@ -117,6 +117,7 @@ function TrainingForm({getEditForm, id, training}) {
       <button type="submit" className="primary-button">
         Enregistrer
       </button>
+      <button type="button" className="secondary-button" onClick={handleClose}>Annuler</button>
     </form>
   );
 }
@@ -125,7 +126,8 @@ export default TrainingForm;
 
 TrainingForm.propTypes = {
   getEditForm: PropTypes.bool.isRequired, // Indique si le formulaire est utilisé pour éditer une activité existante
-  id: PropTypes.number.isRequired, // ID de l'activité en cours d'édition
+  id: PropTypes.number.isRequired,
+  handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({
     title: PropTypes.string.isRequired, // Titre de l'activité
     date: PropTypes.string.isRequired, // Date de l'activité
@@ -134,4 +136,5 @@ TrainingForm.propTypes = {
     details: PropTypes.string.isRequired, // Détails de l'activité
     sport: PropTypes.number.isRequired // ID du sport associé à l'activité
   }).isRequired
+  
 };

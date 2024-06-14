@@ -35,7 +35,7 @@ export default function Journal() {
   useEffect(() => {
     if (trainings.length > 0) {
       toast.info(
-        `Tu as ${trainings.length} entraînement(s) aujourd'hui. Courage tu peux le faire !`
+        `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} aujourd'hui. Courage tu peux le faire !`
       );
     } else {
       toast.info(

@@ -102,6 +102,7 @@
   }
   .header-container {
     background-color: transparent;
+    margin-top: 60px;
   }
   .landing-buttons-container {
     button:nth-child(1) {

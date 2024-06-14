@@ -10,6 +10,11 @@
   background-color: transparent;
 }
 
+.sidebar-logo-moov {
+  margin: 50px 0;
+  width: 220px;
+}
+
 #light #sidebar {
   box-shadow: 4px 3px 3px 0 rgba(222, 222, 222, 0.3);
 }

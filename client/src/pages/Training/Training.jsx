@@ -18,7 +18,7 @@ function Training() {
       <section className="trainingCard">
         <section className="trainingCard-title">
           <h1>{training.title}</h1>
-          <CardMenu set={setGetEditForm} handleOpen={handleOpen} />
+          <CardMenu set={setGetEditForm} handleOpen={handleOpen} id={id} />
         </section>
         <section className="card-type-training">
           <p>Entraînement</p>

@@ -71,5 +71,5 @@ export default CardMenu;
 CardMenu.propTypes = {
   set: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.string.isRequired
 };

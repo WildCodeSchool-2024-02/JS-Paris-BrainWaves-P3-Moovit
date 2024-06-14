@@ -126,15 +126,15 @@ export default TrainingForm;
 
 TrainingForm.propTypes = {
   getEditForm: PropTypes.bool.isRequired, // Indique si le formulaire est utilisé pour éditer une activité existante
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({
     title: PropTypes.string.isRequired, // Titre de l'activité
     date: PropTypes.string.isRequired, // Date de l'activité
-    timeOfDay: PropTypes.string.isRequired, // Moment de la journée de l'activité
+    timeOfDay: PropTypes.string, // Moment de la journée de l'activité
     duration: PropTypes.string.isRequired, // Durée de l'activité
     details: PropTypes.string.isRequired, // Détails de l'activité
-    sport: PropTypes.number.isRequired // ID du sport associé à l'activité
+    sport: PropTypes.number // ID du sport associé à l'activité
   }).isRequired
   
 };

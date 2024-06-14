@@ -1,17 +1,26 @@
 import { useLoaderData, Link, useParams } from "react-router-dom";
-import {useState} from 'react';
+import { useState } from "react";
 import PopUp from "../../components/PopUp/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import "./training.css";
 
+const api = import.meta.env.VITE_API_URL;
+
 function Training() {
   const [training] = useLoaderData();
-  const {id} = useParams();
+  const { id } = useParams();
   const [getEditForm, setGetEditForm] = useState(false);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const completeTraining = () =>
+      fetch(`${api}/api/trainings/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_completed: 1 }),
+    });
 
   return (
     <>
@@ -32,15 +41,25 @@ function Training() {
         </section>
         <p>{training.details}</p>
 
-        <button
-          type="button"
-          className="trainingCardbutton card-button-validate"
-        >
-          Valider mon entraînement
-        </button>
+        
+          <button
+            type="button"
+            className="trainingCardbutton card-button-validate"
+            onClick={completeTraining}
+          >
+            Valider mon entraînement
+          </button>
         <Link to="/">Revenir au journal</Link>
       </section>
-      <PopUp setOpen={setOpen} handleOpen={handleOpen} handleClose={handleClose} open={open} getEditForm={getEditForm} id={id} training={training}/>
+      <PopUp
+        setOpen={setOpen}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        open={open}
+        getEditForm={getEditForm}
+        id={id}
+        training={training}
+      />
     </>
   );
 }

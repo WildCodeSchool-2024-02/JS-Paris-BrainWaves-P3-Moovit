@@ -11,12 +11,16 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.15.19",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@react-icons/all-files": "^4.1.0",
+    "date-fns": "^3.6.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "shadcn-ui": "^0.2.3",
+    "sonner": "^1.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",

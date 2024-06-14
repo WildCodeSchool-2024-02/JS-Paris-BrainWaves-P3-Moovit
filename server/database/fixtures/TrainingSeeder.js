@@ -14,6 +14,20 @@ class TrainingSeeder extends AbstractSeeder {
 
   run() {
     // Generate and insert fake data into the 'item' table
+    for (let i = 0; i < 7; i += 1) {
+      // Generate fake item data
+      const fakeTraining = {
+        title: `Entrainement-test ${i}`,
+        date: new Date(2024, 6, i),
+        duration: '2h',
+        details: `${i} Ceci est mon programme test pour m'entraîner`,
+        time_of_day: 'morning',
+        user_id: this.getRef(`user_0`).insertId, // Get the insertId of the corresponding user from UserSeeder
+      };
+
+      // Insert the fakeItem data into the 'item' table
+      this.insert(fakeTraining); // insert into item(title, user_id) values (?, ?)
+    }
     for (let i = 0; i < 2; i += 1) {
       // Generate fake item data
       const fakeTraining = {

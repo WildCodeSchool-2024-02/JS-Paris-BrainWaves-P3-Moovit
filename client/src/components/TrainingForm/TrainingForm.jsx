@@ -2,33 +2,34 @@ import PropTypes from 'prop-types'
 import "./trainingForm.css";
 import { useState } from "react";
 
-function TrainingForm({getEditForm, id, training, handleClose}) {
+function TrainingForm({id, training, handleClose}) {
   const api = import.meta.env.VITE_API_URL;
 
-  const [title, setTitle] = useState(training.title);
-  const [date, setDate] = useState(training.date);
-  const [timeOfDay, setTimeOfDay] = useState(training.timeOfDay);
-  const [duration, setDuration] = useState(training.duration);
-  const [details, setDetails] = useState(training.details);
-  const [sport, setSport] = useState(training.sport)
+  const [title, setTitle] = useState(training ? training.title : null);
+  const [date, setDate] = useState(training ? training.date : null);
+  const [timeOfDay, setTimeOfDay] = useState(training ? training.timeOfDay : null);
+  const [duration, setDuration] = useState(training ? training.duration : null);
+  const [details, setDetails] = useState(training ? training.details : null);
+  const [sport, setSport] = useState(training ? training.sport : null)
 
   // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!getEditForm) { 
+    if (!id) { 
     fetch(`${api}/api/trainings`, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: 3, sport_id: sport})
     })
-  } else if (getEditForm) {
+  } else if (id) {
     fetch(`${api}/api/trainings/${id}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: 3, sport_id: sport})
     })
   }
+  handleClose()
   };
 
   const handleTitle = (e) => {
@@ -125,7 +126,6 @@ function TrainingForm({getEditForm, id, training, handleClose}) {
 export default TrainingForm;
 
 TrainingForm.propTypes = {
-  getEditForm: PropTypes.bool.isRequired, // Indique si le formulaire est utilisé pour éditer une activité existante
   id: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({

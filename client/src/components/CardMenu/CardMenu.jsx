@@ -10,7 +10,7 @@ const ITEM_HEIGHT = 48;
 const api = import.meta.env.VITE_API_URL;
 
 
-function CardMenu({ set, handleOpen, id }) {
+function CardMenu({ handleOpen, id, setCurrentTraining }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function CardMenu({ set, handleOpen, id }) {
     setAnchorEl(null);
   };
   const handleEdit = () => {
-    set(true);
+    setCurrentTraining(id);
     handleOpen();
   };
 
@@ -30,7 +30,7 @@ function CardMenu({ set, handleOpen, id }) {
     fetch(`${api}/api/trainings/${id}`, {
       method: "DELETE",
     });
-    navigate("/");
+    navigate("/journal");
   };
 
   return (
@@ -69,7 +69,7 @@ function CardMenu({ set, handleOpen, id }) {
 export default CardMenu;
 
 CardMenu.propTypes = {
-  set: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  setCurrentTraining: PropTypes.func.isRequired
 };

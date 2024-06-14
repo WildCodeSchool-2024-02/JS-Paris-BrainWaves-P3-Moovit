@@ -29,7 +29,6 @@
     color: white;
     border: none;
     font-size: 0.8em;
-    width: 60%;
     align-self: center;
   }
 }
@@ -46,7 +45,6 @@
   color: white;
   border: none;
   font-size: 0.8em;
-  width: 60%;
 }
 
 .card-type-training {
@@ -79,12 +77,6 @@
   top: 20px;
   right: 20px;
   font-size: 1.3em;
-}
-
-.trainingCard-title {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
 }
 
 #long-button {

@@ -1,10 +1,14 @@
 import { useLoaderData, Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PopUp from "../../components/PopUp/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
+import DarkMode from "../../contexts/DarkMode/DarkMode";
+import DarkModeContext from "../../services/DarkModeContext";
 import "./training.css";
 
 function Training() {
+  const { mode } = useContext(DarkModeContext);
+
   const [training] = useLoaderData();
   const { id } = useParams();
 
@@ -23,7 +27,8 @@ function Training() {
 
   return (
     <>
-      <section className="trainingCard">
+      <DarkMode />
+      <section className="trainingCard" id={`card-${mode}`}>
         <section className="trainingCard-title">
           <h1>{training.title}</h1>
           <CardMenu handleOpen={handleOpen} id={id} />
@@ -40,21 +45,20 @@ function Training() {
         </section>
         <p>{training.details}</p>
 
-        
         <section className="trainingCard-title">
-        {training.is_completed == null ? (
-          <button
-            type="button"
-            className="card-button-validate"
-            onClick={completeTraining}
-          >
-            Valider
-          </button>
-        ) : (
-          <p>Feeback enregistré</p>
-        )}
-        <Link to='/journal'>Revenir au journal</Link>
-      </section>
+          {training.is_completed == null ? (
+            <button
+              type="button"
+              className="card-button-validate"
+              onClick={completeTraining}
+            >
+              Valider
+            </button>
+          ) : (
+            <p>Feeback enregistré</p>
+          )}
+          <Link to="/journal">Revenir au journal</Link>
+        </section>
       </section>
       <PopUp
         setOpen={setOpen}

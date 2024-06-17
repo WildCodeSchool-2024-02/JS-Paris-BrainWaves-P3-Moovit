@@ -13,7 +13,7 @@ function PopUp({ open, handleClose, id, training}) {
 export default PopUp;
 
 PopUp.propTypes = {
-  open: PropTypes.bool.isRequired, // Indique si la modal est ouverte
+  open: PropTypes.bool.isRequired, // Indique si la modale est ouverte
   handleClose: PropTypes.func.isRequired, // Fonction pour fermer la modale
   id: PropTypes.string.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({

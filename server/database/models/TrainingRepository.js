@@ -5,13 +5,6 @@ class TrainingRepository extends AbstractRepository {
     super({ table: "training" });
   }
 
-  async readAll() {
-    const [rows] = await this.database.query(
-        `select * from ${this.table}`
-    )
-    return rows;
-  }
-
   async readOne(id) {
     const [training] = await this.database.query(
         `select * from ${this.table} WHERE id = ?`, [id]

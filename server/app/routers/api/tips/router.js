@@ -3,16 +3,15 @@ const express = require("express");
 const router = express.Router();
 
 /* ************************************************************************* */
-// Import And Use Routers Here
+// Define Your API Routes Here
 /* ************************************************************************* */
 
-const trainingRouter = require("./training/router");
+// Import item-related actions
+const { browse, readByType } = require("../../../controllers/tipsActions");
 
-router.use("/trainings", trainingRouter);
-
-const tipRouter = require("./tips/router");
-
-router.use("/tips", tipRouter);
+// Route to get a list of items
+router.get("/", browse);
+router.get("/:type", readByType);
 
 /* ************************************************************************* */
 

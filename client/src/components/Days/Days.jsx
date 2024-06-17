@@ -9,16 +9,13 @@ export default function Days({
   daysOfWeek,
   handlePrev,
   handleNext,
-  activeButton,
-  setActiveButton,
+  dayTraining,
   setDayTraining,
   weekCounter,
   handleReturnToday,
 }) {
-  
   // Function that handle display
   const handleDisplay = (day) => {
-    setActiveButton(day.date);
     setDayTraining(day.date);
   };
 
@@ -61,7 +58,7 @@ export default function Days({
         {daysOfWeek.map((day) => (
           <button
             className={
-              activeButton === day.date
+              dayTraining === day.date
                 ? "days-buttons day-active"
                 : "days-buttons"
             }
@@ -80,7 +77,7 @@ export default function Days({
           </button>
         ))}
       </div>
-      {activeButton !== datefns.format(new Date(), "yyyy-MM-dd") && (
+      {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
         <button
           type="button"
           className="days-button-today"
@@ -101,8 +98,7 @@ Days.propTypes = {
   ).isRequired,
   handleNext: PropTypes.func.isRequired,
   handlePrev: PropTypes.func.isRequired,
-  activeButton: PropTypes.string.isRequired,
-  setActiveButton: PropTypes.func.isRequired,
+  dayTraining: PropTypes.string.isRequired,
   setDayTraining: PropTypes.func.isRequired,
   weekCounter: PropTypes.number.isRequired,
   handleReturnToday: PropTypes.func.isRequired,

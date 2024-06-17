@@ -16,12 +16,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   padding: 10px 0;
   width: 14.3%;
   height: 75px;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
+  background-color: rgb(225, 225, 225);
+  color: gray;
 }
 
 .days-statut {
@@ -29,7 +31,8 @@
 }
 
 .days-number {
-  font-size: 0.8em;
+  font-size: 1.2em;
+  font-weight: 700;
 }
 
 .days-day {
@@ -79,6 +82,8 @@
 
 .day-active {
   transform: scale(1.1);
+  background-color: white;
+  color: black;
 }
 
 .day-active:hover {
@@ -105,10 +110,6 @@
   }
   .days-statut {
     display: none;
-  }
-
-  .days-number {
-    font-size: 1em;
   }
 
   .days-day {

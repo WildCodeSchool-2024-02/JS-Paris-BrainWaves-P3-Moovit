@@ -117,6 +117,9 @@ button:hover {
   transition: all 0.3s ease-in-out;
 }
 
-main {
-  min-height: 100vh;
+.darkmode-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
 }

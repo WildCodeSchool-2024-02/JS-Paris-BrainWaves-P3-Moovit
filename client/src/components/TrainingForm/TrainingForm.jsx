@@ -32,34 +32,6 @@ function TrainingForm({id, training, handleClose}) {
   handleClose()
   };
 
-  const handleTitle = (e) => {
-    e.preventDefault();
-    setTitle(e.target.value);
-  };
-
-  const handleDate = (e) => {
-    e.preventDefault();
-    setDate(e.target.value);
-  };
-
-  const handleSport = (e) => {
-    e.preventDefault();
-    setSport(parseInt(e.target.value, 10))
-  }
-
-  const handleTime = (e) => {
-    e.preventDefault();
-    setTimeOfDay(e.target.value);
-  };
-  const handleDuration = (e) => {
-    e.preventDefault();
-    setDuration(e.target.value);
-  };
-  const handleDetails = (e) => {
-    e.preventDefault();
-    setDetails(e.target.value);
-  };
-
   return (
     <form className="trainingForm" onSubmit={handleSubmit}>
       <h1>Créer une nouvelle activité</h1>
@@ -70,7 +42,7 @@ function TrainingForm({id, training, handleClose}) {
         name="title"
         placeholder="Titre de ton entraînement"
         value={title}
-        onChange={handleTitle}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <input
         type="date"
@@ -78,21 +50,21 @@ function TrainingForm({id, training, handleClose}) {
         name="date"
         placeholder="Quel jour ?"
         value={date}
-        onChange={handleDate}
+        onChange={(e) => setDate(e.target.value)}
       />
       <select
         type=""
         id="time-of-day-select"
         name="time-of-day"
         value={timeOfDay}
-        onChange={handleTime}
+        onChange={(e) => setTimeOfDay(e.target.value)}
       >
         <option>Matin, Après-midi ou Soir ? 😉</option>
         <option>Matin</option>
         <option>Après-midi</option>
         <option>Soir</option>
       </select>
-      <select id="sport-select" name="type" value={sport} onChange={handleSport}>
+      <select id="sport-select" name="type" value={sport} onChange={(e) => setSport(e.target.value)}>
         <option>Quel sport ? ⛹️</option>
         <option value="4">Fitness</option>
         <option value="5">Running</option>
@@ -104,7 +76,7 @@ function TrainingForm({id, training, handleClose}) {
         name="duration"
         value={duration}
         placeholder="Combien de temps ?"
-        onChange={handleDuration}
+        onChange={(e) => setDuration(e.target.value)}
       />
       <textarea
         type="text"
@@ -112,7 +84,7 @@ function TrainingForm({id, training, handleClose}) {
         name="details"
         value={details}
         placeholder="Enregistre les détails de ton activité ici 👌"
-        onChange={handleDetails}
+        onChange={(e) => setDetails(e.target.value)}
       />
 
       <button type="submit" className="primary-button">

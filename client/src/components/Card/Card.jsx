@@ -1,18 +1,45 @@
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import DarkModeContext from "../../services/DarkModeContext";
 
-import "./card.css";
 
-export default function Card({ card }) {
+import "./card.css";
+import CardMenu from "../CardMenu/CardMenu";
+
+
+const api = import.meta.env.VITE_API_URL;
+
+
+export default function Card({
+  card,
+  setGetEditForm,
+  handleOpen,
+  setCurrentTraining,
+}) {
   const { mode } = useContext(DarkModeContext);
+
+  const completeTraining = () =>
+    fetch(`${api}/api/trainings/${card.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_completed: 1 }),
+    });
+
   return (
     <section id={`card-${mode}`}>
-      <h1 className="card-title">{card.title}</h1>
+      <section className="trainingCard-title">
+        <h1 className="card-title">{card.title}</h1>
+        <CardMenu
+          set={setGetEditForm}
+          id={card.id}
+          handleOpen={handleOpen}
+          setCurrentTraining={setCurrentTraining}
+        />
+      </section>
       <div className="card-type-training">
         <IoMdFitness />
         <p>Entraînement | Fitness</p>
@@ -27,25 +54,33 @@ export default function Card({ card }) {
           <p>{card.duration}</p>
         </div>
       </div>
-      {card.is_completed == null ? (
-        <button type="button" className="card-button-validate">
-          Valider cet entrainement
-        </button>
-      ) : (
-        <p>Feeback enregistré</p>
-      )}
-      <div className="card-points">
-        <BsThreeDotsVertical />
-      </div>
+      <section className="trainingCard-title">
+        {card.is_completed == null ? (
+          <button
+            type="button"
+            className="card-button-validate"
+            onClick={completeTraining}
+          >
+            Valider
+          </button>
+        ) : (
+          <p>Feeback enregistré</p>
+        )}
+        <Link to={`/training/${card.id}`}>Détails</Link>
+      </section>
     </section>
   );
 }
 
 Card.propTypes = {
   card: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     time_of_day: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
     is_completed: PropTypes.bool,
   }).isRequired,
+  setGetEditForm: PropTypes.func.isRequired,
+  handleOpen: PropTypes.func.isRequired,
+  setCurrentTraining: PropTypes.func.isRequired,
 };

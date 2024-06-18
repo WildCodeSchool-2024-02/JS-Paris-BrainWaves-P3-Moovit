@@ -3,7 +3,6 @@ import Switch from "@mui/material/Switch";
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import DarkModeContext from "../../services/DarkModeContext";
-import "./darkmode.css";
 
 export default function DarkMode() {
   const { setMode } = useContext(DarkModeContext);

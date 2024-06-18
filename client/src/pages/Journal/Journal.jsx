@@ -8,10 +8,23 @@ import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
-import DarkMode from "../../components/DarkMode/DarkMode";
+import DarkMode from "../../contexts/DarkMode/DarkMode";
+import PopUp from "../../components/PopUp/PopUp";
 
 export default function Journal() {
-  // Current date of today
+
+  const [currentTraining, setCurrentTraining] = useState(null)
+
+    // Managing modal
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setCurrentTraining(null)};
+
+
+
+  // Current date
   const [currentDate, setCurrentDate] = useState(new Date());
   // All the trainings
   const [trainings, setTrainings] = useState([]);
@@ -19,7 +32,7 @@ export default function Journal() {
   const [activeButton, setActiveButton] = useState(
     datefns.format(new Date(), "yyyy-MM-dd")
   );
-  // State qui contient la date cliquer (initialement à today)
+  // State qui contient la date cliqué (initialement à today)
   const [dayTraining, setDayTraining] = useState("today");
 
   // State to count
@@ -27,10 +40,11 @@ export default function Journal() {
 
   // Get datas to get trainings for a giving day
   useEffect(() => {
-    fetch(`http://localhost:3310/api/trainings/${dayTraining}/1`)
+    fetch(`http://localhost:3310/api/trainings/${dayTraining}/3`)
       .then((response) => response.json())
       .then((response) => setTrainings(response));
-  }, [dayTraining]);
+  }, [dayTraining, open]);
+
 
   useEffect(() => {
     if (trainings.length > 0) {
@@ -148,6 +162,10 @@ export default function Journal() {
     datefns.eachDayOfInterval({ start: firstDay, end: lastDay })
   );
 
+  // Get training ID for edition
+  const findCurrentTraining = trainings.find((training) => (training.id === currentTraining))
+
+
   return (
     <section className="journal">
       <div className="journal-first-container">
@@ -172,13 +190,13 @@ export default function Journal() {
             </p>
           )}
         </div>
-        <button type="button" className="journal-add-button">
+        <button type="button" className="journal-add-button" onClick={handleOpen}>
           <p>Ajouter une activité</p>
           <FaPlus />
         </button>
         <div className="journal-card">
           {trainings.map((card) => (
-            <Card key={card.id} card={card} />
+            <Card key={card.id} card={card} handleOpen={handleOpen} setCurrentTraining={setCurrentTraining}/>
           ))}
         </div>
         <div className="journal-card">
@@ -214,6 +232,14 @@ export default function Journal() {
           <DarkMode />
         </div>
       </div>
+      <PopUp
+        setOpen={setOpen}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        open={open}
+        training={findCurrentTraining}
+        id={currentTraining}
+      />
       <Toaster />
     </section>
   );

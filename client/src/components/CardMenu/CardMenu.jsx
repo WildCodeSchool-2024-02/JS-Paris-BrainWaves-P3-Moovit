@@ -4,16 +4,14 @@ import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
-const api = import.meta.env.VITE_API_URL;
 
 
-function CardMenu({ handleOpen, id, setCurrentTraining }) {
+function CardMenu({ handleOpen, handleDelete, id, setCurrentTraining }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
+
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -24,13 +22,6 @@ function CardMenu({ handleOpen, id, setCurrentTraining }) {
   const handleEdit = () => {
     setCurrentTraining(id);
     handleOpen();
-  };
-
-  const handleDelete = () => {
-    fetch(`${api}/api/trainings/${id}`, {
-      method: "DELETE",
-    });
-    navigate("/journal");
   };
 
   return (
@@ -70,6 +61,7 @@ export default CardMenu;
 
 CardMenu.propTypes = {
   handleOpen: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   setCurrentTraining: PropTypes.func.isRequired
 };

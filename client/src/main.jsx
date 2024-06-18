@@ -8,6 +8,7 @@ import Training from "./pages/Training/Training";
 import App from "./App";
 import Journal from "./pages/Journal/Journal";
 import Landing from "./pages/Landing/Landing";
+import Templates from "./pages/Templates/Templates";
 
 const api = import.meta.env.VITE_API_URL
 
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
         path: "/journal",
         element: <Journal />,
       },
+      {
+        path: "/templates",
+        element: <Templates />,
+        loader: () => fetch(`${api}/api/templates/1/all`)
+      }
     ],
   },
 ]);

@@ -1,0 +1,6 @@
+.templates {
+  margin: 5vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

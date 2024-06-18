@@ -23,6 +23,15 @@ const readById = async (req, res, next) => {
     }
   };
 
+  const browseByUser = async (req, res, next) => {
+    try { 
+        const template = await tables.template.readAllByUser(req.params.id);
+        res.status(200).json(template)
+   } catch (err) {
+        next(err)
+    }
+  }
+
   const add = async (req, res, next) => {
     try {
         const {title, duration, details} = req.body;
@@ -55,6 +64,7 @@ const destroy = async (req, res, next) => {
 
   module.exports = {
     browse,
+    browseByUser,
     readById,
     edit,
     add,

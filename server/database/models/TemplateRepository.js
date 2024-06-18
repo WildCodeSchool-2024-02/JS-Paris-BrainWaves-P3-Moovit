@@ -5,6 +5,13 @@ class TemplateRepository extends AbstractRepository {
         super({table: 'template'})
     }
 
+    async readAllByUser(id) {
+        const [rows] = await this.database.query(
+            `SELECT * FROM ${this.table} WHERE user_id = ?`, [id]
+        )
+        return rows;
+      };
+    
     async create(title, duration, details, userId, sportId) {
         const newTemplate = await this.database.query(
             `INSERT INTO ${this.table} 

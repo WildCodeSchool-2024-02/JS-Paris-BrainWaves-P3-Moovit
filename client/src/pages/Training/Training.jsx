@@ -1,6 +1,6 @@
 import { useLoaderData, Link, useParams } from "react-router-dom";
 import { useState, useContext } from "react";
-import PopUp from "../../components/PopUp/PopUp";
+import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import DarkMode from "../../contexts/DarkMode/DarkMode";
 import DarkModeContext from "../../services/DarkModeContext";

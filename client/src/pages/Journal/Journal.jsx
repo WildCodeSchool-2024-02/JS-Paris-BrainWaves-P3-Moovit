@@ -9,7 +9,7 @@ import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
 import DarkMode from "../../contexts/DarkMode/DarkMode";
-import PopUp from "../../components/PopUp/PopUp";
+import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 
 export default function Journal() {
 

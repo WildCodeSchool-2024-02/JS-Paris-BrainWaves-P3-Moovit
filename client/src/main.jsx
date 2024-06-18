@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         path: "/journal",
         element: <Journal />,
         loader: () =>
-          fetch(`${import.meta.env.VITE_API_URL}/api/trainings/today/2`),
+          fetch(`${import.meta.env.VITE_API_URL}/trainings/today/1`),
       },
     ],
   },

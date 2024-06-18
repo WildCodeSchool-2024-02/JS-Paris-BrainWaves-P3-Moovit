@@ -43,13 +43,13 @@ export default function Journal() {
   useEffect(() => {
     setLoadingTips(false);
     setLoadingTrainings(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/2`)
+    fetch(`${import.meta.env.VITE_API_URL}/trainings/${dayTraining}/1`)
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);
         setLoadingTrainings(true);
       });
-    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
+    fetch(`${import.meta.env.VITE_API_URL}/tips`)
       .then((response) => response.json())
       .then((response) => {
         setTips(response);
@@ -178,83 +178,81 @@ export default function Journal() {
   };
 
   return (
-    <section className="journal">
-      <div className="journal-first-container">
-        <div className="journal-orange-block">
-          <div className="journal-elements">
-            <h1 className="journal-day-desktop">
-              {day} {numb} {month}
-            </h1>
+    <>
+      <Toaster />
+      <section className="journal">
+        <div className="journal-first-container">
+          <div className="journal-orange-block">
+            <div className="journal-elements">
+              <h1 className="journal-day-desktop">
+                {day} {numb} {month}
+              </h1>
+            </div>
+            {trainings.length === 0 ? (
+              <p className="journal-motivation">
+                Aujourd’hui, tu n'as rien de prévu ! Profites en pour te
+                reposer.
+              </p>
+            ) : (
+              <p className="journal-motivation">
+                Aujourd’hui, tu as {trainings.length} entraînement
+                {trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
+                faire.
+              </p>
+            )}
           </div>
-          {trainings.length === 0 ? (
-            <p className="journal-motivation">
-              Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer.
-            </p>
-          ) : (
-            <p className="journal-motivation">
-              Aujourd’hui, tu as {trainings.length} entraînement
-              {trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
-              faire.
-            </p>
+          <button type="button" className="journal-add-button">
+            <p>Ajouter une activité</p>
+            <FaPlus />
+          </button>
+          {loadingTrainings && (
+            <div className="journal-card">
+              {trainings.map((card) => (
+                <Card key={card.id} card={card} />
+              ))}
+            </div>
+          )}
+          {trainings.length > 0 && loadingTips && (
+            <div className="journal-card">
+              <TipsCard
+                tip={
+                  tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]
+                }
+              />
+            </div>
+          )}
+          {trainings.length === 0 && loadingTips && (
+            <div className="journal-card">
+              <TipsCard
+                tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
+              />
+            </div>
+          )}
+          {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
+            <button
+              type="button"
+              className="days-button-today-mobile"
+              onClick={handleReturnToday}
+            >
+              Retour à aujourd'hui
+            </button>
           )}
         </div>
-        <button type="button" className="journal-add-button">
-          <p>Ajouter une activité</p>
-          <FaPlus />
-        </button>
-        {loadingTrainings && (
-          <div className="journal-card">
-            {trainings.map((card) => (
-              <Card key={card.id} card={card} />
-            ))}
-          </div>
-        )}
-        {trainings.length > 0 && loadingTips && (
-          <div className="journal-card">
-            <TipsCard
-              tip={tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]}
+        <div className="journal-second-container">
+          <div className="journal-days-container">
+            <Days
+              daysOfWeek={daysOfWeek}
+              handlePrev={handlePrev}
+              handleNext={handleNext}
+              dayTraining={dayTraining}
+              setDayTraining={setDayTraining}
+              weekCounter={weekCounter}
+              handleReturnToday={handleReturnToday}
             />
           </div>
-        )}
-        {trainings.length === 0 && loadingTips && (
-          <div className="journal-card">
-            <TipsCard
-              tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
-            />
-          </div>
-        )}
-        {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
-          <button
-            type="button"
-            className="days-button-today-mobile"
-            onClick={handleReturnToday}
-          >
-            Retour à aujourd'hui
-          </button>
-        )}
-      </div>
-      <div className="journal-second-container">
-        <div className="journal-days-container">
-          <Days
-            daysOfWeek={daysOfWeek}
-            handlePrev={handlePrev}
-            handleNext={handleNext}
-            dayTraining={dayTraining}
-            setDayTraining={setDayTraining}
-            weekCounter={weekCounter}
-            handleReturnToday={handleReturnToday}
-          />
         </div>
-      </div>
-      <SideBar />
-      <Toaster
-        toastOptions={{
-          style: {
-            background: "rgb(180, 210, 180)",
-          },
-          className: "class",
-        }}
-      />
-    </section>
+        <SideBar />
+      </section>
+    </>
   );
 }

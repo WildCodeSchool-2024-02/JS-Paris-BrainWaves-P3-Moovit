@@ -40,7 +40,7 @@ export default function Journal() {
 
   // Get datas to get trainings for a giving day
   useEffect(() => {
-    fetch(`http://localhost:3310/api/trainings/${dayTraining}/3`)
+    fetch(`http://localhost:3310/api/trainings/${dayTraining}/2`)
       .then((response) => response.json())
       .then((response) => setTrainings(response));
   }, [dayTraining, open]);

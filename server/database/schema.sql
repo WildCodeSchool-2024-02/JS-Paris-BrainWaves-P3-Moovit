@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `moovit`.`feedback` ;
 
 CREATE TABLE IF NOT EXISTS `moovit`.`feedback` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `duration` DATETIME NOT NULL,
+  `duration` VARCHAR(45) NOT NULL,
   `global` ENUM('easy', 'medium', 'hard') NOT NULL,
   `difficulty` ENUM('easy', 'medium', 'hard') NOT NULL,
   `after` ENUM('tired', 'good', 'perfect') NOT NULL,
@@ -83,7 +83,8 @@ DROP TABLE IF EXISTS `moovit`.`template` ;
 
 CREATE TABLE IF NOT EXISTS `moovit`.`template` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `duration` DATETIME NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `duration` VARCHAR(45) NULL,
   `details` LONGTEXT NULL,
   `user_id` INT NOT NULL,
   `sport_id` INT NOT NULL,

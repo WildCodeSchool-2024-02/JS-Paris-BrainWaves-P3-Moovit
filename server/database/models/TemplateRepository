@@ -1,0 +1,11 @@
+const AbstractRepository = require('./AbstractRepository')
+
+class TemplateRepository extends AbstractRepository {
+    constructor() {
+        super({table: 'template'})
+    }
+
+    
+}
+
+module.exports = TemplateRepository;

@@ -14,6 +14,10 @@ const userRouter = require("./user/router");
 
 router.use("/users", userRouter);
 
+const templateRouter = require("./template/router")
+
+router.use("/templates", templateRouter);
+
 /* ************************************************************************* */
 
 module.exports = router;

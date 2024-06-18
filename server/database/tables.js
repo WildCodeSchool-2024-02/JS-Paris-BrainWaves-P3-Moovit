@@ -1,11 +1,13 @@
 // Import the repository modules responsible for handling data operations on the tables
 const TrainingRepository = require("./models/TrainingRepository");
-const UserRepository = require("./models/UserRepository")
+const UserRepository = require("./models/UserRepository");
+const TemplateRepository = require("./models/TemplateRepository")
 
 // Create an empty object to hold data repositories for different tables
 const tables = {
   training: new TrainingRepository(),
-  user: new UserRepository()
+  user: new UserRepository(),
+  template: new TemplateRepository()
 };
 
 /* ************************************************************************* */

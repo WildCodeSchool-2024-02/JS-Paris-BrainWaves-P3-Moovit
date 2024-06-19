@@ -9,7 +9,7 @@ const tables = {
   training: new TrainingRepository(),
   tip: new TipsRepository(),
   user: new UserRepository(),
-  feedback: new FeedbackRepository()
+  feedback: new FeedbackRepository(),
 };
 
 /* ************************************************************************* */

@@ -9,12 +9,24 @@ import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
+import PopUp from "../../components/PopUp/PopUp";
+import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 
 export default function Journal() {
   // Number of trainings today
   const todayTraining = useLoaderData();
 
-  // Current date of today
+  const [currentTraining, setCurrentTraining] = useState(null);
+
+  // Managing modal
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
+    setCurrentTraining(null);
+  };
+
+  // Current date
   const [currentDate, setCurrentDate] = useState(new Date());
 
   // All the trainings for a given date
@@ -39,23 +51,35 @@ export default function Journal() {
   // Loading state tips
   const [loadingTips, setLoadingTips] = useState(false);
 
+  // State to get all Feedbacks for a givind day
+  const [feedbacks, setFeedbacks] = useState([]);
+  // Loading state feedbacks
+  const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
+
   // Get datas to get trainings for a giving day
   useEffect(() => {
     setLoadingTips(false);
     setLoadingTrainings(false);
-    fetch(`${import.meta.env.VITE_API_URL}/trainings/${dayTraining}/1`)
+    setLoadingFeedbacks(false);
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/1`)
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);
         setLoadingTrainings(true);
       });
-    fetch(`${import.meta.env.VITE_API_URL}/tips`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
       .then((response) => response.json())
       .then((response) => {
         setTips(response);
         setLoadingTips(true);
       });
-  }, [dayTraining]);
+    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`)
+      .then((response) => response.json())
+      .then((response) => {
+        setFeedbacks(response);
+        setLoadingFeedbacks(true);
+      });
+  }, [dayTraining, open]);
 
   // Function to display a toast
   const getToasty = () => {
@@ -176,6 +200,10 @@ export default function Journal() {
     setCurrentDate(new Date());
     setWeekCounter(0);
   };
+  // Get training ID for edition
+  const findCurrentTraining = trainings.find(
+    (training) => training.id === currentTraining
+  );
 
   return (
     <>
@@ -201,14 +229,30 @@ export default function Journal() {
               </p>
             )}
           </div>
-          <button type="button" className="journal-add-button">
+          <button
+            type="button"
+            className="journal-add-button"
+            onClick={handleOpen}
+          >
             <p>Ajouter une activité</p>
             <FaPlus />
           </button>
+          {loadingFeedbacks && (
+            <div className="journal-card">
+              {feedbacks.map((feedback) => (
+                <FeedbackCard key={feedback.id} feedback={feedback} />
+              ))}
+            </div>
+          )}
           {loadingTrainings && (
             <div className="journal-card">
               {trainings.map((card) => (
-                <Card key={card.id} card={card} />
+                <Card
+                  key={card.id}
+                  card={card}
+                  handleOpen={handleOpen}
+                  setCurrentTraining={setCurrentTraining}
+                />
               ))}
             </div>
           )}
@@ -252,6 +296,14 @@ export default function Journal() {
           </div>
         </div>
         <SideBar />
+        <PopUp
+          setOpen={setOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          training={findCurrentTraining}
+          id={currentTraining}
+        />
       </section>
     </>
   );

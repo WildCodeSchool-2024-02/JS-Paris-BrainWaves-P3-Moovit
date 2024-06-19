@@ -14,39 +14,25 @@ class TrainingRepository extends AbstractRepository {
 
   async readToday(id) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE DATE(date) = CURDATE() AND user_id = ?`, [id],
+      `SELECT * FROM ${this.table} WHERE DATE(date) = CURDATE() AND user_id = ? AND is_completed = 0`, [id],
     );
     return rows;
   }
 
   async readOneDay(id, day) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE date = ? AND user_id = ?`, [day, id],
+      `SELECT ${this.table}.*, sport.name FROM ${this.table} JOIN sport ON ${this.table}.sport_id = sport.id WHERE date = ? AND user_id = ? AND is_completed = 0`, [day, id],
     );
     return rows;
   }
 
-  async create(title, date, duration, details, timeOfDay, userId) {
+  async create(title, date, duration, details, timeOfDay, userId, sportId) {
     const newTraining = await this.database.query(
         `INSERT INTO ${this.table} 
-        (title, date, duration, details, time_of_day, user_id) VALUE (?, ?, ?, ?, ?, ?)
-        `, [title, date, duration, details, timeOfDay, userId]
+        (title, date, duration, details, time_of_day, user_id, sport_id) VALUE (?, ?, ?, ?, ?, ?, ?)
+        `, [title, date, duration, details, timeOfDay, userId, sportId]
     );
     return newTraining
-  }
-
-  async update(training, id) {
-    const updatedTraining = await this.database.query(
-        `UPDATE ${this.table} SET ? WHERE id = ?`, [training, id]
-    );
-    return updatedTraining;
-  }
-
-  async deleteOne(id) {
-    const deletedTraining = await this.database.query(
-        `DELETE FROM ${this.table} WHERE id = ?`, [id]
-    );
-    return deletedTraining;
   }
 }
 

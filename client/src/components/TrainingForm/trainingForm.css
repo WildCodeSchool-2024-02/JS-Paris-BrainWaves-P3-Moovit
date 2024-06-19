@@ -1,0 +1,25 @@
+.trainingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--light);
+  height: 100vh;
+  padding: 5vh 0;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input::placeholder {
+    color: black;
+  }
+
+  textarea::placeholder {
+    color: black;
+  }
+
+  textarea {
+    min-height: 200px;
+  }
+}

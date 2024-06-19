@@ -1,7 +1,12 @@
+import {useNavigate} from 'react-router-dom'
 import Logo from "../../assets/images/Logo.svg";
 import "./landing.css";
 
+
+
 export default function Landing() {
+  const navigate = useNavigate();
+
   return (
     <main className="landing-page">
       <section className="landing-container">
@@ -17,7 +22,7 @@ export default function Landing() {
         </div>
         <div className="landing-buttons-container">
           <button type="button">Je m’inscris, c’est gratuit !</button>
-          <button type="button">Je me connecte</button>
+          <button type="button" onClick={() => navigate('/journal')}>Je me connecte</button>
         </div>
       </section>
       <div className="landing-demo">

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 /* eslint-disable import/no-duplicates */
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegCompass } from "react-icons/fa";
@@ -5,7 +6,10 @@ import { FaRegBookmark } from "react-icons/fa";
 import Logo from "../../assets/images/Logo.svg";
 import "./sidebar.css";
 
+
+
 export default function SideBar() {
+
   return (
     <section id="sidebar">
       <div className="sidebar-first-container">
@@ -18,15 +22,15 @@ export default function SideBar() {
       <div className="sidebar-second-container">
         <div className="sidebar-link">
           <FaRegUserCircle className="sidebar-logo" />
-          <p className="sidebar-link-text">Profil</p>
+          <Link to='/' className="sidebar-link-text">Profil</Link>
         </div>
         <div className="sidebar-link">
           <FaRegCompass className="sidebar-logo" />
-          <p className="sidebar-link-text">Journal</p>
+          <Link to='/journal'className="sidebar-link-text">Journal</Link>
         </div>
         <div className="sidebar-link">
           <FaRegBookmark className="sidebar-logo" />
-          <p className="sidebar-link-text">Modèles</p>
+          <Link to='/templates' className="sidebar-link-text">Modèles</Link>
         </div>
         <div className="sidebar-footer-container">
           <p>

@@ -8,7 +8,7 @@ import { IoEllipsisVerticalSharp } from "react-icons/io5";
 const ITEM_HEIGHT = 48;
 
 
-function CardMenu({ handleOpen, handleDelete, id, setCurrentTraining }) {
+function CardMenu({ handleEdit, handleDelete }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -19,10 +19,7 @@ function CardMenu({ handleOpen, handleDelete, id, setCurrentTraining }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleEdit = () => {
-    setCurrentTraining(id);
-    handleOpen();
-  };
+
 
   return (
     <div>
@@ -60,8 +57,6 @@ function CardMenu({ handleOpen, handleDelete, id, setCurrentTraining }) {
 export default CardMenu;
 
 CardMenu.propTypes = {
-  handleOpen: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  setCurrentTraining: PropTypes.func.isRequired
 };

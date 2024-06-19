@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import "./templateForm.css";
 import { useState } from "react";
 
-function TrainingForm({id, training, handleClose}) {
+function TemplateForm({id, training, handleClose}) {
   const api = import.meta.env.VITE_API_URL;
 
   const [title, setTitle] = useState(training ? training.title : null);
@@ -30,6 +30,8 @@ function TrainingForm({id, training, handleClose}) {
   handleClose()
   };
 
+  
+
   return (
     <form className="trainingForm" onSubmit={handleSubmit}>
       <h1>Créer une nouvelle activité</h1>
@@ -44,9 +46,9 @@ function TrainingForm({id, training, handleClose}) {
       />
       <select id="sport-select" name="type" value={sport} onChange={(e) => setSport(e.target.value)}>
         <option>Quel sport ? ⛹️</option>
-        <option value="4">Fitness</option>
-        <option value="5">Running</option>
-        <option value="6">Poney</option>
+        <option value="1">Fitness</option>
+        <option value="2">Running</option>
+        <option value="3">Poney</option>
       </select>
       <input
         type="text"
@@ -73,9 +75,9 @@ function TrainingForm({id, training, handleClose}) {
   );
 }
 
-export default TrainingForm;
+export default TemplateForm;
 
-TrainingForm.propTypes = {
+TemplateForm.propTypes = {
   id: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({

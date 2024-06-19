@@ -7,6 +7,9 @@ import "./templates.css";
 
 function Templates() {
   const templates = useLoaderData();
+  const [currentTemplate, setCurrentTemplate] = useState(null)
+    // Get template ID for edition
+    const findCurrentTemplate = templates.find((template) => (template.id === currentTemplate))
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -20,7 +23,7 @@ function Templates() {
       <h1>Mes modèles</h1>
       {templates ? (
         templates.map((template) => (
-          <CardTemplate key={template.id} card={template} />
+          <CardTemplate key={template.id} card={template} setCurrentTemplate={setCurrentTemplate} handleOpen={handleOpen} />
         ))
       ) : (
         <p>Vous n'avez aucun modèle enregistré</p>
@@ -34,8 +37,8 @@ function Templates() {
         handleOpen={handleOpen}
         handleClose={handleClose}
         open={open}
-        training={templates[0]}
-        id={templates[0].id}
+        id={currentTemplate}
+        training={findCurrentTemplate}
       />
     </section>
   );

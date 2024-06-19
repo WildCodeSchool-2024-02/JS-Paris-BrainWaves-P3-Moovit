@@ -6,18 +6,13 @@ import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
 
-
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 
-
 const api = import.meta.env.VITE_API_URL;
-
-
 
 export default function Card({
   card,
-  setGetEditForm,
   handleOpen,
   setCurrentTraining
 }) {
@@ -31,22 +26,24 @@ export default function Card({
       body: JSON.stringify({ is_completed: 1 }),
     });
 
-    const handleDelete = () => {
-      fetch(`${api}/api/trainings/${card.id}`, {
-        method: "DELETE",
-      });
-      navigate("/journal");
-    };
+  const handleDelete = () => {
+    fetch(`${api}/api/trainings/${card.id}`, {
+      method: "DELETE",
+    });
+    navigate("/journal");
+  };
+
+  const handleEdit = () => {
+    setCurrentTraining(card.id);
+    handleOpen();
+  };
 
   return (
     <section id={`card-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
         <CardMenu
-          set={setGetEditForm}
-          id={card.id}
-          handleOpen={handleOpen}
-          setCurrentTraining={setCurrentTraining}
+          handleEdit={handleEdit}
           handleDelete={handleDelete}
         />
       </section>
@@ -90,7 +87,6 @@ Card.propTypes = {
     duration: PropTypes.string.isRequired,
     is_completed: PropTypes.bool,
   }).isRequired,
-  setGetEditForm: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
 };

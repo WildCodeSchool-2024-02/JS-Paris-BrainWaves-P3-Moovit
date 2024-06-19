@@ -14,19 +14,20 @@ function TrainingForm({id, training, handleClose}) {
 
   // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!id) { 
     fetch(`${api}/api/trainings`, {
       method: "POST",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: 3, sport_id: sport})
+      body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: "1", sport_id: sport})
     })
   } else if (id) {
     fetch(`${api}/api/trainings/${id}`, {
       method: "PUT",
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: 3, sport_id: sport})
+      body: JSON.stringify({title, date, time_of_day: timeOfDay, duration, details, user_id: "1", sport_id: sport})
     })
   }
   handleClose()
@@ -66,9 +67,9 @@ function TrainingForm({id, training, handleClose}) {
       </select>
       <select id="sport-select" name="type" value={sport} onChange={(e) => setSport(e.target.value)}>
         <option>Quel sport ? ⛹️</option>
-        <option value="4">Fitness</option>
-        <option value="5">Running</option>
-        <option value="6">Poney</option>
+        <option value="1">Fitness</option>
+        <option value="2">Running</option>
+        <option value="3">Poney</option>
       </select>
       <input
         type="text"

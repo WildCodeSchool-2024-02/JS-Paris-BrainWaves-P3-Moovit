@@ -14,11 +14,10 @@ const api = import.meta.env.VITE_API_URL;
 
 
 
-export default function Card({
+export default function CardTemplate({
   card,
-  setGetEditForm,
   handleOpen,
-  setCurrentTraining
+  setCurrentTemplate
 }) {
   const { mode } = useContext(DarkModeContext);
   const navigate = useNavigate();
@@ -30,15 +29,18 @@ export default function Card({
     navigate("/templates");
   };
 
+  const handleEdit = () => {
+    setCurrentTemplate(card.id);
+    handleOpen();
+  };
+
+
   return (
     <section id={`card-template-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
         <CardMenu
-          set={setGetEditForm}
-          id={card.id}
-          handleOpen={handleOpen}
-          setCurrentTraining={setCurrentTraining}
+          handleEdit={handleEdit}
           handleDelete={handleDelete}
         />
       </section>
@@ -54,13 +56,13 @@ export default function Card({
         </div> : null}
       </div>
       <section className="trainingCard-title">
-        <Link to={`/template/${card.id}`}>Voir ce modèle</Link>
+        <Link to={`/templates/${card.id}`}>Voir ce modèle</Link>
       </section>
     </section>
   );
 }
 
-Card.propTypes = {
+CardTemplate.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
@@ -68,7 +70,6 @@ Card.propTypes = {
     duration: PropTypes.string.isRequired,
     is_completed: PropTypes.bool,
   }).isRequired,
-  setGetEditForm: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,
-  setCurrentTraining: PropTypes.func.isRequired,
+  setCurrentTemplate: PropTypes.func.isRequired,
 };

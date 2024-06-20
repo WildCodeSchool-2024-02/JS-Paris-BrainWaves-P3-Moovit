@@ -1,5 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import { useRef, useState } from "react";
+import { Toaster, toast } from "sonner";
 import Modal from "@mui/material/Modal";
 
 export default function Feedback({ open, handleClose, id, feedbackId }) {
@@ -84,7 +86,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           }
         }
       } catch (error) {
-        console.error(error);
+        toast.alert('Erreur interne veuillez réesayer plus tard')
       }
     }
   };
@@ -153,6 +155,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
         </button>
         {fill && <p>Renseigne tous les champs</p>}
       </form>
+      <Toaster />
     </Modal>
   );
 }

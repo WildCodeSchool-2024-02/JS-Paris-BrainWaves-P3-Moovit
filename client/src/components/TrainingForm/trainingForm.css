@@ -11,3 +11,13 @@
     flex-direction: column;
   }
 }
+
+.save-button {
+  font-size: 1em;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  align-self: flex-end;
+  margin-top: 0;
+  padding-top: 0;
+}

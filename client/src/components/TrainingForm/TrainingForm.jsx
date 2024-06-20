@@ -73,6 +73,20 @@ function TrainingForm({ id, training, handleClose }) {
     handleClose();
   };
 
+  const handleSave = () => {
+    fetch(`${api}/api/templates`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        duration,
+        details,
+        user_id: "2",
+        sport_id: sport,
+      })
+    })
+  }
+
   return (
     <form className="trainingForm" onSubmit={handleSubmit}>
       <h1>Créer une nouvelle activité</h1>
@@ -155,7 +169,7 @@ function TrainingForm({ id, training, handleClose }) {
         placeholder="Enregistre les détails de ton activité ici 👌"
         onChange={(e) => setDetails(e.target.value)}
       />
-
+      <button type="button" onClick={handleSave} className="save-button">Enregistrer dans mes modèles</button>
       <button type="submit" className="primary-button">
         Enregistrer
       </button>

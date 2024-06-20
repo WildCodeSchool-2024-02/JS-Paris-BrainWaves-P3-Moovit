@@ -95,7 +95,6 @@ export default function Journal() {
   };
   useEffect(() => {
     getToasty();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Days of the week

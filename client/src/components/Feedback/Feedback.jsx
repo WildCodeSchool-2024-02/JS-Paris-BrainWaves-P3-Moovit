@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 
 export default function Feedback({ open, handleClose, id, feedbackId }) {
@@ -18,6 +18,9 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
   // Ref for the details
   const details = useRef();
 
+  // State de gestion d'erreur
+  const [fill, setFill] = useState(true);
+
   const handleClick = async () => {
     if (
       duration.current.value === "" ||
@@ -25,7 +28,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
       difficulty.current.value === "" ||
       after.current.value === ""
     ) {
-      console.error("erreur");
+      setFill(false);
     } else {
       try {
         if (!feedbackId) {
@@ -54,7 +57,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           if (response.ok) {
             handleClose();
           } else {
-            console.error("erreur client");
+            setFill(false);
           }
         } else if (feedbackId) {
           const response = await fetch(
@@ -77,7 +80,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           if (response.ok) {
             handleClose();
           } else {
-            console.error("erreur client");
+            setFill(false);
           }
         }
       } catch (error) {
@@ -148,6 +151,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
         >
           Annuler
         </button>
+        {fill && <p>Renseigne tous les champs</p>}
       </form>
     </Modal>
   );
@@ -156,6 +160,10 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
 Feedback.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]).isRequired,
-  feedbackId: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
+    .isRequired,
+  feedbackId: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([undefined]),
+  ]).isRequired,
 };

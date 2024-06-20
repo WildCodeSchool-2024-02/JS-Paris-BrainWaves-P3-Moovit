@@ -10,8 +10,6 @@ import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 
-// const api = import.meta.env.VITE_API_URL;
-
 export default function Card({ card, handleOpen, setCurrentTraining }) {
   const { mode } = useContext(DarkModeContext);
   const api = import.meta.env.VITE_API_URL;

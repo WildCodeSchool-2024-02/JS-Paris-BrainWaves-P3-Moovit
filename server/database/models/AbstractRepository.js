@@ -24,7 +24,7 @@ class AbstractRepository {
         `SELECT * FROM ${this.table}`
     )
     return rows;
-  };
+  }; 
 
   async readOne(id) {
     const [training] = await this.database.query(

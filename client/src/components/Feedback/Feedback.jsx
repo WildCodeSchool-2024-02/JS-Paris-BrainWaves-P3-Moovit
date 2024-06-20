@@ -1,8 +1,15 @@
 import PropTypes from "prop-types";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 
-export default function Feedback({ open, handleClose, id, feedbackId }) {
+export default function Feedback({
+  open,
+  handleClose,
+  id = undefined,
+  feedbackId = undefined,
+}) {
+  const api = import.meta.env.VITE_API_URL;
+
   // Ref for the duration field
   const duration = useRef();
 
@@ -17,6 +24,20 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
 
   // Ref for the details
   const details = useRef();
+
+  // State for get feedback data (editing)
+  const [feedbackEdit, setFeedbackEdit] = useState([]);
+
+  // useEffect to fetch feedback data
+  useEffect(() => {
+    if (feedbackId) {
+      fetch(`${api}/api/feedbacks?id=${feedbackId}`)
+        .then((response) => response.json())
+        .then((response) => {
+          setFeedbackEdit(response);
+        });
+    }
+  }, [feedbackId, api]);
 
   const handleClick = async () => {
     if (
@@ -53,6 +74,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           });
           if (response.ok) {
             handleClose();
+            window.location.reload();
           } else {
             console.error("erreur client");
           }
@@ -76,6 +98,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           );
           if (response.ok) {
             handleClose();
+            window.location.reload();
           } else {
             console.error("erreur client");
           }
@@ -95,6 +118,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           id="duration"
           name="duration"
           placeholder="Ca a duré combien de temps ?"
+          defaultValue={feedbackEdit ? feedbackEdit[0]?.duration : ""}
           ref={duration}
         />
         <select
@@ -102,8 +126,9 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           id="session-feeling"
           name="session-feeling"
           ref={global}
+          defaultValue=""
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             La séance s'est bien passée ?
           </option>
           <option value="easy">🔥 Très bien passée !</option>
@@ -112,19 +137,26 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
         </select>
         <select
           type=""
-          id="session-feeling"
-          name="session-feeling"
+          id="session-effort"
+          name="session-effort"
           ref={difficulty}
+          defaultValue=""
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Quelle a été ta perception de l'effort ?
           </option>
           <option value="easy">💪 Facile</option>
           <option value="medium">😮‍💨 Fatiguant</option>
           <option value="hard">🥵 Epuisant</option>
         </select>
-        <select type="" id="mood-feeling" name="mood-feeling" ref={after}>
-          <option value="" disabled selected>
+        <select
+          type=""
+          id="mood-feeling"
+          name="mood-feeling"
+          ref={after}
+          defaultValue=""
+        >
+          <option value="" disabled>
             Comment te sens-tu après ?
           </option>
           <option value="perfect">💪 Super j'en veux encore</option>
@@ -136,6 +168,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           id="details"
           name="details"
           placeholder="Dis m'en plus"
+          defaultValue={feedbackEdit ? feedbackEdit[0]?.details : ""}
           ref={details}
         />
         <button type="button" className="primary-button" onClick={handleClick}>
@@ -156,6 +189,10 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
 Feedback.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]).isRequired,
-  feedbackId: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
+    .isRequired,
+  feedbackId: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.oneOf([undefined]),
+  ]).isRequired,
 };

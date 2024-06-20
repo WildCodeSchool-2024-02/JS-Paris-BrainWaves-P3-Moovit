@@ -5,6 +5,19 @@ class FeedbackRepository extends AbstractRepository {
     super({ table: "feedback" });
   }
 
+  async readAll(query) {
+    let rows = []
+    if (!query.id){
+      rows = await this.database.query(
+        `SELECT * FROM ${this.table}`)
+    } else {
+      rows = await this.database.query(
+        `SELECT * FROM ${this.table} WHERE id = ?`, [query.id]
+      )
+    }
+    return [rows]
+  };
+
   async create(feedback) {
     const [newFeedback] = await this.database.query(
         `INSERT INTO ${this.table} 

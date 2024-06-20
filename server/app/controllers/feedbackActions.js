@@ -1,13 +1,14 @@
 const tables = require("../../database/tables");
 
-const browse = async ({ res, next }) => {
+const browse = async ( req, res, next ) => {
     try {
-        const feedbacks = await tables.feedback.readAll();
+        const feedbacks = await tables.feedback.readAll(req.query);
         res.status(200).json(feedbacks)
     } catch (err) {
         next(err)
     }
 }
+
 
 const add = async (req, res, next) => {
     try {

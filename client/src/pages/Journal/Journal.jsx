@@ -207,7 +207,12 @@ export default function Journal() {
 
   return (
     <>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: { background: "#F45F22", color: "white", fontSize: "1.1em" },
+          className: "my-toast",
+        }}
+      />
       <section className="journal">
         <div className="journal-first-container">
           <div className="journal-orange-block">
@@ -216,16 +221,26 @@ export default function Journal() {
                 {day} {numb} {month}
               </h1>
             </div>
-            {trainings.length === 0 ? (
+            {dayTraining === datefns.format(new Date(), "yyyy-MM-dd") && (
               <p className="journal-motivation">
-                Aujourd’hui, tu n'as rien de prévu ! Profites en pour te
-                reposer.
+                {trainings.length === 0
+                  ? "Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer."
+                  : `Aujourd’hui, tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
+              faire.`}
               </p>
-            ) : (
+            )}
+            {dayTraining < datefns.format(new Date(), "yyyy-MM-dd") && (
               <p className="journal-motivation">
-                Aujourd’hui, tu as {trainings.length} entraînement
-                {trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
-                faire.
+                {feedbacks.length > 0 || trainings.length > 0
+                  ? `Tu avais ${feedbacks.length + trainings.length} entraînement${feedbacks.length + trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Bravo à toi`
+                  : "Tu n'avais rien de prévu ce jour là !"}
+              </p>
+            )}
+            {dayTraining > datefns.format(new Date(), "yyyy-MM-dd") && (
+              <p className="journal-motivation">
+                {trainings.length === 0
+                  ? "Tu n'as rien de prévu ce jour là !"
+                  : `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Courage tu peux le faire !`}
               </p>
             )}
           </div>

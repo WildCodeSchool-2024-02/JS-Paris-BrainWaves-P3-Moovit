@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useState } from "react";
 
-function TrainingForm({ id, training, handleClose }) {
+function TrainingForm({ id = null, training = undefined, handleClose }) {
   const api = import.meta.env.VITE_API_URL;
 
   const [title, setTitle] = useState(training ? training.title : null);

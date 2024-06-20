@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import TrainingForm from "../TrainingForm/TrainingForm";
 
-function PopUp({ open, handleClose, id, training }) {
+function PopUp({ open, handleClose, id = null, training = undefined }) {
   return (
     <Modal open={open} onClose={handleClose}>
       <TrainingForm id={id} training={training} handleClose={handleClose} />

@@ -14,6 +14,7 @@ function TrainingForm({ id, training, handleClose }) {
   const [sport, setSport] = useState(null);
   const [templateId, setTemplateId] = useState(null);
   const [templates, setTemplates] = useState([]);
+  const [checked, setChecked] = useState(false);
 
   // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
   const getTemplates = async () => {
@@ -21,6 +22,20 @@ function TrainingForm({ id, training, handleClose }) {
       .then((res) => res.json())
       .then((data) => setTemplates(data))
       .catch((err) => console.error(err));
+  };
+
+  const handleSave = () => {
+    fetch(`${api}/api/templates`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        duration,
+        details,
+        user_id: "2",
+        sport_id: sport,
+      }),
+    });
   };
 
   useEffect(() => {
@@ -31,7 +46,7 @@ function TrainingForm({ id, training, handleClose }) {
       setTitle(selectedTemplate.title);
       setDuration(selectedTemplate.duration);
       setDetails(selectedTemplate.details);
-      setSport(selectedTemplate.sport_id)
+      setSport(selectedTemplate.sport_id);
     }
   }, [templateId, templates]);
 
@@ -41,6 +56,7 @@ function TrainingForm({ id, training, handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (checked) handleSave();
     if (!id) {
       fetch(`${api}/api/trainings`, {
         method: "POST",
@@ -73,20 +89,6 @@ function TrainingForm({ id, training, handleClose }) {
     handleClose();
   };
 
-  const handleSave = () => {
-    fetch(`${api}/api/templates`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title,
-        duration,
-        details,
-        user_id: "2",
-        sport_id: sport,
-      })
-    })
-  }
-
   return (
     <form className="trainingForm" onSubmit={handleSubmit}>
       <h1>Créer une nouvelle activité</h1>
@@ -96,9 +98,12 @@ function TrainingForm({ id, training, handleClose }) {
         id="use-template"
         name="template"
         value={templateId}
+        defaultValue=""
         onChange={(e) => setTemplateId(e.target.value)}
       >
-        <option>Est-ce que tu veux utiliser un modèle ?</option>
+        <option value="" disabled>
+          Est-ce que tu veux utiliser un modèle ?
+        </option>
         {templates.length === 0
           ? null
           : templates.map((temp) => (
@@ -114,7 +119,7 @@ function TrainingForm({ id, training, handleClose }) {
         name="title"
         placeholder="Titre de ton entraînement"
         value={title}
-        defaultValue={training ? training.title : ''}
+        defaultValue={training ? training.title : ""}
         onChange={(e) => setTitle(e.target.value)}
       />
       <input
@@ -123,7 +128,11 @@ function TrainingForm({ id, training, handleClose }) {
         name="date"
         placeholder="Quel jour ?"
         value={date}
-        defaultValue={training ? training.date.slice(0, 10) : datefns.format(new Date(), "yyyy-MM-dd")}
+        defaultValue={
+          training
+            ? training.date.slice(0, 10)
+            : datefns.format(new Date(), "yyyy-MM-dd")
+        }
         onChange={(e) => setDate(e.target.value)}
       />
       <select
@@ -169,7 +178,21 @@ function TrainingForm({ id, training, handleClose }) {
         placeholder="Enregistre les détails de ton activité ici 👌"
         onChange={(e) => setDetails(e.target.value)}
       />
-      <button type="button" onClick={handleSave} className="save-button">Enregistrer dans mes modèles</button>
+      {templateId ? null : (
+        <div className="save-template">
+          <input
+            type="checkbox"
+            className="save-button"
+            id="save-button"
+            name="save-button"
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          />
+          <label htmlFor="save-button" id="save-label">
+            Enregistrer dans mes modèles
+          </label>
+        </div>
+      )}
       <button type="submit" className="primary-button">
         Enregistrer
       </button>

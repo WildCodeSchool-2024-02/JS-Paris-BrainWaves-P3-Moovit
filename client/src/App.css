@@ -83,6 +83,7 @@ textarea {
   width: 90vw;
   border: solid var(--second);
   border-width: 0.5px;
+  -webkit-padding-end: 20px;
 }
 
 button {

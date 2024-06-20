@@ -12,12 +12,31 @@
   }
 }
 
-.save-button {
+#save-label {
   font-size: 1em;
+  font-weight: 700;
   border: none;
   box-shadow: none;
   background-color: transparent;
   align-self: flex-end;
-  margin-top: 0;
-  padding-top: 0;
+}
+
+.save-template {
+  display: flex;
+  width: 90vw;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#save-button {
+  width: 2em;
+  margin: 0;
+}
+
+#use-template {
+  margin-bottom: 2em;
+  padding: 5px;
+  width: 50vw;
+  text-align: center;
+  border-color: var(--template-dark);
 }

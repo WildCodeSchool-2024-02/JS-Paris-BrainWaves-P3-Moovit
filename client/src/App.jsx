@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
-import DarkMode from "./contexts/DarkMode/DarkMode";
+import DarkMode from "./components/DarkMode/DarkMode";
 
 function App() {
   // Contexte DarkMode

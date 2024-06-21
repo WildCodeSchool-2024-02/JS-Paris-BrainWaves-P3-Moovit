@@ -2,19 +2,16 @@ import { useLoaderData, Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
-import DarkMode from "../../contexts/DarkMode/DarkMode";
+import DarkMode from "../../components/DarkMode/DarkMode";
 import "./templateDetails.css";
 
 function TemplateDetails() {
-
   const [training] = useLoaderData();
   const { id } = useParams();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  
 
   return (
     <>

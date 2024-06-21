@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import CardTemplate from "../../components/CardTemplate/CardTemplate";
 import PopUpTemplate from "../../components/PopUp/PopUpTemplate/PopUpTemplate";
+import SideBar from "../../components/SideBar/SideBar";
 import "./templates.css";
 
 function Templates() {
@@ -19,6 +20,7 @@ function Templates() {
   };
 
   return (
+    <>
     <section className="templates">
       <h1>Mes modèles</h1>
       {templates ? (
@@ -41,6 +43,8 @@ function Templates() {
         training={findCurrentTemplate}
       />
     </section>
+    <SideBar />
+    </>
   );
 }
 

@@ -7,8 +7,8 @@ export default function TipsCard({ tip = undefined }) {
   const { mode } = useContext(DarkModeContext);
   return (
     <section id={`tipscard-${mode}`}>
-      <h1 className="card-title">Petit conseil | {tip.type}</h1>
-      <p>{tip.content}</p>
+      <h1 className="card-title">Petit conseil | {tip?.type}</h1>
+      <p>{tip?.content}</p>
     </section>
   );
 }

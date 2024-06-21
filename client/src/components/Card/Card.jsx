@@ -10,9 +10,14 @@ import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 
-export default function Card({ card, handleOpen, setCurrentTraining }) {
+const api = import.meta.env.VITE_API_URL;
+
+export default function Card({
+  card,
+  handleOpen,
+  setCurrentTraining
+}) {
   const { mode } = useContext(DarkModeContext);
-  const api = import.meta.env.VITE_API_URL;
 
   // Open feedback State
   const [openFeedback, setOpenFeedback] = useState(false);
@@ -42,7 +47,10 @@ export default function Card({ card, handleOpen, setCurrentTraining }) {
     <section id={`card-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu handleDelete={handleDelete} handleEdit={handleEdit} />
+        <CardMenu
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
       </section>
       <div className="card-type-training">
         <IoMdFitness />

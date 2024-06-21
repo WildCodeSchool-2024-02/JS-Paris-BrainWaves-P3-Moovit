@@ -11,7 +11,6 @@ const ITEM_HEIGHT = 48;
 
 function CardMenu({ handleDelete, handleEdit }) {
   const { mode } = useContext(DarkModeContext);
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 

@@ -9,7 +9,7 @@ import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
-import PopUp from "../../components/PopUp/PopUp";
+import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 
 export default function Journal() {
@@ -17,6 +17,7 @@ export default function Journal() {
   const todayTraining = useLoaderData();
 
   const [currentTraining, setCurrentTraining] = useState(null);
+
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Journal() {
     setLoadingTips(false);
     setLoadingTrainings(false);
     setLoadingFeedbacks(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/1`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/2`)
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);

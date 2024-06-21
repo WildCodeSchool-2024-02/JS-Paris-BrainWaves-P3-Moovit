@@ -86,12 +86,13 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           }
         }
       } catch (error) {
-        toast.alert('Erreur interne veuillez réesayer plus tard')
+        toast.alert('Erreur interne veuillez réessayer plus tard')
       }
     }
   };
 
   return (
+    <>
     <Modal open={open} onClose={handleClose}>
       <form className="trainingForm">
         <h1>C'est l'heure du Feedback </h1>
@@ -155,8 +156,10 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
         </button>
         {fill && <p>Renseigne tous les champs</p>}
       </form>
-      <Toaster />
+      
     </Modal>
+    <Toaster />
+    </>
   );
 }
 

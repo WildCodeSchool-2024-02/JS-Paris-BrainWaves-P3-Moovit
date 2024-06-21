@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import "./templateForm.css";
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 function TemplateForm({id, training, handleClose}) {
   const api = import.meta.env.VITE_API_URL;
+  const sports = useOutletContext();
 
   const [title, setTitle] = useState(training ? training.title : null);
   const [duration, setDuration] = useState(training ? training.duration : null);
@@ -46,9 +48,7 @@ function TemplateForm({id, training, handleClose}) {
       />
       <select id="sport-select" name="type" value={sport} onChange={(e) => setSport(e.target.value)}>
         <option>Quel sport ? ⛹️</option>
-        <option value="1">Fitness</option>
-        <option value="2">Running</option>
-        <option value="3">Poney</option>
+        {sports ? sports.map((activity) => (<option key={activity.id} value={activity.id}>{activity.name}</option>)) : null}
       </select>
       <input
         type="text"

@@ -6,17 +6,16 @@ class FeedbackRepository extends AbstractRepository {
   }
 
   async readAll(query) {
-    let rows = []
     if (!query.id){
-      rows = await this.database.query(
+      const [rows] = await this.database.query(
         `SELECT * FROM ${this.table}`)
-    } else {
-      rows = await this.database.query(
-        `SELECT * FROM ${this.table} WHERE id = ?`, [query.id]
-      )
+        return rows
     }
-    return [rows]
-  };
+    const [rows] = await this.database.query(
+      `SELECT * FROM ${this.table} WHERE id = ?`, [query.id]
+    )
+    return rows
+    }
 
   async create(feedback) {
     const [newFeedback] = await this.database.query(
@@ -32,6 +31,14 @@ class FeedbackRepository extends AbstractRepository {
         `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
         JOIN training ON feedback.training_id = training.id WHERE training.date = ?`,
         [date]
+    );
+    return feedbacks
+  }
+
+  async readToday(){
+    const [feedbacks] = await this.database.query(
+        `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
+        JOIN training ON feedback.training_id = training.id WHERE training.date = CURDATE()`
     );
     return feedbacks
   }

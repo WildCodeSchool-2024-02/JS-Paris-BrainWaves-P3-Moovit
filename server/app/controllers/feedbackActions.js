@@ -55,10 +55,25 @@ const readFeedbackDay = async (req, res, next) => {
     }
 }
 
+const readToday = async (req, res, next) => {
+    try {
+      const todaysFeedbacks = await tables.feedback.readToday();
+      if (!todaysFeedbacks) {
+        res.sendStatus(404);
+      } else {
+        res.json(todaysFeedbacks);
+      }
+    } catch (err) {
+      // Pass any errors to the error-handling middleware
+      next(err);
+    }
+  };
+
 module.exports = {
     add,
     browse,
     edit,
     destroy,
     readFeedbackDay,
+    readToday
 }

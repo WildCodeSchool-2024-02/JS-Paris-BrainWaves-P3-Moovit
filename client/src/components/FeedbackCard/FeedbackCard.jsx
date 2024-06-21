@@ -4,7 +4,7 @@ import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 import "./feedbackCard.css";
 
-export default function FeedbackCard({ feedback }) {
+export default function FeedbackCard({ feedback = undefined }) {
   const api = import.meta.env.VITE_API_URL;
 
   // Open feedback State
@@ -63,7 +63,8 @@ export default function FeedbackCard({ feedback }) {
 
 FeedbackCard.propTypes = {
   feedback: PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
+      .isRequired,
     training_id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
       .isRequired,
     title: PropTypes.string.isRequired,

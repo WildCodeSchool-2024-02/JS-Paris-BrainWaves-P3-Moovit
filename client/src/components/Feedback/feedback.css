@@ -1,0 +1,10 @@
+.feedback-error {
+  border: solid red;
+  transition: all 0.1s ease-in-out;
+  border-width: thin;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+}

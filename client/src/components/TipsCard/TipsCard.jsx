@@ -17,5 +17,13 @@ TipsCard.propTypes = {
   tip: PropTypes.shape({
     type: PropTypes.string,
     content: PropTypes.string,
-  }).isRequired,
+  }),
+};
+
+TipsCard.defaultProps = {
+  tip: {
+    type: "Rappel",
+    content:
+      "N'oublie pas de bien t'hydrater avant et après ton entraînement !",
+  },
 };

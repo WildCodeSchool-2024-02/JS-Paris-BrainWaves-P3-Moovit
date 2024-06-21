@@ -82,12 +82,17 @@ export default function Journal() {
   }, [dayTraining, open]);
 
   // Function to display a toast
-  const getToasty = () => {
+  const getToasty = async () => {
     if (todayTraining.length > 0) {
       toast.info(
         `Tu as ${todayTraining.length} entraînement${todayTraining.length > 1 ? "s" : ""} aujourd'hui. Courage tu peux le faire !`
       );
-    } else {
+    }
+    // if (todayFeedbacks.length > 0 && todayTraining.length === 0) {
+    //   toast.info(
+    //     "Tu n'as plus d'entraînement aujourd'hui. Ne néglige pas ta récupération !"
+    //   );
+    else {
       toast.info(
         "Tu n'as pas d'entraînement aujourd'hui. Profites en pour te reposer !"
       );
@@ -239,7 +244,7 @@ export default function Journal() {
             {dayTraining > datefns.format(new Date(), "yyyy-MM-dd") && (
               <p className="journal-motivation">
                 {trainings.length === 0
-                  ? "Tu n'as rien de prévu ce jour là !"
+                  ? "Tu n'as rien de prévu ce jour là ! Profites en pour te reposer"
                   : `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Courage tu peux le faire !`}
               </p>
             )}

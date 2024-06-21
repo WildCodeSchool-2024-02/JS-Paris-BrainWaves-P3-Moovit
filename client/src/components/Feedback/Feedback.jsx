@@ -1,13 +1,9 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
+import "./feedback.css";
 
-export default function Feedback({
-  open,
-  handleClose,
-  id = undefined,
-  feedbackId = undefined,
-}) {
+export default function Feedback({ open, handleClose, id, feedbackId }) {
   const api = import.meta.env.VITE_API_URL;
 
   // Ref for the duration field
@@ -28,6 +24,9 @@ export default function Feedback({
   // State for get feedback data (editing)
   const [feedbackEdit, setFeedbackEdit] = useState([]);
 
+  // State d'erreur
+  const [errors, setErrors] = useState({});
+
   // useEffect to fetch feedback data
   useEffect(() => {
     if (feedbackId) {
@@ -40,14 +39,22 @@ export default function Feedback({
   }, [feedbackId, api]);
 
   const handleClick = async () => {
-    if (
-      duration.current.value === "" ||
-      global.current.value === "" ||
-      difficulty.current.value === "" ||
-      after.current.value === ""
-    ) {
-      console.error("erreur");
+    const newErrors = {};
+    if (duration.current.value === "")
+      newErrors.duration = "Veuillez remplir ce champ";
+    if (global.current.value === "")
+      newErrors.global = "Veuillez remplir ce champ";
+    if (difficulty.current.value === "")
+      newErrors.difficulty = "Veuillez remplir ce champ";
+    if (after.current.value === "")
+      newErrors.after = "Veuillez remplir ce champ";
+    if (details.current.value === "")
+      newErrors.details = "Veuillez remplir ce champ";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     } else {
+      setErrors({});
       try {
         if (!feedbackId) {
           const response = await fetch(
@@ -117,6 +124,7 @@ export default function Feedback({
           type="text"
           id="duration"
           name="duration"
+          className={errors.duration ? "feedback-error" : "feedback-ok"}
           placeholder="Ca a duré combien de temps ?"
           defaultValue={feedbackEdit ? feedbackEdit[0]?.duration : ""}
           ref={duration}
@@ -125,6 +133,7 @@ export default function Feedback({
           type=""
           id="session-feeling"
           name="session-feeling"
+          className={errors.global ? "feedback-error" : "feedback-ok"}
           ref={global}
           defaultValue=""
         >
@@ -139,6 +148,7 @@ export default function Feedback({
           type=""
           id="session-effort"
           name="session-effort"
+          className={errors.difficulty ? "feedback-error" : "feedback-ok"}
           ref={difficulty}
           defaultValue=""
         >
@@ -153,6 +163,7 @@ export default function Feedback({
           type=""
           id="mood-feeling"
           name="mood-feeling"
+          className={errors.after ? "feedback-error" : "feedback-ok"}
           ref={after}
           defaultValue=""
         >
@@ -168,9 +179,19 @@ export default function Feedback({
           id="details"
           name="details"
           placeholder="Dis m'en plus"
+          className={errors.details ? "feedback-error" : "feedback-ok"}
           defaultValue={feedbackEdit ? feedbackEdit[0]?.details : ""}
           ref={details}
         />
+        {(errors.duration ||
+          errors.difficulty ||
+          errors.global ||
+          errors.after ||
+          errors.details) && (
+          <p className="error-message">
+            Renseigne bien tous les champs pour traquer ta progression !
+          </p>
+        )}
         <button type="button" className="primary-button" onClick={handleClick}>
           Enregistrer
         </button>
@@ -189,10 +210,14 @@ export default function Feedback({
 Feedback.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
-    .isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]),
   feedbackId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.oneOf([undefined]),
-  ]).isRequired,
+  ]),
+};
+
+Feedback.defaultProps = {
+  id: undefined,
+  feedbackId: undefined,
 };

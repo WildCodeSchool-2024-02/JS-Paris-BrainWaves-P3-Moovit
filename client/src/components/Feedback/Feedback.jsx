@@ -83,7 +83,7 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
             handleClose();
             window.location.reload();
           } else {
-            console.error("erreur client");
+            console.error('error')
           }
         } else if (feedbackId) {
           const response = await fetch(
@@ -107,11 +107,11 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
             handleClose();
             window.location.reload();
           } else {
-            console.error("erreur client");
+            console.error('error')
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error('error')
       }
     }
   };

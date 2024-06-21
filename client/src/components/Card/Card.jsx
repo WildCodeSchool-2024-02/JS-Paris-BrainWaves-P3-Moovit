@@ -5,13 +5,17 @@ import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
-
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 
-export default function Card({ card, handleOpen, setCurrentTraining }) {
+export default function Card({
+  card,
+  handleOpen,
+  setCurrentTraining
+}) {
   const { mode } = useContext(DarkModeContext);
+
   const api = import.meta.env.VITE_API_URL;
 
   // Open feedback State
@@ -42,7 +46,10 @@ export default function Card({ card, handleOpen, setCurrentTraining }) {
     <section id={`card-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu handleDelete={handleDelete} handleEdit={handleEdit} />
+        <CardMenu
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+        />
       </section>
       <div className="card-type-training">
         <IoMdFitness />

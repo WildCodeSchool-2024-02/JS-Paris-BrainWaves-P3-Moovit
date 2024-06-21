@@ -27,7 +27,7 @@ const edit = async (req, res, next) => {
     try {
         const result = await tables.feedback.update(req.body, req.params.id);
         if (result){
-            res.json(result);
+            res.sendStatus(204);
         } else {
             res.sendStatus(404)
         }

@@ -83,7 +83,8 @@ DROP TABLE IF EXISTS `moovit`.`template` ;
 
 CREATE TABLE IF NOT EXISTS `moovit`.`template` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `duration` DATETIME NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `duration` VARCHAR(45) NULL,
   `details` LONGTEXT NULL,
   `user_id` INT NOT NULL,
   `sport_id` INT NOT NULL,

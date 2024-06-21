@@ -1,36 +1,25 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import "./cardmenu.css";
+import DarkModeContext from "../../services/DarkModeContext";
 
 const ITEM_HEIGHT = 48;
-const api = import.meta.env.VITE_API_URL;
 
+function CardMenu({ handleDelete, handleEdit }) {
+  const { mode } = useContext(DarkModeContext);
 
-function CardMenu({ handleOpen, id, setCurrentTraining }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const navigate = useNavigate();
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
-  };
-  const handleEdit = () => {
-    setCurrentTraining(id);
-    handleOpen();
-  };
-
-  const handleDelete = () => {
-    fetch(`${api}/api/trainings/${id}`, {
-      method: "DELETE",
-    });
-    navigate("/journal");
   };
 
   return (
@@ -43,7 +32,7 @@ function CardMenu({ handleOpen, id, setCurrentTraining }) {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <IoEllipsisVerticalSharp />
+        <IoEllipsisVerticalSharp className={`three-point-${mode}`} />
       </IconButton>
       <Menu
         id="long-menu"
@@ -69,7 +58,6 @@ function CardMenu({ handleOpen, id, setCurrentTraining }) {
 export default CardMenu;
 
 CardMenu.propTypes = {
-  handleOpen: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  setCurrentTraining: PropTypes.func.isRequired
+  handleDelete: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };

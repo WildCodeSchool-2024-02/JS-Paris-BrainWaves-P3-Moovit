@@ -16,15 +16,6 @@ function Training() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const api = import.meta.env.VITE_API_URL;
-
-  const completeTraining = () =>
-    fetch(`${api}/api/trainings/${training.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ is_completed: 1 }),
-    });
-
   return (
     <>
       <DarkMode />
@@ -46,12 +37,8 @@ function Training() {
         <p>{training.details}</p>
 
         <section className="trainingCard-title">
-          {training.is_completed == null ? (
-            <button
-              type="button"
-              className="card-button-validate"
-              onClick={completeTraining}
-            >
+          {training.is_completed === 0 ? (
+            <button type="button" className="card-button-validate">
               Valider
             </button>
           ) : (

@@ -9,7 +9,7 @@ import App from "./App";
 import Journal from "./pages/Journal/Journal";
 import Landing from "./pages/Landing/Landing";
 
-const api = import.meta.env.VITE_API_URL
+const api = import.meta.env.VITE_API_URL;
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       {
         path: "/training/:id",
         element: <Training />,
-        loader: ({params}) => fetch(`${api}/api/trainings/${params.id}`)
+        loader: ({ params }) => fetch(`${api}/api/trainings/${params.id}`),
       },
       {
         path: "/",
@@ -28,6 +28,8 @@ const router = createBrowserRouter([
       {
         path: "/journal",
         element: <Journal />,
+        loader: () =>
+          fetch(`${import.meta.env.VITE_API_URL}/api/trainings/today/1`),
       },
     ],
   },

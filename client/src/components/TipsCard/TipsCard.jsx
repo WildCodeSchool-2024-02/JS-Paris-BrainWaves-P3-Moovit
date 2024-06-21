@@ -1,16 +1,21 @@
+import PropTypes from "prop-types";
 import { useContext } from "react";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./tipscard.css";
 
-export default function TipsCard() {
+export default function TipsCard({ tip = undefined }) {
   const { mode } = useContext(DarkModeContext);
   return (
     <section id={`tipscard-${mode}`}>
-      <h1 className="card-title">Petit conseil</h1>
-      <p>
-        Tu as un entraînement aujourd’hui 😉 N’oublie pas de t’échauffer, de
-        t’hydrater !
-      </p>
+      <h1 className="card-title">Petit conseil | {tip.type}</h1>
+      <p>{tip.content}</p>
     </section>
   );
 }
+
+TipsCard.propTypes = {
+  tip: PropTypes.shape({
+    type: PropTypes.string,
+    content: PropTypes.string,
+  }).isRequired,
+};

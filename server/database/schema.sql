@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `moovit`.`feedback` ;
 
 CREATE TABLE IF NOT EXISTS `moovit`.`feedback` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `duration` DATETIME NOT NULL,
+  `duration` VARCHAR(45) NOT NULL,
   `global` ENUM('easy', 'medium', 'hard') NOT NULL,
   `difficulty` ENUM('easy', 'medium', 'hard') NOT NULL,
   `after` ENUM('tired', 'good', 'perfect') NOT NULL,
@@ -115,6 +115,21 @@ CREATE TABLE IF NOT EXISTS `moovit`.`tip` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+INSERT INTO `moovit`.`tip` (`type`, `content`) VALUES ('Entraînement', "Bois de l'eau tout au long de la journée pour éviter la déshydratation et consomme environ 500 ml d'eau 1 à 2 heures avant l'entraînement"),
+('Entraînement', "Prends un repas équilibré 2 à 3 heures avant la séance, comprenant des glucides complexes, des protéines et des graisses saines. Si tu manges plus près de l'entraînement (30 à 60 minutes avant), opte pour une collation légère."),
+('Entraînement', "Fais un échauffement dynamique pendant 5 à 10 minutes pour augmenter la température corporelle et préparer les muscles. Inclus des exercices comme des jumping jacks, des squats légers, et des mouvements spécifiques à votre sport."),
+('Entraînement', "Assure toi que tu as les vêtements appropriés pour le sport pratiqué (chaussures, tenue confortable). Vérifie et prépare tout matériel nécessaire (bouteille d'eau, serviette, tapis de yoga, etc.)."),
+('Entraînement', "Fixe des objectifs clairs pour la séance. Pratique des techniques de relaxation ou de respiration pour réduire le stress et te concentrer."),
+('Entraînement', "Reprends de l'eau immédiatement après l'entraînement pour compenser les pertes de fluides. Considère des boissons isotoniques si l'effort a été long et intense."),
+('Entraînement', "Mange une collation riche en protéines et en glucides dans les 30 minutes après l'entraînement pour aider à la récupération musculaire. Prends un repas équilibré dans les 2 heures suivant la séance."),
+('Entraînement', "Effectue des étirements statiques pour détendre les muscles et augmenter la flexibilité. Utilise un rouleau de massage pour réduire les tensions musculaires et favoriser la circulation sanguine."),
+('Entraînement', "Accorde toi un temps de repos suffisant pour permettre à ton corps de récupérer. Dors suffisamment, car le sommeil est crucial pour la réparation musculaire et la récupération générale."),
+('Entraînement', "Note tes performances et tes sensations après chaque séance pour ajuster tes futurs entraînements."),
+('Repos', "Assure toi d'obtenir suffisamment de sommeil de qualité (7 à 9 heures par nuit), car c'est le moment où le corps récupère et se répare le mieux. Intègre des siestes courtes si nécessaire pour améliorer la récupération et réduire la fatigue."),
+('Repos', "Maintiens une alimentation équilibrée et riche en nutriments pour soutenir la récupération. Consomme des aliments riches en protéines pour aider à la réparation musculaire, comme la viande maigre, le poisson, les œufs, et les légumineuses."),
+('Repos', "Continue à boire suffisamment d'eau tout au long de la journée pour maintenir une bonne hydratation. Inclus des boissons riches en électrolytes si nécessaire pour aider à rétablir l'équilibre des minéraux."),
+('Repos', "Pratique des activités légères comme la marche, la natation ou le vélo à un rythme modéré pour stimuler la circulation sanguine sans solliciter excessivement les muscles. Évite les activités intenses qui pourraient entraver la récupération."),
+('Repos', "Écoute ton corps et ajuste les activités en fonction des signes de fatigue ou de douleur.");
 
 -- -----------------------------------------------------
 -- Table `moovit`.`training`
@@ -127,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `moovit`.`training` (
   `duration` VARCHAR(45) NOT NULL,
   `details` LONGTEXT NULL,
   `time_of_day` ENUM('Matin', 'Après-midi', 'Soir') NULL,
-  `is_completed` TINYINT NULL DEFAULT NULL,
+  `is_completed` TINYINT NULL DEFAULT 0,
   `user_id` INT NOT NULL,
   `sport_id` INT NOT NULL,
   `title` VARCHAR(100) NOT NULL,

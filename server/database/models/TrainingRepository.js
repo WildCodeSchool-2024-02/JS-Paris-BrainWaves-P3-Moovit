@@ -4,18 +4,24 @@ class TrainingRepository extends AbstractRepository {
   constructor() {
     super({ table: "training" });
   }
- 
+
+  async readOne(id) {
+    const [training] = await this.database.query(
+        `select * from ${this.table} WHERE id = ?`, [id]
+    )
+    return training;
+  }
 
   async readToday(id) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE DATE(date) = CURDATE() AND user_id = ?`, [id],
+      `SELECT * FROM ${this.table} WHERE DATE(date) = CURDATE() AND user_id = ? AND is_completed = 0`, [id],
     );
     return rows;
   }
 
   async readOneDay(id, day) {
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE date = ? AND user_id = ?`, [day, id],
+      `SELECT ${this.table}.*, sport.name FROM ${this.table} JOIN sport ON ${this.table}.sport_id = sport.id WHERE date = ? AND user_id = ? AND is_completed = 0`, [day, id],
     );
     return rows;
   }

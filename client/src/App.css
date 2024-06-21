@@ -83,7 +83,6 @@ textarea {
   width: 90vw;
   border: solid var(--second);
   border-width: 0.5px;
-  -webkit-padding-end: 20px;
 }
 
 button {
@@ -127,6 +126,9 @@ button:hover {
   transition: all 0.3s ease-in-out;
 }
 
-main {
-  min-height: 100vh;
+.darkmode-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
 }

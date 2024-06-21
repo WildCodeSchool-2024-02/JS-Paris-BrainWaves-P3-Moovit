@@ -10,13 +10,21 @@ const trainingRouter = require("./training/router");
 
 router.use("/trainings", trainingRouter);
 
+const tipRouter = require("./tips/router");
+
+router.use("/tips", tipRouter);
+
 const userRouter = require("./user/router");
 
 router.use("/users", userRouter);
 
-const templateRouter = require("./template/router")
+const templateRouter = require("./template/router");
 
 router.use("/templates", templateRouter);
+
+const feedbackRouter = require("./feedback/router");
+
+router.use("/feedbacks", feedbackRouter);
 
 /* ************************************************************************* */
 

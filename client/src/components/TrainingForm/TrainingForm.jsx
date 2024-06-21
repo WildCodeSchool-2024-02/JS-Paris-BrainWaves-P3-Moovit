@@ -6,12 +6,14 @@ import * as datefns from "date-fns";
 function TrainingForm({ id, training, handleClose }) {
   const api = import.meta.env.VITE_API_URL;
 
-  const [title, setTitle] = useState(null);
-  const [date, setDate] = useState(null);
-  const [timeOfDay, setTimeOfDay] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [details, setDetails] = useState(null);
-  const [sport, setSport] = useState(null);
+  const [title, setTitle] = useState(training?.title);
+  const [date, setDate] = useState(training ? datefns.format(training.date, "yyyy-MM-dd") : datefns.format(new Date(), "yyyy-MM-dd"));
+  const [timeOfDay, setTimeOfDay] = useState(
+    training?.time_of_day
+  );
+  const [duration, setDuration] = useState(training?.duration);
+  const [details, setDetails] = useState(training?.details);
+  const [sport, setSport] = useState(training?.sport_id);
   const [templateId, setTemplateId] = useState(null);
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
@@ -43,10 +45,10 @@ function TrainingForm({ id, training, handleClose }) {
       const selectedTemplate = templates.find(
         (template) => +template.id === +templateId
       );
-      setTitle(selectedTemplate.title);
-      setDuration(selectedTemplate.duration);
-      setDetails(selectedTemplate.details);
-      setSport(selectedTemplate.sport_id);
+      setTitle(selectedTemplate?.title);
+      setDuration(selectedTemplate?.duration);
+      setDetails(selectedTemplate?.details);
+      setSport(selectedTemplate?.sport_id);
     }
   }, [templateId, templates]);
 
@@ -67,7 +69,7 @@ function TrainingForm({ id, training, handleClose }) {
           time_of_day: timeOfDay,
           duration,
           details,
-          user_id: "1",
+          user_id: "2",
           sport_id: sport,
         }),
       });
@@ -77,11 +79,11 @@ function TrainingForm({ id, training, handleClose }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,
-          date,
+          date: datefns.format(date, "yyyy-MM-dd"),
           time_of_day: timeOfDay,
           duration,
           details,
-          user_id: "1",
+          user_id: "2",
           sport_id: sport,
         }),
       });
@@ -119,7 +121,6 @@ function TrainingForm({ id, training, handleClose }) {
         name="title"
         placeholder="Titre de ton entraînement"
         value={title}
-        defaultValue={training ? training.title : ""}
         onChange={(e) => setTitle(e.target.value)}
       />
       <input
@@ -128,11 +129,6 @@ function TrainingForm({ id, training, handleClose }) {
         name="date"
         placeholder="Quel jour ?"
         value={date}
-        defaultValue={
-          training
-            ? training.date.slice(0, 10)
-            : datefns.format(new Date(), "yyyy-MM-dd")
-        }
         onChange={(e) => setDate(e.target.value)}
       />
       <select
@@ -140,10 +136,11 @@ function TrainingForm({ id, training, handleClose }) {
         id="time-of-day-select"
         name="time-of-day"
         value={timeOfDay}
-        defaultValue={training ? training.time_of_day : null}
         onChange={(e) => setTimeOfDay(e.target.value)}
       >
-        <option>Matin, Après-midi ou Soir ? 😉</option>
+        <option value="" disabled selected>
+          Matin, Après-midi ou Soir ? 😉
+        </option>
         <option>Matin</option>
         <option>Après-midi</option>
         <option>Soir</option>
@@ -152,7 +149,6 @@ function TrainingForm({ id, training, handleClose }) {
         id="sport-select"
         name="type"
         value={sport}
-        defaultValue={training ? training.sport_id : null}
         onChange={(e) => setSport(e.target.value)}
       >
         <option>Quel sport ? ⛹️</option>
@@ -165,7 +161,6 @@ function TrainingForm({ id, training, handleClose }) {
         id="duration"
         name="duration"
         value={duration}
-        defaultValue={training ? training.duration : null}
         placeholder="Combien de temps ?"
         onChange={(e) => setDuration(e.target.value)}
       />
@@ -174,7 +169,6 @@ function TrainingForm({ id, training, handleClose }) {
         id="details"
         name="details"
         value={details}
-        defaultValue={training ? training.details : null}
         placeholder="Enregistre les détails de ton activité ici 👌"
         onChange={(e) => setDetails(e.target.value)}
       />
@@ -206,7 +200,8 @@ function TrainingForm({ id, training, handleClose }) {
 export default TrainingForm;
 
 TrainingForm.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
+    .isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({
     title: PropTypes.string.isRequired, // Titre de l'activité

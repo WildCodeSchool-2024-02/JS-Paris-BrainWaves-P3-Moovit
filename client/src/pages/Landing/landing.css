@@ -5,7 +5,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-image: url("../../assets/images/LandingPage2.png");
+  background-image: url("../../assets/images/LandingPage3.webp");
   background-size: cover;
   background-position: bottom;
 }
@@ -89,7 +89,7 @@
     height: 100vh;
   }
   .landing-demo-img {
-    background-image: url("../../assets/images/LandingPage2.png");
+    background-image: url("../../assets/images/LandingPage3.webp");
     height: 90%;
     width: 90%;
     border-radius: 20px;

@@ -10,6 +10,14 @@
     display: flex;
     flex-direction: column;
   }
+
+  input::placeholder {
+    color: black;
+  }
+
+  textarea::placeholder {
+    color: black;
+  }
 }
 
 #save-label {

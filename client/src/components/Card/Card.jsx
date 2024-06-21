@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
@@ -8,6 +8,7 @@ import DarkModeContext from "../../services/DarkModeContext";
 
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
+import Feedback from "../Feedback/Feedback";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -17,22 +18,26 @@ export default function Card({
   setCurrentTraining
 }) {
   const { mode } = useContext(DarkModeContext);
-  const navigate = useNavigate();
 
-  const completeTraining = () =>
-    fetch(`${api}/api/trainings/${card.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ is_completed: 1 }),
-    });
+  // Open feedback State
+  const [openFeedback, setOpenFeedback] = useState(false);
 
+  // Managing opening and closing Modal (feedback)
+  const handleOpenFeedback = () => {
+    setOpenFeedback(true);
+  };
+  const handleCloseFeedback = () => {
+    setOpenFeedback(false);
+  };
+
+  // Delete training with the cardMenu
   const handleDelete = () => {
     fetch(`${api}/api/trainings/${card.id}`, {
       method: "DELETE",
     });
-    navigate("/journal");
   };
 
+  // Edit training with the cardMenu
   const handleEdit = () => {
     setCurrentTraining(card.id);
     handleOpen();
@@ -49,7 +54,7 @@ export default function Card({
       </section>
       <div className="card-type-training">
         <IoMdFitness />
-        <p>Entraînement | Fitness</p>
+        <p>Entraînement | {card.name}</p>
       </div>
       <div className="card-time-training">
         <div className="card-plus">
@@ -62,19 +67,20 @@ export default function Card({
         </div>
       </div>
       <section className="trainingCard-title">
-        {card.is_completed == null ? (
-          <button
-            type="button"
-            className="card-button-validate"
-            onClick={completeTraining}
-          >
-            Valider
-          </button>
-        ) : (
-          <p>Feeback enregistré</p>
-        )}
+        <button
+          type="button"
+          className="card-button-validate"
+          onClick={handleOpenFeedback}
+        >
+          Valider
+        </button>
         <Link to={`/training/${card.id}`}>Détails</Link>
       </section>
+      <Feedback
+        handleClose={handleCloseFeedback}
+        open={openFeedback}
+        id={card.id}
+      />
     </section>
   );
 }
@@ -85,7 +91,7 @@ Card.propTypes = {
     title: PropTypes.string.isRequired,
     time_of_day: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
-    is_completed: PropTypes.bool,
+    name: PropTypes.string.isRequired,
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,

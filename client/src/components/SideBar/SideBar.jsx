@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegCompass } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
+import { useContext } from "react";
 import Logo from "../../assets/images/Logo.svg";
+import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
 
 
 
 export default function SideBar() {
 
+  const { mode } = useContext(DarkModeContext);
+
   return (
-    <section id="sidebar">
+    <section id={`sidebar-${mode}`}>
       <div className="sidebar-first-container">
         <img className="sidebar-logo-moov" src={Logo} alt="logo" />
         <h1>Bienvenue Toto</h1>

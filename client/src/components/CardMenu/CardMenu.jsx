@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IoEllipsisVerticalSharp } from "react-icons/io5";
+import "./cardmenu.css";
+import DarkModeContext from "../../services/DarkModeContext";
 
 const ITEM_HEIGHT = 48;
 
-
-function CardMenu({ handleEdit, handleDelete }) {
+function CardMenu({ handleDelete, handleEdit }) {
+  const { mode } = useContext(DarkModeContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -19,7 +20,6 @@ function CardMenu({ handleEdit, handleDelete }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
 
   return (
     <div>
@@ -31,7 +31,7 @@ function CardMenu({ handleEdit, handleDelete }) {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <IoEllipsisVerticalSharp />
+        <IoEllipsisVerticalSharp className={`three-point-${mode}`} />
       </IconButton>
       <Menu
         id="long-menu"
@@ -57,6 +57,6 @@ function CardMenu({ handleEdit, handleDelete }) {
 export default CardMenu;
 
 CardMenu.propTypes = {
-  handleEdit: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
+  handleEdit: PropTypes.func.isRequired,
 };

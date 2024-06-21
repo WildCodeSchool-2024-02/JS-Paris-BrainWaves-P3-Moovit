@@ -33,11 +33,11 @@ class AbstractRepository {
     return training;
   }
 
-  async update(training, id) {
-    const updatedTraining = await this.database.query(
-        `UPDATE ${this.table} SET ? WHERE id = ?`, [training, id]
+  async update(body, id) {
+    const [updatedTraining] = await this.database.query(
+        `UPDATE ${this.table} SET ? WHERE id = ?`, [body, id]
     );
-    return updatedTraining;
+    return updatedTraining.affectedRows;
   }
 
   async deleteOne(id) {
@@ -46,6 +46,7 @@ class AbstractRepository {
     );
     return deletedTraining;
   }
+  
 }
 
 // Ready to export

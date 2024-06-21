@@ -2,8 +2,12 @@ import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useEffect, useState } from "react";
 import * as datefns from "date-fns";
+import { useUser } from '../../contexts/User/User'
 
 function TrainingForm({ id, training, handleClose }) {
+const {user} = useUser();
+
+
   const api = import.meta.env.VITE_API_URL;
 
   const [title, setTitle] = useState(training?.title);
@@ -20,7 +24,7 @@ function TrainingForm({ id, training, handleClose }) {
 
   // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
   const getTemplates = async () => {
-    await fetch(`${api}/api/templates/2/all`)
+    await fetch(`${api}/api/templates/${user.id}/all`)
       .then((res) => res.json())
       .then((data) => setTemplates(data))
       .catch((err) => console.error(err));
@@ -34,7 +38,7 @@ function TrainingForm({ id, training, handleClose }) {
         title,
         duration,
         details,
-        user_id: "2",
+        user_id: user.id,
         sport_id: sport,
       }),
     });
@@ -69,7 +73,7 @@ function TrainingForm({ id, training, handleClose }) {
           time_of_day: timeOfDay,
           duration,
           details,
-          user_id: "2",
+          user_id: user.id,
           sport_id: sport,
         }),
       });
@@ -83,7 +87,7 @@ function TrainingForm({ id, training, handleClose }) {
           time_of_day: timeOfDay,
           duration,
           details,
-          user_id: "2",
+          user_id: user.id,
           sport_id: sport,
         }),
       });

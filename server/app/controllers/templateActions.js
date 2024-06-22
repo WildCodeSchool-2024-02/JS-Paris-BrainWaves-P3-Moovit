@@ -11,7 +11,7 @@ const browse = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
     try {
-      const template = await tables.template.readOne(req.params.id);
+      const template = await tables.template.readTemplate(req.params.id);
       if (template == null) {
         res.sendStatus(404);
       } else {

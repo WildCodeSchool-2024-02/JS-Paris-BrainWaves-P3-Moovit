@@ -24,5 +24,6 @@ export function UserProvider({ children }) {
 export const useUser = () => useContext(UserContext);
 
 UserProvider.propTypes = {
-    children: PropTypes.func.isRequired
+    // eslint-disable-next-line react/forbid-prop-types
+    children: PropTypes.object.isRequired
 }

@@ -1,9 +1,17 @@
+/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 import "./feedback.css";
+import { toast } from "sonner";
 
-export default function Feedback({ open, handleClose, id, feedbackId }) {
+export default function Feedback({
+  open,
+  handleClose,
+  id,
+  feedbackId,
+  setStatusFeedback,
+}) {
   const api = import.meta.env.VITE_API_URL;
 
   // Ref for the duration field
@@ -38,7 +46,9 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
     }
   }, [feedbackId, api]);
 
+  // Function to handle a feedback (edit or add)
   const handleClick = async () => {
+    // Front error handling if one field is empty
     const newErrors = {};
     if (duration.current.value === "")
       newErrors.duration = "Veuillez remplir ce champ";
@@ -50,42 +60,14 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
       newErrors.after = "Veuillez remplir ce champ";
     if (details.current.value === "")
       newErrors.details = "Veuillez remplir ce champ";
-
+    // Errros adding in the setter
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
       setErrors({});
-      try {
-        if (!feedbackId) {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/feedbacks/`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                duration: duration.current.value,
-                global: global.current.value,
-                difficulty: difficulty.current.value,
-                after: after.current.value,
-                details: details.current.value,
-                training_id: id,
-              }),
-            }
-          );
-          fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ is_completed: 1 }),
-          });
-          if (response.ok) {
-            handleClose();
-            window.location.reload();
-          } else {
-            console.error('error')
-          }
-        } else if (feedbackId) {
+      if (feedbackId) {
+        try {
+          // Feedback PUT route
           const response = await fetch(
             `${import.meta.env.VITE_API_URL}/api/feedbacks/${feedbackId}`,
             {
@@ -105,13 +87,59 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           );
           if (response.ok) {
             handleClose();
-            window.location.reload();
+            setStatusFeedback((prevStatus) => !prevStatus);
+            toast.success("Feedback modifié avec success");
           } else {
-            console.error('error')
+            handleClose();
+            toast.error(
+              "Une erreur est survenue, le feedback n'a pas pu être enregistré"
+            );
           }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (error) {
-        console.error('error')
+      } else {
+        try {
+          // Feedback POST route
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/feedbacks/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                duration: duration.current.value,
+                global: global.current.value,
+                difficulty: difficulty.current.value,
+                after: after.current.value,
+                details: details.current.value,
+                training_id: id,
+              }),
+            }
+          );
+          // Set is_completed to 1 in training table
+          const response2 = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/trainings/${id}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ is_completed: 1 }),
+            }
+          );
+          if (response.ok && response2.ok) {
+            handleClose();
+            setStatusFeedback((prevStatus) => !prevStatus);
+            toast.success("Feedback enregistré avec succes");
+          } else {
+            handleClose();
+            toast.error(
+              "Une erreur est survenue, le feedback n'a pas pu être enregistré"
+            );
+          }
+        } catch (err) {
+          toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+        }
       }
     }
   };
@@ -215,6 +243,7 @@ Feedback.propTypes = {
     PropTypes.number,
     PropTypes.oneOf([undefined]),
   ]),
+  setStatusFeedback: PropTypes.func.isRequired,
 };
 
 Feedback.defaultProps = {

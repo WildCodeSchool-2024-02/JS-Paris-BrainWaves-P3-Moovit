@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import TrainingForm from "../TrainingForm/TrainingForm";
 
-function PopUp({ open, handleClose, id = null, training = undefined }) {
+function PopUp({ open, handleClose, id, training = undefined }) {
   return (
     <Modal open={open} onClose={handleClose}>
       <TrainingForm id={id} training={training} handleClose={handleClose} />
@@ -15,7 +15,7 @@ export default PopUp;
 PopUp.propTypes = {
   open: PropTypes.bool.isRequired, // Indique si la modale est ouverte
   handleClose: PropTypes.func.isRequired, // Fonction pour fermer la modale
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]).isRequired, // ID de l'activité en cours d'édition
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([null])]), // ID de l'activité en cours d'édition
   training: PropTypes.oneOfType([
     PropTypes.shape({
       title: PropTypes.string.isRequired, // Titre de l'activité
@@ -26,5 +26,10 @@ PopUp.propTypes = {
       sport: PropTypes.number, // ID du sport associé à l'activité
     }),
     PropTypes.oneOf([undefined]),
-  ]).isRequired,
+  ]),
+};
+
+PopUp.defaultProps = {
+  id: null,
+  training: undefined,
 };

@@ -1,23 +1,22 @@
 /* eslint-disable import/no-unresolved */
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
+import { useUser } from "../../contexts/User/User";
 
 export default function Journal() {
-  // Number of trainings today
-  const todayTraining = useLoaderData();
+  // Import user
+  const { user } = useUser();
 
   const [currentTraining, setCurrentTraining] = useState(null);
-
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -57,12 +56,17 @@ export default function Journal() {
   // Loading state feedbacks
   const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
 
+  // State pour gestion de toast
+  const [statusFeedback, setStatusFeedback] = useState(false);
+
   // Get datas to get trainings for a giving day
   useEffect(() => {
     setLoadingTips(false);
     setLoadingTrainings(false);
     setLoadingFeedbacks(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/1`)
+    fetch(
+      `${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/${user.id}`
+    )
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);
@@ -80,28 +84,7 @@ export default function Journal() {
         setFeedbacks(response);
         setLoadingFeedbacks(true);
       });
-  }, [dayTraining, open]);
-
-  // Function to display a toast
-  const getToasty = async () => {
-    if (todayTraining.length > 0) {
-      toast.info(
-        `Tu as ${todayTraining.length} entraînement${todayTraining.length > 1 ? "s" : ""} aujourd'hui. Courage tu peux le faire !`
-      );
-    }
-    // if (todayFeedbacks.length > 0 && todayTraining.length === 0) {
-    //   toast.info(
-    //     "Tu n'as plus d'entraînement aujourd'hui. Ne néglige pas ta récupération !"
-    //   );
-    else {
-      toast.info(
-        "Tu n'as pas d'entraînement aujourd'hui. Profites en pour te reposer !"
-      );
-    }
-  };
-  useEffect(() => {
-    getToasty();
-  }, []);
+  }, [dayTraining, open, user.id, statusFeedback]);
 
   // Days of the week
   const daysWeek = [
@@ -211,120 +194,116 @@ export default function Journal() {
   );
 
   return (
-    <>
-      <Toaster
-        toastOptions={{
-          style: { background: "#F45F22", color: "white", fontSize: "1.1em" },
-          className: "my-toast",
-        }}
-      />
-      <section className="journal">
-        <div className="journal-first-container">
-          <div className="journal-orange-block">
-            <div className="journal-elements">
-              <h1 className="journal-day-desktop">
-                {day} {numb} {month}
-              </h1>
-            </div>
-            {dayTraining === datefns.format(new Date(), "yyyy-MM-dd") && (
-              <p className="journal-motivation">
-                {trainings.length === 0
-                  ? "Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer."
-                  : `Aujourd’hui, tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
-              faire.`}
-              </p>
-            )}
-            {dayTraining < datefns.format(new Date(), "yyyy-MM-dd") && (
-              <p className="journal-motivation">
-                {feedbacks.length > 0 || trainings.length > 0
-                  ? `Tu avais ${feedbacks.length + trainings.length} entraînement${feedbacks.length + trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Bravo à toi`
-                  : "Tu n'avais rien de prévu ce jour là !"}
-              </p>
-            )}
-            {dayTraining > datefns.format(new Date(), "yyyy-MM-dd") && (
-              <p className="journal-motivation">
-                {trainings.length === 0
-                  ? "Tu n'as rien de prévu ce jour là ! Profites en pour te reposer"
-                  : `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Courage tu peux le faire !`}
-              </p>
-            )}
+    <section className="journal">
+      <div className="journal-first-container">
+        <div className="journal-orange-block">
+          <div className="journal-elements">
+            <h1 className="journal-day-desktop">
+              {day} {numb} {month}
+            </h1>
           </div>
-          <button
-            type="button"
-            className="journal-add-button"
-            onClick={handleOpen}
-          >
-            <p>Ajouter une activité</p>
-            <FaPlus />
-          </button>
-          {loadingFeedbacks && (
-            <div className="journal-card">
-              {feedbacks.map((feedback) => (
-                <FeedbackCard key={feedback.id} feedback={feedback} />
-              ))}
-            </div>
+          {dayTraining === datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {trainings.length === 0
+                ? "Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer."
+                : `Aujourd’hui, tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
+              faire.`}
+            </p>
           )}
-          {loadingTrainings && (
-            <div className="journal-card">
-              {trainings.map((card) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  handleOpen={handleOpen}
-                  setCurrentTraining={setCurrentTraining}
-                />
-              ))}
-            </div>
+          {dayTraining < datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {feedbacks.length > 0 || trainings.length > 0
+                ? `Tu avais ${feedbacks.length + trainings.length} entraînement${feedbacks.length + trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Bravo à toi`
+                : "Tu n'avais rien de prévu ce jour là !"}
+            </p>
           )}
-          {trainings.length > 0 && loadingTips && (
-            <div className="journal-card">
-              <TipsCard
-                tip={
-                  tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]
-                }
-              />
-            </div>
-          )}
-          {trainings.length === 0 && loadingTips && (
-            <div className="journal-card">
-              <TipsCard
-                tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
-              />
-            </div>
-          )}
-          {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
-            <button
-              type="button"
-              className="days-button-today-mobile"
-              onClick={handleReturnToday}
-            >
-              Retour à aujourd'hui
-            </button>
+          {dayTraining > datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {trainings.length === 0
+                ? "Tu n'as rien de prévu ce jour là ! Profites en pour te reposer"
+                : `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Courage tu peux le faire !`}
+            </p>
           )}
         </div>
-        <div className="journal-second-container">
-          <div className="journal-days-container">
-            <Days
-              daysOfWeek={daysOfWeek}
-              handlePrev={handlePrev}
-              handleNext={handleNext}
-              dayTraining={dayTraining}
-              setDayTraining={setDayTraining}
-              weekCounter={weekCounter}
-              handleReturnToday={handleReturnToday}
+        <button
+          type="button"
+          className="journal-add-button"
+          onClick={handleOpen}
+        >
+          <p>Ajouter une activité</p>
+          <FaPlus />
+        </button>
+        {loadingFeedbacks && (
+          <div className="journal-card">
+            {feedbacks.map((feedback) => (
+              <FeedbackCard
+                key={feedback.id}
+                feedback={feedback}
+                setStatusFeedback={setStatusFeedback}
+              />
+            ))}
+          </div>
+        )}
+        {loadingTrainings && (
+          <div className="journal-card">
+            {trainings.map((card) => (
+              <Card
+                key={card.id}
+                card={card}
+                handleOpen={handleOpen}
+                setCurrentTraining={setCurrentTraining}
+                setStatusFeedback={setStatusFeedback}
+              />
+            ))}
+          </div>
+        )}
+        {trainings.length > 0 && loadingTips && (
+          <div className="journal-card">
+            <TipsCard
+              tip={tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]}
             />
           </div>
+        )}
+        {trainings.length === 0 && loadingTips && (
+          <div className="journal-card">
+            <TipsCard
+              tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
+            />
+          </div>
+        )}
+        {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
+          <button
+            type="button"
+            className="days-button-today-mobile"
+            onClick={handleReturnToday}
+          >
+            Retour à aujourd'hui
+          </button>
+        )}
+      </div>
+      <div className="journal-second-container">
+        <div className="journal-days-container">
+          <Days
+            daysOfWeek={daysOfWeek}
+            handlePrev={handlePrev}
+            handleNext={handleNext}
+            dayTraining={dayTraining}
+            setDayTraining={setDayTraining}
+            weekCounter={weekCounter}
+            handleReturnToday={handleReturnToday}
+          />
         </div>
-        <SideBar />
-        <PopUp
-          setOpen={setOpen}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-          open={open}
-          training={findCurrentTraining}
-          id={currentTraining}
-        />
-      </section>
-    </>
+      </div>
+      <SideBar />
+      <PopUp
+        setOpen={setOpen}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        open={open}
+        training={findCurrentTraining}
+        id={currentTraining}
+      />
+      <Toaster />
+    </section>
   );
 }

@@ -1,10 +1,15 @@
+/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { toast } from "sonner";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 import "./feedbackCard.css";
 
-export default function FeedbackCard({ feedback = undefined }) {
+export default function FeedbackCard({
+  feedback = undefined,
+  setStatusFeedback,
+}) {
   const api = import.meta.env.VITE_API_URL;
 
   // Open feedback State
@@ -19,11 +24,25 @@ export default function FeedbackCard({ feedback = undefined }) {
   };
 
   // Delete a feedback
-  const handleDelete = () => {
-    fetch(`${api}/api/feedbacks/${feedback.id}/${feedback.training_id}`, {
-      method: "DELETE",
-    });
-    window.location.reload();
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `${api}/api/feedbacks/${feedback.id}/${feedback.training_id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        toast.success("Feedback supprimé avec succès");
+      } else {
+        toast.error(
+          "Une erreur est survenue, le feedback n'a pas pu être supprimé"
+        );
+      }
+      setStatusFeedback((prevStatus) => !prevStatus);
+    } catch (err) {
+      toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+    }
   };
 
   // Edit a feedback
@@ -37,6 +56,7 @@ export default function FeedbackCard({ feedback = undefined }) {
         open={openFeedback}
         handleClose={handleCloseFeedback}
         feedbackId={feedback.id}
+        setStatusFeedback={setStatusFeedback}
       />
       <section className="trainingCard-title">
         <h1 className="feedback-card-title">{feedback.title}</h1>
@@ -73,4 +93,5 @@ FeedbackCard.propTypes = {
     difficulty: PropTypes.oneOf(["easy", "medium", "hard"]).isRequired,
     after: PropTypes.oneOf(["perfect", "good", "tired"]).isRequired,
   }).isRequired,
+  setStatusFeedback: PropTypes.func.isRequired,
 };

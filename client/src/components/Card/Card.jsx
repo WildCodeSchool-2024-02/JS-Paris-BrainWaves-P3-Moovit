@@ -12,7 +12,8 @@ import Feedback from "../Feedback/Feedback";
 export default function Card({
   card,
   handleOpen,
-  setCurrentTraining
+  setCurrentTraining,
+  setStatusFeedback
 }) {
   const { mode } = useContext(DarkModeContext);
 
@@ -79,6 +80,7 @@ export default function Card({
         handleClose={handleCloseFeedback}
         open={openFeedback}
         id={card.id}
+        setStatusFeedback={setStatusFeedback}
       />
     </section>
   );
@@ -94,4 +96,5 @@ Card.propTypes = {
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
+  setStatusFeedback: PropTypes.func.isRequired
 };

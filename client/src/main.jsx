@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DarkModeContextProvider } from "./services/DarkModeContext";
-
+import { UserProvider } from "./contexts/User/User";
 import Training from "./pages/Training/Training";
 import App from "./App";
 import Journal from "./pages/Journal/Journal";
@@ -30,13 +29,11 @@ const router = createBrowserRouter([
       {
         path: "/journal",
         element: <Journal />,
-        loader: () =>
-          fetch(`${import.meta.env.VITE_API_URL}/api/trainings/today/1`),
       },
       {
         path: "/templates",
         element: <Templates />,
-        loader: () => fetch(`${api}/api/templates/1/all`),
+        loader: () => fetch(`${api}/api/templates/2/all`),
       },
       {
         path: "/templates/:id",
@@ -51,8 +48,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <DarkModeContextProvider>
-      <RouterProvider router={router} />
-    </DarkModeContextProvider>
+    <UserProvider>
+      <DarkModeContextProvider>
+        <RouterProvider router={router} />
+      </DarkModeContextProvider>
+    </UserProvider>
   </React.StrictMode>
 );

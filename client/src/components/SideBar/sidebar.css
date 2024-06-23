@@ -1,4 +1,6 @@
 #sidebar-light {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11,6 +13,8 @@
 }
 
 #sidebar-dark {
+  position: sticky;
+  top: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -109,6 +113,8 @@ h1 {
     padding: 0;
     z-index: 1;
     background-color: white;
+    position: sticky;
+    bottom: 0;
   }
   #sidebar-dark {
     flex-direction: row;
@@ -117,5 +123,7 @@ h1 {
     padding: 0;
     z-index: 1;
     background-color: rgb(41, 41, 49);
+    position: sticky;
+    bottom: 0;
   }
 }

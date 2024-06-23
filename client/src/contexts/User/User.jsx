@@ -12,17 +12,13 @@ export function UserProvider({ children }) {
     level: 1,
   });
 
-  const memo = useMemo(() => ({ user, setUser }), [user, setUser])
+  const memo = useMemo(() => ({ user, setUser }), [user, setUser]);
 
-  return (
-    <UserContext.Provider value={memo}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={memo}>{children}</UserContext.Provider>;
 }
 
 export const useUser = () => useContext(UserContext);
 
 UserProvider.propTypes = {
-    children: PropTypes.func.isRequired
-}
+  children: PropTypes.func.isRequired,
+};

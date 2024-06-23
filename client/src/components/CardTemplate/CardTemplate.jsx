@@ -4,21 +4,12 @@ import { useContext } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
-
-
 import "./cardTemplate.css";
 import CardMenu from "../CardMenu/CardMenu";
 
-
 const api = import.meta.env.VITE_API_URL;
 
-
-
-export default function CardTemplate({
-  card,
-  handleOpen,
-  setCurrentTemplate
-}) {
+export default function CardTemplate({ card, handleOpen, setCurrentTemplate }) {
   const { mode } = useContext(DarkModeContext);
   const navigate = useNavigate();
 
@@ -34,26 +25,23 @@ export default function CardTemplate({
     handleOpen();
   };
 
-
   return (
     <section id={`card-template-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+        <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
       </section>
       <div className="card-type-training">
         <IoMdFitness />
         <p>Entraînement | Fitness</p>
       </div>
       <div className="card-time-training">
-      {card.duration ? 
-        <div className="card-plus">
-          <CiClock2 />
-          <p>{card.duration}</p>
-        </div> : null}
+        {card.duration ? (
+          <div className="card-plus">
+            <CiClock2 />
+            <p>{card.duration}</p>
+          </div>
+        ) : null}
       </div>
       <section className="trainingCard-title">
         <Link to={`/templates/${card.id}`}>Voir ce modèle</Link>

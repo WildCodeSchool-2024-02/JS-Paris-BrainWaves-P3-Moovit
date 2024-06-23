@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
@@ -11,6 +11,7 @@ import SideBar from "../../components/SideBar/SideBar";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 import { useUser } from "../../contexts/User/User";
+import Validation from "../../components/Validation/Validation";
 
 export default function Journal() {
   // Import user
@@ -58,6 +59,49 @@ export default function Journal() {
 
   // State pour gestion de toast
   const [statusFeedback, setStatusFeedback] = useState(false);
+
+  // Validation modal managing
+  const [validation, setValidation] = useState(false);
+  const handleCloseValidation = () => {
+    setValidation(false);
+    document.body.classList.remove("blocked");
+  };
+  const handleOpenValidation = () => {
+    setValidation(true);
+    document.body.classList.add("blocked");
+  };
+
+  // State pour récupérer l'id du feedback cliquer
+  const [idFeedback, setIdFeedback] = useState("");
+  const [trainingFeedback, setTrainingFeedback] = useState("");
+
+  // Delete feedback if yes is clicked
+  const handleDeleteFeedback = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/feedbacks/${idFeedback}/${trainingFeedback}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        toast.success("Feedback supprimé avec succès", {
+          style: {
+            background: "rgba(145, 225, 166, 0.8)",
+            color: "black",
+          },
+        });
+      } else {
+        toast.error(
+          "Une erreur est survenue, le feedback n'a pas pu être supprimé"
+        );
+      }
+      handleCloseValidation();
+      setStatusFeedback((prevStatus) => !prevStatus);
+    } catch (err) {
+      toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+    }
+  };
 
   // Get datas to get trainings for a giving day
   useEffect(() => {
@@ -240,6 +284,9 @@ export default function Journal() {
                 key={feedback.id}
                 feedback={feedback}
                 setStatusFeedback={setStatusFeedback}
+                setIdFeedback={setIdFeedback}
+                setTrainingFeedback={setTrainingFeedback}
+                handleOpenValidation={handleOpenValidation}
               />
             ))}
           </div>
@@ -304,6 +351,13 @@ export default function Journal() {
         id={currentTraining}
       />
       <Toaster />
+      {validation && (
+        <Validation
+          handleClose={handleCloseValidation}
+          handleDeleteFeedback={handleDeleteFeedback}
+          handleOpenValidation={handleOpenValidation}
+        />
+      )}
     </section>
   );
 }

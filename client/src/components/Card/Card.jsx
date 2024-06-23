@@ -13,10 +13,9 @@ export default function Card({
   card,
   handleOpen,
   setCurrentTraining,
-  setStatusFeedback
+  setStatusFeedback,
 }) {
   const { mode } = useContext(DarkModeContext);
-
   const api = import.meta.env.VITE_API_URL;
 
   // Open feedback State
@@ -47,10 +46,7 @@ export default function Card({
     <section id={`card-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-        />
+        <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
       </section>
       <div className="card-type-training">
         <IoMdFitness />
@@ -96,5 +92,5 @@ Card.propTypes = {
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
-  setStatusFeedback: PropTypes.func.isRequired
+  setStatusFeedback: PropTypes.func.isRequired,
 };

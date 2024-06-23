@@ -12,7 +12,7 @@ class FeedbackRepository extends AbstractRepository {
         return rows
     }
     const [rows] = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE id = ?`, [query.id]
+      `SELECT ${this.table}.*, training.details AS training_details, training.sport_id, training.title FROM ${this.table} JOIN training ON feedback.training_id = training.id WHERE feedback.id = ?`, [query.id]
     )
     return rows
     }

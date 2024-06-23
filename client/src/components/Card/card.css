@@ -5,7 +5,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 5px;
-  background-color: var(--light);
+  background-color: rgba(102, 217, 224, 0.2);
   border-radius: 10px;
   border: solid var(--second);
   border-width: 0.5px;
@@ -39,7 +39,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 5px;
-  background-color: var(--dark);
+  background-color: rgba(102, 217, 224, 0.2);
   border-radius: 10px;
   border: solid var(--second);
   border-width: 0.5px;

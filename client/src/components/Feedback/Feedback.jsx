@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 import "./feedback.css";
@@ -49,7 +50,7 @@ export default function Feedback({
   // Function to handle a feedback (edit or add)
   const handleClick = async () => {
     // Front error handling if one field is empty
-    const newErrors = {};
+    const newErrors = [];
     if (duration.current.value === "")
       newErrors.duration = "Veuillez remplir ce champ";
     if (global.current.value === "")
@@ -88,7 +89,12 @@ export default function Feedback({
           if (response.ok) {
             handleClose();
             setStatusFeedback((prevStatus) => !prevStatus);
-            toast.success("Feedback modifié avec success");
+            toast.success("Feedback modifié avec succès", {
+              style: {
+                background: "rgba(145, 225, 166, 0.8)",
+                color: "black",
+              },
+            });
           } else {
             handleClose();
             toast.error(
@@ -130,7 +136,12 @@ export default function Feedback({
           if (response.ok && response2.ok) {
             handleClose();
             setStatusFeedback((prevStatus) => !prevStatus);
-            toast.success("Feedback enregistré avec succes");
+            toast.success("Feedback enregistré avec succès", {
+              style: {
+                background: "rgba(145, 225, 166, 0.8)",
+                color: "black",
+              },
+            });
           } else {
             handleClose();
             toast.error(
@@ -144,9 +155,25 @@ export default function Feedback({
     }
   };
 
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
-      <form className="trainingForm">
+      <motion.form
+        className="trainingForm"
+        variants={variants}
+        animate={open ? "open" : "closed"}
+        initial="closed"
+      >
         <h1>C'est l'heure du Feedback </h1>
         <input
           type="text"
@@ -230,7 +257,7 @@ export default function Feedback({
         >
           Annuler
         </button>
-      </form>
+      </motion.form>
     </Modal>
   );
 }

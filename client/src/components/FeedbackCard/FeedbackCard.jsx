@@ -1,7 +1,7 @@
-/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 import { useState } from "react";
-import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 import "./feedbackCard.css";
@@ -9,9 +9,10 @@ import "./feedbackCard.css";
 export default function FeedbackCard({
   feedback = undefined,
   setStatusFeedback,
+  setIdFeedback,
+  setTrainingFeedback,
+  handleOpenValidation,
 }) {
-  const api = import.meta.env.VITE_API_URL;
-
   // Open feedback State
   const [openFeedback, setOpenFeedback] = useState(false);
 
@@ -23,35 +24,42 @@ export default function FeedbackCard({
     setOpenFeedback(false);
   };
 
-  // Delete a feedback
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(
-        `${api}/api/feedbacks/${feedback.id}/${feedback.training_id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        toast.success("Feedback supprimé avec succès");
-      } else {
-        toast.error(
-          "Une erreur est survenue, le feedback n'a pas pu être supprimé"
-        );
-      }
-      setStatusFeedback((prevStatus) => !prevStatus);
-    } catch (err) {
-      toast.error("Une erreur est survenue, veuillez réessayer plus tard");
-    }
-  };
-
   // Edit a feedback
   const handleEdit = () => {
     handleOpenFeedback();
   };
 
+  // Open the modal validation
+  const handleDelete = async () => {
+    setIdFeedback(feedback.id);
+    setTrainingFeedback(feedback.training_id);
+    handleOpenValidation();
+  };
+
+  // Navigate to the detail page
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/feedback/${feedback.id}`);
+  };
+
+  const variants = {
+    open: {
+      y: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      y: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
+
   return (
-    <section className="feedback-card-container">
+    <motion.section
+      className="feedback-card-container"
+      variants={variants}
+      animate="open"
+      initial="closed"
+    >
       <Feedback
         open={openFeedback}
         handleClose={handleCloseFeedback}
@@ -63,21 +71,64 @@ export default function FeedbackCard({
         <CardMenu handleDelete={handleDelete} handleEdit={handleEdit} />
       </section>
       <section className="feedback-text">
-        <p>Durée réelle {feedback.duration}</p>
-        {feedback.global === "easy" && <p>Déroulé de la séance 🔥</p>}
-        {feedback.global === "medium" && <p>Déroulé de la séance 👌</p>}
-        {feedback.global === "hard" && <p>Déroulé de la séance 🥵</p>}
-        {feedback.difficulty === "easy" && <p>Pendant la séance 💪</p>}
-        {feedback.difficulty === "medium" && <p>Pendant la séance 😮‍💨</p>}
-        {feedback.difficulty === "hard" && <p>Pendant la séance 🥵</p>}
-        {feedback.after === "perfect" && <p>Après la séance 💪</p>}
-        {feedback.after === "good" && <p>Après la séance 🥶</p>}
-        {feedback.after === "tired" && <p>Après la séance 😴</p>}
+        <p>
+          Durée réelle{" "}
+          <span className="feedback-card-duration">{feedback.duration}</span>
+        </p>
+        {feedback.global === "easy" && (
+          <p>
+            Déroulé de la séance <span className="emoji">🔥</span>
+          </p>
+        )}
+        {feedback.global === "medium" && (
+          <p>
+            Déroulé de la séance <span className="emoji">👌</span>
+          </p>
+        )}
+        {feedback.global === "hard" && (
+          <p>
+            Déroulé de la séance <span className="emoji">🥵</span>
+          </p>
+        )}
+        {feedback.difficulty === "easy" && (
+          <p>
+            Pendant la séance <span className="emoji">💪</span>
+          </p>
+        )}
+        {feedback.difficulty === "medium" && (
+          <p>
+            Pendant la séance <span className="emoji">😮‍💨</span>
+          </p>
+        )}
+        {feedback.difficulty === "hard" && (
+          <p>
+            Pendant la séance <span className="emoji">🥵</span>
+          </p>
+        )}
+        {feedback.after === "perfect" && (
+          <p>
+            Après la séance <span className="emoji">💪</span>
+          </p>
+        )}
+        {feedback.after === "good" && (
+          <p>
+            Après la séance <span className="emoji">🥶</span>
+          </p>
+        )}
+        {feedback.after === "tired" && (
+          <p>
+            Après la séance <span className="emoji">😴</span>
+          </p>
+        )}
       </section>
-      <button type="button" className="feedback-button">
+      <button
+        type="button"
+        className="feedback-button"
+        onClick={handleNavigate}
+      >
         Voir le détail de l'entraînement
       </button>
-    </section>
+    </motion.section>
   );
 }
 
@@ -94,4 +145,7 @@ FeedbackCard.propTypes = {
     after: PropTypes.oneOf(["perfect", "good", "tired"]).isRequired,
   }).isRequired,
   setStatusFeedback: PropTypes.func.isRequired,
+  setIdFeedback: PropTypes.func.isRequired,
+  setTrainingFeedback: PropTypes.func.isRequired,
+  handleOpenValidation: PropTypes.func.isRequired,
 };

@@ -1,5 +1,4 @@
 .feedback-card-container {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -30,4 +29,14 @@
   border: solid #34a853;
   border-width: 1px;
   font-size: 0.8em;
+}
+
+.emoji {
+  font-size: 1.6em;
+  margin-left: 10px;
+}
+
+.feedback-card-duration {
+  font-size: 1.2em;
+  margin-left: 10px;
 }

@@ -1,8 +1,6 @@
-/* eslint-disable import/no-duplicates */
 import PropTypes from "prop-types";
 import * as datefns from "date-fns";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import "./days.css";
 
 export default function Days({

@@ -70,7 +70,7 @@
   width: 100%;
   position: absolute;
   top: 140px;
-  z-index: 2;
+  z-index: 1;
 }
 
 .journal-day-desktop {
@@ -97,10 +97,11 @@
   display: none;
 }
 
-#sidebar-light,
-#sidebar-dark {
-  position: sticky;
-  bottom: 0;
+.validation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
 }
 
 @media (min-width: 768px) {
@@ -123,12 +124,6 @@
     position: sticky;
     top: 120px;
     width: 35%;
-  }
-  #sidebar-dark,
-  #sidebar-light {
-    position: sticky;
-    top: 0;
-    display: block;
   }
   .journal-orange-block {
     width: 100%;

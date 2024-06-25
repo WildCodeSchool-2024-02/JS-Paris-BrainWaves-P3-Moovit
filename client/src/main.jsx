@@ -12,6 +12,7 @@ import Journal from "./pages/Journal/Journal";
 import Landing from "./pages/Landing/Landing";
 import Templates from "./pages/Templates/Templates";
 import TemplateDetails from "./pages/TemplateDetails/TemplateDetails";
+import Register from "./pages/Register/Register"
 
 
 const api = import.meta.env.VITE_API_URL;
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         element: <TemplateDetails />,
         loader: ({ params }) => fetch(`${api}/api/templates/${params.id}`),
       },
+      {
+        path: "/register",
+        element: <Register />
+      }
     ],
   },
 ]);

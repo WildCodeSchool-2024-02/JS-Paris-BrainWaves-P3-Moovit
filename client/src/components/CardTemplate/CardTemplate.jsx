@@ -34,7 +34,6 @@ export default function CardTemplate({
     handleOpen();
   };
 
-
   return (
     <section id={`card-template-${mode}`}>
       <section className="trainingCard-title">
@@ -46,7 +45,7 @@ export default function CardTemplate({
       </section>
       <div className="card-type-training">
         <IoMdFitness />
-        <p>Entraînement | Fitness</p>
+        <p>Entraînement | {card.name}</p>
       </div>
       <div className="card-time-training">
       {card.duration ? 
@@ -66,8 +65,15 @@ CardTemplate.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    time_of_day: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    time_of_day: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([undefined])
+    ]),
+    duration: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([undefined])
+    ]),
     is_completed: PropTypes.bool,
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,

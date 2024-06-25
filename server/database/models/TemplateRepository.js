@@ -7,7 +7,7 @@ class TemplateRepository extends AbstractRepository {
 
     async readAllByUser(id) {
         const [rows] = await this.database.query(
-            `SELECT * FROM ${this.table} WHERE user_id = ?`, [id]
+            `SELECT ${this.table}.* , sport.name FROM ${this.table} JOIN sport ON ${this.table}.sport_id = sport.id WHERE user_id = ?`, [id]
         )
         return rows;
       };
@@ -20,6 +20,13 @@ class TemplateRepository extends AbstractRepository {
         );
         return newTemplate
       }
+
+    async readTemplate(id) {
+        const [result] = await this.database.query(
+            `SELECT ${this.table}.*, sport.name FROM ${this.table} JOIN sport ON ${this.table}.sport_id = sport.id WHERE ${this.table}.id = ?`, [id]
+        )
+        return result;
+    }
 
 }
 

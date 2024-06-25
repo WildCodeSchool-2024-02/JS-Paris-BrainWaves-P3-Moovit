@@ -11,7 +11,7 @@ import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
-import {useUser} from "../../contexts/User/User"
+import { useUser } from "../../contexts/User/User"
 
 export default function Journal() {
   // Import user

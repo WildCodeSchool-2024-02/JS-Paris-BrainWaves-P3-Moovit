@@ -14,6 +14,7 @@ function TemplateDetails() {
   const handleClose = () => setOpen(false);
 
   return (
+    
     <>
       <DarkMode />
       <section className="trainingCard">

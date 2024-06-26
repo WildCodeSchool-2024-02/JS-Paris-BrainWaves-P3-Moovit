@@ -40,7 +40,7 @@ const readToday = async (req, res, next) => {
 const readDay = async (req, res, next) => {
   try {
     const todaysTrainings = await tables.training.readOneDay(
-      req.params.id,
+      req.auth.id,
       req.params.day
     );
     if (todaysTrainings == null) {

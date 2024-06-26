@@ -16,6 +16,7 @@ const {
   destroy,
   readDay,
 } = require("../../../controllers/trainingActions");
+const { verifyToken } = require("../../../services/verifyToken");
 
 // Route to get a list of items
 router.get("/", browse);
@@ -25,7 +26,7 @@ router.get("/:id", readById);
 router.get("/today/:id", readToday);
 
 // Route to get all trainings for a user at a giving date
-router.get("/:day/:id", readDay);
+router.get("/day/:day", verifyToken, readDay);
 
 // Route to add a new item
 router.post("/", add);

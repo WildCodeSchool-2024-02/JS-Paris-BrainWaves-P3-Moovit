@@ -36,13 +36,13 @@
   margin-right: auto;
 }
 
-.sidebar-first-container p,
-h1 {
+.sidebar-first-container p {
   text-align: center;
 }
 
 .sidebar-first-container h1 {
   margin: 15px 0;
+  text-align: center;
 }
 
 .sidebar-second-container {

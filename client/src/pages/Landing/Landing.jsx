@@ -22,7 +22,7 @@ export default function Landing() {
           <button type="button" onClick={() => navigate("/register")}>
             Je m’inscris, c’est gratuit !
           </button>
-          <button type="button" onClick={() => navigate("/journal")}>
+          <button type="button" onClick={() => navigate("/login")}>
             Je me connecte
           </button>
         </div>

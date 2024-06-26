@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
@@ -13,14 +13,13 @@ import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 import { useUser } from "../../contexts/User/User";
 
+
 export default function Journal() {
   // Import user
   const { user } = useUser();
 
-  // Number of trainings today
-  const todayTraining = useLoaderData();
-
   const [currentTraining, setCurrentTraining] = useState(null);
+  const [statusTraining, setStatusTraining] = useState(false);
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -59,15 +58,19 @@ export default function Journal() {
   const [feedbacks, setFeedbacks] = useState([]);
   // Loading state feedbacks
   const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
+  const navigate = useNavigate();
 
   // Get datas to get trainings for a giving day
   useEffect(() => {
+    if (!user) navigate('/login')
     setLoadingTips(false);
     setLoadingTrainings(false);
     setLoadingFeedbacks(false);
-    fetch(
-      `${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/${user.id}`
-    )
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);
@@ -85,23 +88,7 @@ export default function Journal() {
         setFeedbacks(response);
         setLoadingFeedbacks(true);
       });
-  }, [dayTraining, open]);
-
-  // Function to display a toast
-  const getToasty = () => {
-    if (todayTraining.length > 0) {
-      toast.info(
-        `Tu as ${todayTraining.length} entraînement${todayTraining.length > 1 ? "s" : ""} aujourd'hui. Courage tu peux le faire !`
-      );
-    } else {
-      toast.info(
-        "Tu n'as pas d'entraînement aujourd'hui. Profites en pour te reposer !"
-      );
-    }
-  };
-  useEffect(() => {
-    getToasty();
-  }, []);
+  }, [dayTraining, open, statusTraining]);
 
   // Days of the week
   const daysWeek = [
@@ -257,6 +244,7 @@ export default function Journal() {
                   card={card}
                   handleOpen={handleOpen}
                   setCurrentTraining={setCurrentTraining}
+                  setStatusTraining={setStatusTraining}
                 />
               ))}
             </div>

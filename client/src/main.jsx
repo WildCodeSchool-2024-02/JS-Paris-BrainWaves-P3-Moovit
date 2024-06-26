@@ -12,6 +12,7 @@ import Landing from "./pages/Landing/Landing";
 import Templates from "./pages/Templates/Templates";
 import TemplateDetails from "./pages/TemplateDetails/TemplateDetails";
 import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login"
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -24,7 +25,6 @@ const router = createBrowserRouter([
       {
         path: "/training/:id",
         element: <Training />,
-        loader: ({ params }) => fetch(`${api}/api/trainings/${params.id}`),
       },
       {
         path: "/",
@@ -33,23 +33,23 @@ const router = createBrowserRouter([
       {
         path: "/journal",
         element: <Journal />,
-        loader: () =>
-          fetch(`${import.meta.env.VITE_API_URL}/api/trainings/today/1`),
       },
       {
         path: "/templates",
         element: <Templates />,
-        loader: () => fetch(`${api}/api/templates/1/all`),
       },
       {
         path: "/templates/:id",
-        element: <TemplateDetails />,
-        loader: ({ params }) => fetch(`${api}/api/templates/${params.id}`),
+        element: <TemplateDetails />
       },
       {
         path: "/register",
         element: <Register />,
       },
+      {
+        path: "/login",
+        element: <Login />
+      }
     ],
   },
 ]);

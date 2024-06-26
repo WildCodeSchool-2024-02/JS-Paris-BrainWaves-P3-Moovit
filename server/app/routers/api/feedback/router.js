@@ -7,13 +7,19 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const { add, browse, destroy, edit, readFeedbackDay } = require("../../../controllers/feedbackActions");
+const {
+  add,
+  browse,
+  destroy,
+  edit,
+  readFeedbackDay,
+} = require("../../../controllers/feedbackActions");
 
 // Route to get a list of feedbacks
-router.get("/", browse)
+router.get("/", browse);
 
 // Route to get all feedbacks for a given day
-router.get("/:day", readFeedbackDay)
+router.get("/:day", readFeedbackDay);
 
 // Route to add a new feedback
 router.post("/", add);

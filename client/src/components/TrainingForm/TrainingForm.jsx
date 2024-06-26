@@ -3,20 +3,21 @@ import "./trainingForm.css";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import * as datefns from "date-fns";
-import { useUser } from '../../contexts/User/User'
+import { useUser } from "../../contexts/User/User";
 
 function TrainingForm({ id, training, handleClose }) {
-const {user} = useUser();
-
+  const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
   const sports = useOutletContext();
 
   const [title, setTitle] = useState(training?.title);
-  const [date, setDate] = useState(training ? datefns.format(training.date, "yyyy-MM-dd") : datefns.format(new Date(), "yyyy-MM-dd"));
-  const [timeOfDay, setTimeOfDay] = useState(
-    training?.time_of_day
+  const [date, setDate] = useState(
+    training
+      ? datefns.format(training.date, "yyyy-MM-dd")
+      : datefns.format(new Date(), "yyyy-MM-dd")
   );
+  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
   const [duration, setDuration] = useState(training?.duration);
   const [details, setDetails] = useState(training?.details);
   const [sport, setSport] = useState(training?.sport_id);
@@ -158,7 +159,13 @@ const {user} = useUser();
         onChange={(e) => setSport(e.target.value)}
       >
         <option>Quel sport ? ⛹️</option>
-        {sports ? sports.map((activity) => (<option key={activity.id} value={activity.id}>{activity.name}</option>)) : null}
+        {sports
+          ? sports.map((activity) => (
+              <option key={activity.id} value={activity.id}>
+                {activity.name}
+              </option>
+            ))
+          : null}
       </select>
       <input
         type="text"

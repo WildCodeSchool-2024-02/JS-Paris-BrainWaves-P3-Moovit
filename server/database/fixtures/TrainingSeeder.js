@@ -19,11 +19,11 @@ class TrainingSeeder extends AbstractSeeder {
       const fakeTraining = {
         title: `Entrainement-test ${i}`,
         date: new Date(2024, 6, i),
-        duration: '2h',
+        duration: "2h",
         details: `${i} Ceci est mon programme test pour m'entraîner`,
-        time_of_day: 'Matin',
+        time_of_day: "Matin",
         user_id: this.getRef(`user_0`).insertId,
-        sport_id: this.getRef(`sport_0`).insertId // Get the insertId of the corresponding user from UserSeeder
+        sport_id: this.getRef(`sport_0`).insertId, // Get the insertId of the corresponding user from UserSeeder
       };
 
       // Insert the fakeItem data into the 'item' table
@@ -34,11 +34,11 @@ class TrainingSeeder extends AbstractSeeder {
       const fakeTraining = {
         title: `Entrainement-test ${i}`,
         date: new Date(),
-        duration: '2h',
+        duration: "2h",
         details: `${i} Ceci est mon programme test pour m'entraîner`,
-        time_of_day: 'Soir',
+        time_of_day: "Soir",
         user_id: this.getRef(`user_1`).insertId, // Get the insertId of the corresponding user from UserSeeder
-        sport_id: this.getRef(`sport_1`).insertId // Get the insertId of the corresponding sport from SportSeeder
+        sport_id: this.getRef(`sport_1`).insertId, // Get the insertId of the corresponding sport from SportSeeder
       };
 
       // Insert the fakeItem data into the 'item' table

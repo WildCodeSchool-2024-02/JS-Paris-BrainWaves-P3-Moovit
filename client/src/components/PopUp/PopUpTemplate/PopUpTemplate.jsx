@@ -17,14 +17,14 @@ export default PopUp;
 PopUp.defaultProps = {
   id: null,
   training: undefined,
-}
+};
 
 PopUp.propTypes = {
   open: PropTypes.bool.isRequired, // Indique si la modale est ouverte
   handleClose: PropTypes.func.isRequired, // Fonction pour fermer la modale
   id: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.oneOf([undefined, null])
+    PropTypes.oneOf([undefined, null]),
   ]),
   training: PropTypes.oneOfType([
     PropTypes.shape({
@@ -39,5 +39,3 @@ PopUp.propTypes = {
     PropTypes.oneOf([undefined]),
   ]),
 };
-
-

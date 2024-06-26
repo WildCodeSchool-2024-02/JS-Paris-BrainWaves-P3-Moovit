@@ -7,7 +7,15 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const { browse, readById, readToday, add, edit, destroy, readDay } = require("../../../controllers/trainingActions");
+const {
+  browse,
+  readById,
+  readToday,
+  add,
+  edit,
+  destroy,
+  readDay,
+} = require("../../../controllers/trainingActions");
 
 // Route to get a list of items
 router.get("/", browse);

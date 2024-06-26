@@ -11,17 +11,16 @@ import TipsCard from "../../components/TipsCard/TipsCard";
 import SideBar from "../../components/SideBar/SideBar";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
-import { useUser } from "../../contexts/User/User"
+import { useUser } from "../../contexts/User/User";
 
 export default function Journal() {
   // Import user
-  const {user} = useUser();
+  const { user } = useUser();
 
   // Number of trainings today
   const todayTraining = useLoaderData();
 
   const [currentTraining, setCurrentTraining] = useState(null);
-
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -66,7 +65,9 @@ export default function Journal() {
     setLoadingTips(false);
     setLoadingTrainings(false);
     setLoadingFeedbacks(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/${user.id}`)
+    fetch(
+      `${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/${user.id}`
+    )
       .then((response) => response.json())
       .then((response) => {
         setTrainings(response);

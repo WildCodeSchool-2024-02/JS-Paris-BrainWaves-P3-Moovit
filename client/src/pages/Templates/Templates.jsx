@@ -47,14 +47,14 @@ function Templates() {
           <p>Ajouter un modèle</p>
           <FaPlus />
         </button>
-          <PopUpTemplate
-            setOpen={setOpen}
-            handleOpen={handleOpen}
-            handleClose={handleClose}
-            open={open}
-            id={currentTemplate}
-            training={findCurrentTemplate}
-          />
+        <PopUpTemplate
+          setOpen={setOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          id={currentTemplate}
+          training={findCurrentTemplate}
+        />
       </section>
       <SideBar />
     </>

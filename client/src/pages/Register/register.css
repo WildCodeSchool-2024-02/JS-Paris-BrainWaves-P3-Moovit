@@ -17,6 +17,21 @@
   }
 }
 
+#password-input {
+  position: relative;
+}
+
+.eye-password {
+  position: absolute;
+  right: 30px;
+  transform: translateY(150%);
+}
+
+.eye-password:hover {
+  color: var(--main);
+  transition: all 0.1s ease-in-out;
+}
+
 .loginForm {
   display: flex;
   flex-direction: column;

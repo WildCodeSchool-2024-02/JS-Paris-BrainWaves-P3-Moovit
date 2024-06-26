@@ -16,37 +16,36 @@ class AbstractRepository {
 
     // Provide access to the database client
     this.database = database;
-
   }
 
   async readAll() {
-    const [rows] = await this.database.query(
-        `SELECT * FROM ${this.table}`
-    )
+    const [rows] = await this.database.query(`SELECT * FROM ${this.table}`);
     return rows;
-  };
+  }
 
   async readOne(id) {
     const [training] = await this.database.query(
-        `SELECT * FROM ${this.table} WHERE id = ?`, [id]
-    )
+      `SELECT * FROM ${this.table} WHERE id = ?`,
+      [id]
+    );
     return training;
   }
 
   async update(body, id) {
     const [updatedTraining] = await this.database.query(
-        `UPDATE ${this.table} SET ? WHERE id = ?`, [body, id]
+      `UPDATE ${this.table} SET ? WHERE id = ?`,
+      [body, id]
     );
     return updatedTraining.affectedRows;
   }
 
   async deleteOne(id) {
     const deletedTraining = await this.database.query(
-        `DELETE FROM ${this.table} WHERE id = ?`, [id]
+      `DELETE FROM ${this.table} WHERE id = ?`,
+      [id]
     );
     return deletedTraining;
   }
-  
 }
 
 // Ready to export

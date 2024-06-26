@@ -6,12 +6,19 @@ const router = express.Router();
 // Define Your API Routes Here
 /* ************************************************************************* */
 
-const {browse, browseByUser, readById, add, edit, destroy} = require('../../../controllers/templateActions')
+const {
+  browse,
+  browseByUser,
+  readById,
+  add,
+  edit,
+  destroy,
+} = require("../../../controllers/templateActions");
 
 router.get("/", browse);
 router.get("/:id", readById);
-router.get("/:id/all", browseByUser)
-router.post("/", add)
+router.get("/:id/all", browseByUser);
+router.post("/", add);
 
 router.put("/:id", edit);
 

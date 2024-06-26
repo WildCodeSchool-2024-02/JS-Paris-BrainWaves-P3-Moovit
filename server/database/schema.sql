@@ -172,8 +172,8 @@ CREATE TABLE IF NOT EXISTS `moovit`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `level` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `level` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

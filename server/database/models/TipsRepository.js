@@ -7,12 +7,11 @@ class TipsRepository extends AbstractRepository {
 
   async readType(type) {
     const tips = await this.database.query(
-      `SELECT * FROM ${this.table} WHERE type = ?`, [type]
-  );
-  return tips;
+      `SELECT * FROM ${this.table} WHERE type = ?`,
+      [type]
+    );
+    return tips;
   }
-
-
 }
 
 module.exports = TipsRepository;

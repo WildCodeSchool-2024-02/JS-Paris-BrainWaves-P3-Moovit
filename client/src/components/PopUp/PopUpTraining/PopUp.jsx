@@ -19,7 +19,7 @@ PopUp.propTypes = {
   handleClose: PropTypes.func.isRequired, // Fonction pour fermer la modale
   id: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.oneOf([undefined, null])
+    PropTypes.oneOf([undefined, null]),
   ]).isRequired,
   training: PropTypes.oneOfType([
     PropTypes.shape({
@@ -33,6 +33,4 @@ PopUp.propTypes = {
     }),
     PropTypes.oneOf([undefined]),
   ]).isRequired,
-  
-  
 };

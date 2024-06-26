@@ -7,14 +7,22 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const { browse, readById, add, edit, destroy } = require("../../../controllers/userActions");
+const {
+  browse,
+  readById,
+  add,
+  edit,
+  destroy,
+} = require("../../../controllers/userActions");
+const { hashPassword } = require("../../../services/hashPassword");
+const { schema, validateSchema } = require("../../../services/validateData");
 
 // Route to get a list of users
 router.get("/", browse);
 router.get("/:id", readById);
 
 // Route to add a new user
-router.post("/", add);
+router.post("/", validateSchema(schema), hashPassword, add);
 
 router.put("/:id", edit);
 

@@ -14,6 +14,7 @@ const {
   edit,
   destroy,
 } = require("../../../controllers/userActions");
+const {login} = require("../../../controllers/authActions")
 const { hashPassword } = require("../../../services/hashPassword");
 const { schema, validateSchema } = require("../../../services/validateData");
 
@@ -23,6 +24,7 @@ router.get("/:id", readById);
 
 // Route to add a new user
 router.post("/", validateSchema(schema), hashPassword, add);
+router.post('/login', login)
 
 router.put("/:id", edit);
 

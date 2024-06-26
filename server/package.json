@@ -9,9 +9,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "argon2": "^0.40.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.1"
   },
   "devDependencies": {

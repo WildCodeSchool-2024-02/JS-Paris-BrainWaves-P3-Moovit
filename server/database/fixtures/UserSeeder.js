@@ -9,26 +9,18 @@ class UserSeeder extends AbstractSeeder {
   // The run method - Populate the 'user' table with fake data
 
   run() {
-      // Generate fake user data
-      const julian = {
-        email: 'king-julian@gmail.com',
-        password: 'julian',
-        refName: 'user_0',
-        name: 'Julian',
-        level: 1
-      };
-      const maurice = {
-        email: `maurice@gmail.com`,
-        password: `maurice`,
-        refName: `user_1`,
-        name: `Maurice`,
-        level: 352
-      };
+    // Generate fake user data
+    const alex = {
+      email: "alexlelion@gmail.com",
+      password: "$argon2id$v=19$m=65536,t=3,p=4$XcwGli+gwi1IF72ukJ3hog$wGEC0rSM5U9bUrSYLcU6ev3/+exMzH9f9om6F7B9lDw",
+      refName: "user_0",
+      name: "Alex",
+      level: 1,
+    };
 
-      this.insert(julian);
-      this.insert(maurice);
-    }
+    this.insert(alex);
   }
+}
 
 // Export the UserSeeder class
 module.exports = UserSeeder;

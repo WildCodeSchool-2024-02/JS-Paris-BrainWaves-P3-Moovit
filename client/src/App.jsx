@@ -7,12 +7,12 @@ import DarkMode from "./components/DarkMode/DarkMode";
 function App() {
   // Contexte DarkMode
   const { mode } = useContext(DarkModeContext);
-  const sports = useLoaderData()
+  const sports = useLoaderData();
 
   return (
     <main className={`container ${mode}`}>
       <DarkMode />
-      <Outlet context={sports}/>
+      <Outlet context={sports} />
     </main>
   );
 }

@@ -1,9 +1,9 @@
-const AbstractRepository = require('./AbstractRepository')
+const AbstractRepository = require("./AbstractRepository");
 
 class SportRepository extends AbstractRepository {
-    constructor() {
-        super({ table: 'sport' });
-    }
+  constructor() {
+    super({ table: "sport" });
+  }
 }
 
 module.exports = SportRepository;

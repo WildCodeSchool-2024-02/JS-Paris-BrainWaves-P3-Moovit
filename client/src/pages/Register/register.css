@@ -1,0 +1,38 @@
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: var(--light);
+  min-height: 100vh;
+  padding: 5vh 2vw;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p {
+    text-align: center;
+  }
+}
+
+#password-input {
+  position: relative;
+}
+
+.eye-password {
+  position: absolute;
+  right: 30px;
+  transform: translateY(150%);
+}
+
+.eye-password:hover {
+  color: var(--main);
+  transition: all 0.1s ease-in-out;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}

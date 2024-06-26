@@ -8,10 +8,7 @@ import Logo from "../../assets/images/Logo.svg";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
 
-
-
 export default function SideBar() {
-
   const { mode } = useContext(DarkModeContext);
 
   return (
@@ -26,15 +23,21 @@ export default function SideBar() {
       <div className="sidebar-second-container">
         <div className="sidebar-link">
           <FaRegUserCircle className="sidebar-logo" />
-          <Link to='/' className="sidebar-link-text">Profil</Link>
+          <Link to="/" className="sidebar-link-text">
+            Profil
+          </Link>
         </div>
         <div className="sidebar-link">
           <FaRegCompass className="sidebar-logo" />
-          <Link to='/journal'className="sidebar-link-text">Journal</Link>
+          <Link to="/journal" className="sidebar-link-text">
+            Journal
+          </Link>
         </div>
         <div className="sidebar-link">
           <FaRegBookmark className="sidebar-logo" />
-          <Link to='/templates' className="sidebar-link-text">Modèles</Link>
+          <Link to="/templates" className="sidebar-link-text">
+            Modèles
+          </Link>
         </div>
         <div className="sidebar-footer-container">
           <p>

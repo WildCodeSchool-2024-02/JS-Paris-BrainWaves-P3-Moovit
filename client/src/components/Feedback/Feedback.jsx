@@ -86,79 +86,82 @@ export default function Feedback({ open, handleClose, id, feedbackId }) {
           }
         }
       } catch (error) {
-        toast.alert('Erreur interne veuillez réessayer plus tard')
+        toast.alert("Erreur interne veuillez réessayer plus tard");
       }
     }
   };
 
   return (
     <>
-    <Modal open={open} onClose={handleClose}>
-      <form className="trainingForm">
-        <h1>C'est l'heure du Feedback </h1>
-        <input
-          type="text"
-          id="duration"
-          name="duration"
-          placeholder="Ca a duré combien de temps ?"
-          ref={duration}
-        />
-        <select
-          type=""
-          id="session-feeling"
-          name="session-feeling"
-          ref={global}
-        >
-          <option value="" disabled selected>
-            La séance s'est bien passée ?
-          </option>
-          <option value="easy">🔥 Très bien passée !</option>
-          <option value="medium">👌 Tranquille</option>
-          <option value="hard">🥵 C'était pas évident</option>
-        </select>
-        <select
-          type=""
-          id="session-feeling"
-          name="session-feeling"
-          ref={difficulty}
-        >
-          <option value="" disabled selected>
-            Quelle a été ta perception de l'effort ?
-          </option>
-          <option value="easy">💪 Facile</option>
-          <option value="medium">😮‍💨 Fatiguant</option>
-          <option value="hard">🥵 Epuisant</option>
-        </select>
-        <select type="" id="mood-feeling" name="mood-feeling" ref={after}>
-          <option value="" disabled selected>
-            Comment te sens-tu après ?
-          </option>
-          <option value="perfect">💪 Super j'en veux encore</option>
-          <option value="good">🥶 Je sens la fatigue arriver</option>
-          <option value="tired">😴 J'ai besoin de repos</option>
-        </select>
-        <textarea
-          type="text"
-          id="details"
-          name="details"
-          placeholder="Dis m'en plus"
-          ref={details}
-        />
-        <button type="button" className="primary-button" onClick={handleClick}>
-          Enregistrer
-        </button>
-        <button
-          type="button"
-          className="secondary-button"
-          onClick={handleClose}
-        >
-          Annuler
-        </button>
-        {fill && <p>Renseigne tous les champs</p>}
-      </form>
-      
-    </Modal>
-    <Toaster />
+      <Modal open={open} onClose={handleClose}>
+        <form className="trainingForm">
+          <h1>C'est l'heure du Feedback </h1>
+          <input
+            type="text"
+            id="duration"
+            name="duration"
+            placeholder="Ca a duré combien de temps ?"
+            ref={duration}
+          />
+          <select
+            type=""
+            id="session-feeling"
+            name="session-feeling"
+            ref={global}
+          >
+            <option value="" disabled selected>
+              La séance s'est bien passée ?
+            </option>
+            <option value="easy">🔥 Très bien passée !</option>
+            <option value="medium">👌 Tranquille</option>
+            <option value="hard">🥵 C'était pas évident</option>
+          </select>
+          <select
+            type=""
+            id="session-feeling"
+            name="session-feeling"
+            ref={difficulty}
+          >
+            <option value="" disabled selected>
+              Quelle a été ta perception de l'effort ?
+            </option>
+            <option value="easy">💪 Facile</option>
+            <option value="medium">😮‍💨 Fatiguant</option>
+            <option value="hard">🥵 Epuisant</option>
+          </select>
+          <select type="" id="mood-feeling" name="mood-feeling" ref={after}>
+            <option value="" disabled selected>
+              Comment te sens-tu après ?
+            </option>
+            <option value="perfect">💪 Super j'en veux encore</option>
+            <option value="good">🥶 Je sens la fatigue arriver</option>
+            <option value="tired">😴 J'ai besoin de repos</option>
+          </select>
+          <textarea
+            type="text"
+            id="details"
+            name="details"
+            placeholder="Dis m'en plus"
+            ref={details}
+          />
+          <button
+            type="button"
+            className="primary-button"
+            onClick={handleClick}
+          >
+            Enregistrer
+          </button>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={handleClose}
+          >
+            Annuler
+          </button>
+          {fill && <p>Renseigne tous les champs</p>}
+        </form>
+      </Modal>
+      <Toaster />
     </>
   );
 }

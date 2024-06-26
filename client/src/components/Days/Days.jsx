@@ -33,12 +33,22 @@ export default function Days({
             Cette semaine
           </button>
         )}
-        {weekCounter < 0 && (
+        {weekCounter === -1 && (
+          <button type="button" className="days-current-button">
+            La semaine dernière
+          </button>
+        )}
+        {weekCounter === 1 && (
+          <button type="button" className="days-current-button">
+            La semaine prochaine
+          </button>
+        )}
+        {weekCounter < -1 && (
           <button type="button" className="days-current-button">
             Il y a {-weekCounter} semaine(s)
           </button>
         )}
-        {weekCounter > 0 && (
+        {weekCounter > 1 && (
           <button type="button" className="days-current-button">
             Dans {weekCounter} semaine(s)
           </button>

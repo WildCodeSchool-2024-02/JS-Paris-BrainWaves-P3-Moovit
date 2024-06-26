@@ -15,7 +15,8 @@
   height: 340px;
   background-color: var(--main);
   z-index: -1;
-  border-radius: 0 0 25% 25%;
+  border-bottom-right-radius: 60px 40px;
+  border-bottom-left-radius: 60px 40px;
 }
 
 .journal-days-container {

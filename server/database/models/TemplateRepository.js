@@ -32,4 +32,5 @@ class TemplateRepository extends AbstractRepository {
   }
 }
 
+
 module.exports = TemplateRepository;

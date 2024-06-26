@@ -11,7 +11,7 @@ const browse = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
   try {
-    const template = await tables.template.readTemplate(req.params.id);
+    const [template] = await tables.template.readTemplate(req.params.id);
     if (template == null) {
       res.sendStatus(404);
     } else {
@@ -25,8 +25,8 @@ const readById = async (req, res, next) => {
 
 const browseByUser = async (req, res, next) => {
   try {
-    const template = await tables.template.readAllByUser(req.params.id);
-    res.status(200).json(template);
+    const template = await tables.template.readAllByUser(req.auth.id);
+    res.status(201).json(template);
   } catch (err) {
     next(err);
   }
@@ -39,7 +39,7 @@ const add = async (req, res, next) => {
       title,
       duration,
       details,
-      req.body.user_id,
+      req.auth.id,
       req.body.sport_id
     );
     res.status(201).json(newTemplate);

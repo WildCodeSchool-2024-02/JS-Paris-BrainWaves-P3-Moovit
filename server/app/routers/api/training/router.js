@@ -10,28 +10,31 @@ const router = express.Router();
 const {
   browse,
   readById,
-  readToday,
   add,
   edit,
   destroy,
   readDay,
 } = require("../../../controllers/trainingActions");
+const { verifyToken } = require("../../../services/verifyToken");
 
-// Route to get a list of items
-router.get("/", browse);
+router.get("/", browse); // get all trainings for all users
+
+// Authentification Wall 
+router.use(verifyToken);
+
+// get a training by id
 router.get("/:id", readById);
 
-// Route to get all trainings for a user by current day
-router.get("/today/:id", readToday);
-
 // Route to get all trainings for a user at a giving date
-router.get("/:day/:id", readDay);
+router.get("/day/:day", readDay);
 
-// Route to add a new item
+// Route to add a new training
 router.post("/", add);
 
+// Route to edit a training
 router.put("/:id", edit);
 
+// Route to delete a training
 router.delete("/:id", destroy);
 
 /* ************************************************************************* */

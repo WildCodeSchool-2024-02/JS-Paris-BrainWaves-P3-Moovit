@@ -23,24 +23,10 @@ const readById = async (req, res, next) => {
   }
 };
 
-const readToday = async (req, res, next) => {
-  try {
-    const todaysTrainings = await tables.training.readToday(req.params.id);
-    if (todaysTrainings == null) {
-      res.sendStatus(404);
-    } else {
-      res.json(todaysTrainings);
-    }
-  } catch (err) {
-    // Pass any errors to the error-handling middleware
-    next(err);
-  }
-};
-
 const readDay = async (req, res, next) => {
   try {
     const todaysTrainings = await tables.training.readOneDay(
-      req.params.id,
+      req.auth.id,
       req.params.day
     );
     if (todaysTrainings == null) {
@@ -63,7 +49,7 @@ const add = async (req, res, next) => {
       duration,
       details,
       req.body.time_of_day,
-      req.body.user_id,
+      req.auth.id,
       req.body.sport_id
     );
     res.status(201).json(newTraining);
@@ -93,7 +79,6 @@ const destroy = async (req, res, next) => {
 module.exports = {
   browse,
   readById,
-  readToday,
   add,
   edit,
   destroy,

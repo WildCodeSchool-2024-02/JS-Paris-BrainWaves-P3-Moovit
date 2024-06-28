@@ -14,10 +14,17 @@ const {
   edit,
   destroy,
 } = require("../../../controllers/templateActions");
+const { verifyToken } = require("../../../services/verifyToken");
 
 router.get("/", browse);
-router.get("/:id", readById);
-router.get("/:id/all", browseByUser);
+
+// Authentification Wall 
+router.use(verifyToken);
+
+router.get("/all", browseByUser);
+
+router.get("/detail/:id", readById);
+
 router.post("/", add);
 
 router.put("/:id", edit);

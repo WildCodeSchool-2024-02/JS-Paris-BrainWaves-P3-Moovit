@@ -25,23 +25,17 @@ function TrainingForm({ id, training, handleClose }) {
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
 
-  // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
-  const getTemplates = async () => {
-    await fetch(`${api}/api/templates/${user.id}/all`)
-      .then((res) => res.json())
-      .then((data) => setTemplates(data))
-      .catch((err) => console.error(err));
-  };
-
   const handleSave = () => {
     fetch(`${api}/api/templates`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
       body: JSON.stringify({
         title,
         duration,
         details,
-        user_id: user.id,
         sport_id: sport,
       }),
     });
@@ -60,8 +54,14 @@ function TrainingForm({ id, training, handleClose }) {
   }, [templateId, templates]);
 
   useEffect(() => {
-    getTemplates();
-  }, []);
+    fetch(`${api}/api/templates/all`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setTemplates(data));
+  }, [api]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,7 +69,10 @@ function TrainingForm({ id, training, handleClose }) {
     if (!id) {
       fetch(`${api}/api/trainings`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
         body: JSON.stringify({
           title,
           date,
@@ -83,7 +86,10 @@ function TrainingForm({ id, training, handleClose }) {
     } else if (id) {
       fetch(`${api}/api/trainings/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
         body: JSON.stringify({
           title,
           date: datefns.format(date, "yyyy-MM-dd"),

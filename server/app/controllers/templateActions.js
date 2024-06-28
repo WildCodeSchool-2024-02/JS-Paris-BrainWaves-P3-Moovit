@@ -26,7 +26,7 @@ const readById = async (req, res, next) => {
 const browseByUser = async (req, res, next) => {
   try {
     const template = await tables.template.readAllByUser(req.auth.id);
-    res.status(201).json(template);
+    res.status(200).json(template);
   } catch (err) {
     next(err);
   }

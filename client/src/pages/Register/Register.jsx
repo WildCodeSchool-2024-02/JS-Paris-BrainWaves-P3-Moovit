@@ -46,8 +46,8 @@ function Register() {
 
   return (
     <main className="loginPage">
-      <img src={Logo} alt="logo" className="landing-logo" />
-      <section>
+      <img src={Logo} alt="logo" className="login-logo" />
+      <section className="login">
         <h1>Je crée mon compte</h1>
         <p className="loginIntro">
           Entre ton email et connecte toi à Moov'it !

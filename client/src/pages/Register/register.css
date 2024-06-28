@@ -1,8 +1,12 @@
+.login-logo {
+  margin: 0 0 100px;
+}
+
 .loginPage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   background-color: var(--light);
   min-height: 100vh;
   padding: 5vh 2vw;
@@ -12,8 +16,14 @@
     flex-direction: column;
   }
 
-  p {
+  p,
+  a,
+  h1 {
     text-align: center;
+  }
+
+  a {
+    margin: 10px 0;
   }
 }
 

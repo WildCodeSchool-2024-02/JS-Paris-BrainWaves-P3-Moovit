@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 import "./feedback.css";
 import { toast } from "sonner";
+import { useUser } from "../../contexts/User/User";
 
 export default function Feedback({
   open,
@@ -15,6 +16,7 @@ export default function Feedback({
 }) {
   const api = import.meta.env.VITE_API_URL;
 
+  const { user } = useUser();
   // Ref for the duration field
   const duration = useRef();
 
@@ -129,7 +131,10 @@ export default function Feedback({
             `${import.meta.env.VITE_API_URL}/api/trainings/${id}`,
             {
               method: "PUT",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${user.token}`,
+              },
               body: JSON.stringify({ is_completed: 1 }),
             }
           );

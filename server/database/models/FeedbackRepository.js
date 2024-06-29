@@ -19,34 +19,35 @@ class FeedbackRepository extends AbstractRepository {
 
   async create(feedback) {
     const [newFeedback] = await this.database.query(
-        `INSERT INTO ${this.table} 
+      `INSERT INTO ${this.table} 
         (duration, global, difficulty, after, details, training_id) VALUE (?, ?, ?, ?, ?, ?)
-        `, [feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, feedback.training_id]
+        `,
+      [
+        feedback.duration,
+        feedback.global,
+        feedback.difficulty,
+        feedback.after,
+        feedback.details,
+        feedback.training_id,
+      ]
     );
-    return newFeedback.insertId
+    return newFeedback.insertId;
   }
 
-  async readByDay(date){
+  async readByDay(date) {
     const [feedbacks] = await this.database.query(
-        `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
+      `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
         JOIN training ON feedback.training_id = training.id WHERE training.date = ?`,
-        [date]
+      [date]
     );
-    return feedbacks
+    return feedbacks;
   }
 
-  async readToday(){
-    const [feedbacks] = await this.database.query(
-        `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
-        JOIN training ON feedback.training_id = training.id WHERE training.date = CURDATE()`
-    );
-    return feedbacks
-  }
-
-  async changeStatus(id){
+  async changeStatus(id) {
     await this.database.query(
-      `UPDATE training SET is_completed = 0 WHERE id = ?`, [id]
-    )
+      `UPDATE training SET is_completed = 0 WHERE id = ?`,
+      [id]
+    );
   }
 }
 

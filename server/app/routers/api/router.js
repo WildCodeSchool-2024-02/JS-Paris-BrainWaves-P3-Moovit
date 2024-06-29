@@ -26,6 +26,10 @@ const feedbackRouter = require("./feedback/router");
 
 router.use("/feedbacks", feedbackRouter);
 
+const sportRouter = require("./sport/router");
+
+router.use("/sports", sportRouter);
+
 /* ************************************************************************* */
 
 module.exports = router;

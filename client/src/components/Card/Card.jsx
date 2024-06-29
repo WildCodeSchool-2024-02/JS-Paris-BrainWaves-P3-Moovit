@@ -8,13 +8,12 @@ import DarkModeContext from "../../services/DarkModeContext";
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
+import { useUser } from "../../contexts/User/User";
 
-export default function Card({
-  card,
-  handleOpen,
-  setCurrentTraining,
-  setStatusFeedback,
-}) {
+
+export default function Card({ card, handleOpen, setCurrentTraining, setStatusTraining, setStatusFeedback }) {
+
+  const { user } = useUser();
   const { mode } = useContext(DarkModeContext);
   const api = import.meta.env.VITE_API_URL;
 
@@ -33,7 +32,11 @@ export default function Card({
   const handleDelete = () => {
     fetch(`${api}/api/trainings/${card.id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
+    setStatusTraining(prev => !prev)
   };
 
   // Edit training with the cardMenu
@@ -93,4 +96,5 @@ Card.propTypes = {
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
   setStatusFeedback: PropTypes.func.isRequired,
+  setStatusTraining: PropTypes.func.isRequired,
 };

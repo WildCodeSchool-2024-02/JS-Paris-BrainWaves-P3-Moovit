@@ -6,17 +6,23 @@ import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./cardTemplate.css";
 import CardMenu from "../CardMenu/CardMenu";
+import { useUser } from "../../contexts/User/User";
 
 const api = import.meta.env.VITE_API_URL;
 
-export default function CardTemplate({ card, handleOpen, setCurrentTemplate }) {
+export default function CardTemplate({ card, handleOpen, setCurrentTemplate, setStatusTemplate }) {
   const { mode } = useContext(DarkModeContext);
+  const { user } = useUser();
   const navigate = useNavigate();
 
   const handleDelete = () => {
     fetch(`${api}/api/templates/${card.id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
+    setStatusTemplate(prev => !prev)
     navigate("/templates");
   };
 
@@ -33,7 +39,7 @@ export default function CardTemplate({ card, handleOpen, setCurrentTemplate }) {
       </section>
       <div className="card-type-training">
         <IoMdFitness />
-        <p>Entraînement | Fitness</p>
+        <p>Entraînement | {card.name}</p>
       </div>
       <div className="card-time-training">
         {card.duration ? (
@@ -54,10 +60,18 @@ CardTemplate.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    time_of_day: PropTypes.string.isRequired,
-    duration: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    time_of_day: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([undefined]),
+    ]),
+    duration: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.oneOf([undefined]),
+    ]),
     is_completed: PropTypes.bool,
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTemplate: PropTypes.func.isRequired,
+  setStatusTemplate: PropTypes.func.isRequired
 };

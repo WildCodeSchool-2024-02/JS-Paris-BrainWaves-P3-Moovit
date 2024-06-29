@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
 
@@ -8,6 +9,7 @@ function TrainingForm({ id, training, handleClose }) {
   const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
+  const sports = useOutletContext();
 
   const [title, setTitle] = useState(training?.title);
   const [date, setDate] = useState(
@@ -23,23 +25,17 @@ function TrainingForm({ id, training, handleClose }) {
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
 
-  // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
-  const getTemplates = async () => {
-    await fetch(`${api}/api/templates/${user.id}/all`)
-      .then((res) => res.json())
-      .then((data) => setTemplates(data))
-      .catch((err) => console.error(err));
-  };
-
   const handleSave = () => {
     fetch(`${api}/api/templates`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
       body: JSON.stringify({
         title,
         duration,
         details,
-        user_id: user.id,
         sport_id: sport,
       }),
     });
@@ -58,8 +54,14 @@ function TrainingForm({ id, training, handleClose }) {
   }, [templateId, templates]);
 
   useEffect(() => {
-    getTemplates();
-  }, []);
+    fetch(`${api}/api/templates/all`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setTemplates(data));
+  }, [api]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +69,10 @@ function TrainingForm({ id, training, handleClose }) {
     if (!id) {
       fetch(`${api}/api/trainings`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
         body: JSON.stringify({
           title,
           date,
@@ -81,7 +86,10 @@ function TrainingForm({ id, training, handleClose }) {
     } else if (id) {
       fetch(`${api}/api/trainings/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
         body: JSON.stringify({
           title,
           date: datefns.format(date, "yyyy-MM-dd"),
@@ -157,9 +165,13 @@ function TrainingForm({ id, training, handleClose }) {
         onChange={(e) => setSport(e.target.value)}
       >
         <option>Quel sport ? ⛹️</option>
-        <option value="1">Fitness</option>
-        <option value="2">Running</option>
-        <option value="3">Poney</option>
+        {sports
+          ? sports.map((activity) => (
+              <option key={activity.id} value={activity.id}>
+                {activity.name}
+              </option>
+            ))
+          : null}
       </select>
       <input
         type="text"

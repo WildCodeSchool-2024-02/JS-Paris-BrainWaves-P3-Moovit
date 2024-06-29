@@ -1,0 +1,48 @@
+.login-logo {
+  margin: 0 0 100px;
+}
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light);
+  min-height: 100vh;
+  padding: 5vh 2vw;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p,
+  a,
+  h1 {
+    text-align: center;
+  }
+
+  a {
+    margin: 10px 0;
+  }
+}
+
+#password-input {
+  position: relative;
+}
+
+.eye-password {
+  position: absolute;
+  right: 30px;
+  transform: translateY(150%);
+}
+
+.eye-password:hover {
+  color: var(--main);
+  transition: all 0.1s ease-in-out;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}

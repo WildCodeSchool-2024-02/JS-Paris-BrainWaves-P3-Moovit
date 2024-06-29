@@ -4,13 +4,7 @@ import PropTypes from "prop-types";
 const UserContext = createContext();
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState({
-    id: 1,
-    email: "king-julian@gmail.com",
-    password: "julian",
-    name: "Julian",
-    level: 1,
-  });
+  const [user, setUser] = useState(null);
 
   const memo = useMemo(() => ({ user, setUser }), [user, setUser]);
 
@@ -20,5 +14,6 @@ export function UserProvider({ children }) {
 export const useUser = () => useContext(UserContext);
 
 UserProvider.propTypes = {
-  children: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.object.isRequired,
 };

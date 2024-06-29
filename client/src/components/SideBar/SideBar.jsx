@@ -32,7 +32,7 @@ export default function SideBar() {
         </div>
         <div className="sidebar-link">
           <FaRegBookmark className="sidebar-logo" />
-          <Link to="/templates" className="sidebar-link-text">
+          <Link to='/templates' className="sidebar-link-text">
             Modèles
           </Link>
         </div>

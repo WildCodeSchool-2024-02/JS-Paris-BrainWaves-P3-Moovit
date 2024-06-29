@@ -29,13 +29,7 @@ class TemplateSeeder extends AbstractSeeder {
         details: trainingDetails,
         user_id: this.getRef(`user_0`).insertId,
         sport_id: this.getRef(`sport_0`).insertId,
-      },
-      {
-        title: "modèle de Maurice",
-        details: trainingDetails,
-        user_id: this.getRef(`user_1`).insertId,
-        sport_id: this.getRef(`sport_0`).insertId,
-      },
+      }
     ];
 
     templates.forEach((template) => this.insert(template));

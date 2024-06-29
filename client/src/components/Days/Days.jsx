@@ -11,6 +11,7 @@ export default function Days({
   setDayTraining,
   weekCounter,
   handleReturnToday,
+  getInterval,
 }) {
   // Function that handle display
   const handleDisplay = (day) => {
@@ -80,8 +81,12 @@ export default function Days({
             <p className="days-number">
               {day.date.slice(day.date.length - 2, day.date.length)}
             </p>
-            <p className="days-statut">statut</p>
-            <p className="days-statut-desktop">1 entrainement</p>
+            {getInterval.includes(day.date) && (
+              <p className="days-statut">Test</p>
+            )}
+            {!getInterval.includes(day.date) && (
+              <p className="days-rest">Repos</p>
+            )}
           </button>
         ))}
       </div>
@@ -110,4 +115,5 @@ Days.propTypes = {
   setDayTraining: PropTypes.func.isRequired,
   weekCounter: PropTypes.number.isRequired,
   handleReturnToday: PropTypes.func.isRequired,
+  getInterval: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

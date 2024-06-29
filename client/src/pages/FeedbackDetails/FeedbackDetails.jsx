@@ -10,12 +10,20 @@ import SideBar from "../../components/SideBar/SideBar";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import Validation from "../../components/Validation/Validation";
 import Feedback from "../../components/Feedback/Feedback";
+import { useUser } from "../../contexts/User/User";
 
 export default function FeedbackDetails() {
   const api = import.meta.env.VITE_API_URL;
-  const [feedback, setFeedback] = useState([])
+  const { user } = useUser();
+  const [feedback, setFeedback] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
 
   // Validation modal managing
   const [validation, setValidation] = useState(false);
@@ -82,8 +90,8 @@ export default function FeedbackDetails() {
 
   useEffect(() => {
     fetch(`${api}/api/feedbacks?id=${id}`)
-    .then(response => response.json())
-    .then(response => setFeedback(response[0]));
+      .then((response) => response.json())
+      .then((response) => setFeedback(response[0]));
   }, [statusFeedback, api, id]);
 
   const variants = {

@@ -1,13 +1,19 @@
-import { useLoaderData } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import CardTemplate from "../../components/CardTemplate/CardTemplate";
 import PopUpTemplate from "../../components/PopUp/PopUpTemplate/PopUpTemplate";
 import SideBar from "../../components/SideBar/SideBar";
 import "./templates.css";
+import { useUser } from "../../contexts/User/User";
 
 function Templates() {
-  const templates = useLoaderData();
+  const api = import.meta.env.VITE_API_URL;
+
+  const [templates, setTemplates] = useState([]);
+  const [statusTemplate, setStatusTemplate] = useState(false);
+  const { user } = useUser();
+
   const [currentTemplate, setCurrentTemplate] = useState(null);
   // Get template ID for edition
   const findCurrentTemplate = templates.find(
@@ -19,7 +25,20 @@ function Templates() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
+    setCurrentTemplate(null);
   };
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) navigate("/login");
+    fetch(`${api}/api/templates/all`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setTemplates(data));
+  }, [api, open, statusTemplate]);
 
   return (
     <>
@@ -28,10 +47,11 @@ function Templates() {
         {templates ? (
           templates.map((template) => (
             <CardTemplate
-              key={template.id}
+              key={`template-${template.id}`}
               card={template}
               setCurrentTemplate={setCurrentTemplate}
               handleOpen={handleOpen}
+              setStatusTemplate={setStatusTemplate}
             />
           ))
         ) : (

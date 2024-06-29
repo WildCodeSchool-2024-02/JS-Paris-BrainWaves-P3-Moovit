@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
@@ -18,6 +19,7 @@ export default function Journal() {
   const { user } = useUser();
 
   const [currentTraining, setCurrentTraining] = useState(null);
+  const [statusTraining, setStatusTraining] = useState(false);
 
   // Managing modal
   const [open, setOpen] = useState(false);
@@ -56,6 +58,7 @@ export default function Journal() {
   const [feedbacks, setFeedbacks] = useState([]);
   // Loading state feedbacks
   const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
+  const navigate = useNavigate();
 
   // State pour gestion de toast
   const [statusFeedback, setStatusFeedback] = useState(false);
@@ -74,6 +77,9 @@ export default function Journal() {
   // State pour récupérer l'id du feedback cliquer
   const [idFeedback, setIdFeedback] = useState("");
   const [trainingFeedback, setTrainingFeedback] = useState("");
+
+  // State to get all training for a week
+  const [getInterval, setGetInterval] = useState([]);
 
   // Delete feedback if yes is clicked
   const handleDeleteFeedback = async () => {
@@ -102,33 +108,6 @@ export default function Journal() {
       toast.error("Une erreur est survenue, veuillez réessayer plus tard");
     }
   };
-
-  // Get datas to get trainings for a giving day
-  useEffect(() => {
-    setLoadingTips(false);
-    setLoadingTrainings(false);
-    setLoadingFeedbacks(false);
-    fetch(
-      `${import.meta.env.VITE_API_URL}/api/trainings/${dayTraining}/${user.id}`
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setTrainings(response);
-        setLoadingTrainings(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTips(response);
-        setLoadingTips(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`)
-      .then((response) => response.json())
-      .then((response) => {
-        setFeedbacks(response);
-        setLoadingFeedbacks(true);
-      });
-  }, [dayTraining, open, user.id, statusFeedback]);
 
   // Days of the week
   const daysWeek = [
@@ -199,6 +178,55 @@ export default function Journal() {
   const daysOfWeek = formated(
     datefns.eachDayOfInterval({ start: firstDay, end: lastDay })
   );
+
+  // Get datas to get trainings for a giving day
+  useEffect(() => {
+    if (!user) navigate("/login");
+    setLoadingTips(false);
+    setLoadingTrainings(false);
+    setLoadingFeedbacks(false);
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        setTrainings(response);
+        setLoadingTrainings(true);
+      });
+    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
+      .then((response) => response.json())
+      .then((response) => {
+        setTips(response);
+        setLoadingTips(true);
+      });
+    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`)
+      .then((response) => response.json())
+      .then((response) => {
+        setFeedbacks(response);
+        setLoadingFeedbacks(true);
+      });
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/interval`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      body: JSON.stringify({
+        firstDay: datefns.format(firstDay, "yyyy-MM-dd"),
+        lastDay: datefns.format(lastDay, "yyyy-MM-dd"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const newArray = [];
+        res.forEach((value) =>
+          newArray.push(datefns.format(value.date, "yyyy-MM-dd"))
+        );
+        setGetInterval(newArray);
+      });
+  }, [dayTraining, open, statusTraining, statusFeedback, currentDate]);
 
   // Display the previous week
   const handlePrev = () => {
@@ -300,6 +328,7 @@ export default function Journal() {
                 handleOpen={handleOpen}
                 setCurrentTraining={setCurrentTraining}
                 setStatusFeedback={setStatusFeedback}
+                setStatusTraining={setStatusTraining}
               />
             ))}
           </div>
@@ -338,6 +367,7 @@ export default function Journal() {
             setDayTraining={setDayTraining}
             weekCounter={weekCounter}
             handleReturnToday={handleReturnToday}
+            getInterval={getInterval}
           />
         </div>
       </div>

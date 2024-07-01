@@ -201,7 +201,11 @@ export default function Journal() {
         setTips(response);
         setLoadingTips(true);
       });
-    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    })
       .then((response) => response.json())
       .then((response) => {
         setFeedbacks(response);

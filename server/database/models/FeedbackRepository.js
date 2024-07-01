@@ -34,11 +34,11 @@ class FeedbackRepository extends AbstractRepository {
     return newFeedback.insertId;
   }
 
-  async readByDay(date) {
+  async readByDay(date, id) {
     const [feedbacks] = await this.database.query(
       `SELECT feedback.id as id, feedback.duration, feedback.global, feedback.difficulty, feedback.after, feedback.details, training.time_of_day, training.title, training.sport_id, training.id as training_id FROM ${this.table} 
-        JOIN training ON feedback.training_id = training.id WHERE training.date = ?`,
-      [date]
+        JOIN training ON feedback.training_id = training.id WHERE training.date = ? AND training.user_id = ?`,
+      [date, id]
     );
     return feedbacks;
   }

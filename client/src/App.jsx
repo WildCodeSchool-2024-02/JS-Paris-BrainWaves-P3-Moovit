@@ -12,7 +12,7 @@ function App() {
   return (
     <main className={`container ${mode}`}>
       <DarkMode />
-      <Outlet context={sports} />
+      <Outlet context={{ sports }} />
     </main>
   );
 }

@@ -78,7 +78,7 @@ const destroy = async (req, res, next) => {
 
 const intervalWeek = async (req, res, next) => {
   try {
-    const interval = await tables.training.readInterval(req.body)
+    const interval = await tables.training.readInterval(req.body, req.auth.id)
     res.json(interval)
   } catch (error) {
     next(error)

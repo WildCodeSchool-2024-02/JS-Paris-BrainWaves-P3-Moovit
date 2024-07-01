@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
@@ -15,6 +15,7 @@ import { useUser } from "../../contexts/User/User";
 export default function FeedbackDetails() {
   const api = import.meta.env.VITE_API_URL;
   const { user } = useUser();
+  const { sports } = useOutletContext();
   const [feedback, setFeedback] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -105,6 +106,10 @@ export default function FeedbackDetails() {
     },
   };
 
+  const idSport = sports?.find(
+    (value) => feedback?.sport_id === value.id
+  )?.name;
+
   return (
     <section className="feedbackdetail-page">
       <motion.div
@@ -119,7 +124,9 @@ export default function FeedbackDetails() {
         </div>
         <div className="feedbackdetail-type-training">
           <IoMdFitness className="feedbackdetail-logo-type" />
-          <p>Entraînement | {feedback?.sport_id}</p>
+          <p>
+            Entraînement | {idSport ? idSport.charAt(0).toUpperCase() + idSport.slice(1) : idSport}
+          </p>
         </div>
         <div className="feedbackdetail-duration-container">
           <CiClock2 className="feedbackdetail-logo-type" />

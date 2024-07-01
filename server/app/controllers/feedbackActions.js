@@ -48,7 +48,7 @@ const destroy = async (req, res, next) => {
 
 const readFeedbackDay = async (req, res, next) => {
   try {
-    const feedbacks = await tables.feedback.readByDay(req.params.day);
+    const feedbacks = await tables.feedback.readByDay(req.params.day, req.auth.id);
     res.status(200).json(feedbacks);
   } catch (error) {
     next(error);

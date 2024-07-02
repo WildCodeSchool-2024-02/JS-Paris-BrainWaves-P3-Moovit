@@ -9,14 +9,47 @@ const login = async (req, res, next) => {
     const verify = await argon.verify(user.password, req.body.password);
     if (verify) {
       delete user.password;
-      const token = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
+      const accessToken = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
         expiresIn: "1h",
       });
-      res.json({ id: user.id, details: user, token });
+      const refreshToken = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
+        expiresIn: "1d",
+      });
+      res
+        .status(200)
+        .cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          sameSite: "lax",
+          expires: new Date(Date.now() + 90000000)
+        })
+        .header("Authorization", accessToken)
+        .json(user);
     } else res.status(422).json("wrong credentials");
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { login };
+const refresh = async (req, res, next) => {
+  const {refreshToken} = req.cookies;
+  try {
+    if (!refreshToken) {
+      res.sendStatus(401).send("Access denied, no refresToken provided");
+    }
+    const decoded = jwt.verify(refreshToken, process.env.APP_SECRET);
+    const [user] = await tables.user.readOne(decoded.id);
+    delete user.password;
+    const accessToken = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
+      expiresIn: "1h",
+    });
+    res.status(200).header("Authorization", accessToken).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const logout = async ({res}) => {
+  res.clearCookie('refreshToken').sendStatus(200)
+}
+
+module.exports = { login, refresh, logout };

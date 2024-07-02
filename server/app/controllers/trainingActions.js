@@ -18,7 +18,6 @@ const readById = async (req, res, next) => {
       res.json(training);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -35,7 +34,6 @@ const readDay = async (req, res, next) => {
       res.json(todaysTrainings);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };

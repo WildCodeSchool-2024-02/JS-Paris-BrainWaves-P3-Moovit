@@ -18,7 +18,6 @@ const readById = async (req, res, next) => {
       res.json(user);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };

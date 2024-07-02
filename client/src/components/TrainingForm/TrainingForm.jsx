@@ -9,7 +9,7 @@ function TrainingForm({ id, training, handleClose }) {
   const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
-  const sports = useOutletContext();
+  const { sports } = useOutletContext();
 
   const [title, setTitle] = useState(training?.title);
   const [date, setDate] = useState(

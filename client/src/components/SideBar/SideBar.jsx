@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaRegUserCircle, FaRegBookmark, FaRegCompass } from "react-icons/fa";
 import { useContext } from "react";
 import Logo from "../../assets/images/Logo.svg";
@@ -7,6 +7,24 @@ import "./sidebar.css";
 
 export default function SideBar() {
   const { mode } = useContext(DarkModeContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/auth/logout`,
+        {
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <section id={`sidebar-${mode}`}>
@@ -32,10 +50,13 @@ export default function SideBar() {
         </div>
         <div className="sidebar-link">
           <FaRegBookmark className="sidebar-logo" />
-          <Link to='/templates' className="sidebar-link-text">
+          <Link to="/templates" className="sidebar-link-text">
             Modèles
           </Link>
         </div>
+        <button type="button" onClick={handleLogout}>
+          Disconnect
+        </button>
         <div className="sidebar-footer-container">
           <p>
             Un site réalisé avec amour par Antoine Delalande et Anthony Dufrenot

@@ -10,7 +10,6 @@ import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
 import { useUser } from "../../contexts/User/User";
 
-
 export default function Card({ card, handleOpen, setCurrentTraining, setStatusTraining, setStatusFeedback }) {
 
   const { user } = useUser();

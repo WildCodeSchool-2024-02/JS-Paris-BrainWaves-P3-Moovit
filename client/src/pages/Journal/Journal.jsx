@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
@@ -17,6 +17,9 @@ import Validation from "../../components/Validation/Validation";
 export default function Journal() {
   // Import user
   const { user } = useUser();
+
+  // State to know is the first loading is finished 
+  const { isLoading } = useOutletContext();
 
   const [currentTraining, setCurrentTraining] = useState(null);
   const [statusTraining, setStatusTraining] = useState(false);
@@ -58,7 +61,6 @@ export default function Journal() {
   const [feedbacks, setFeedbacks] = useState([]);
   // Loading state feedbacks
   const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
-  const navigate = useNavigate();
 
   // State pour gestion de toast
   const [statusFeedback, setStatusFeedback] = useState(false);
@@ -181,56 +183,67 @@ export default function Journal() {
 
   // Get datas to get trainings for a giving day
   useEffect(() => {
-    if (!user) navigate("/login");
-    setLoadingTips(false);
-    setLoadingTrainings(false);
-    setLoadingFeedbacks(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setTrainings(response);
-        setLoadingTrainings(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTips(response);
-        setLoadingTips(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setFeedbacks(response);
-        setLoadingFeedbacks(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/interval`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user.token}`,
-      },
-      body: JSON.stringify({
-        firstDay: datefns.format(firstDay, "yyyy-MM-dd"),
-        lastDay: datefns.format(lastDay, "yyyy-MM-dd"),
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        const newArray = [];
-        res.forEach((value) =>
-          newArray.push(datefns.format(value.date, "yyyy-MM-dd"))
-        );
-        setGetInterval(newArray);
-      });
-  }, [dayTraining, open, statusTraining, statusFeedback, currentDate]);
+    if (!isLoading) {
+      setLoadingTips(false);
+      setLoadingTrainings(false);
+      setLoadingFeedbacks(false);
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          setTrainings(response);
+          setLoadingTrainings(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
+        .then((response) => response.json())
+        .then((response) => {
+          setTips(response);
+          setLoadingTips(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setFeedbacks(response);
+          setLoadingFeedbacks(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/trainings/interval`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          firstDay: datefns.format(firstDay, "yyyy-MM-dd"),
+          lastDay: datefns.format(lastDay, "yyyy-MM-dd"),
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          const newArray = [];
+          res.forEach((value) =>
+            newArray.push(datefns.format(value.date, "yyyy-MM-dd"))
+          );
+          setGetInterval(newArray);
+        });
+    }
+  }, [
+    dayTraining,
+    open,
+    statusTraining,
+    statusFeedback,
+    currentDate,
+    isLoading,
+  ]);
 
   // Display the previous week
   const handlePrev = () => {

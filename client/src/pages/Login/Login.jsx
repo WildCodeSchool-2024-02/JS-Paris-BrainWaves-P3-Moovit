@@ -2,7 +2,6 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
-
 import "../Register/register.css";
 import { useUser } from "../../contexts/User/User";
 
@@ -29,9 +28,12 @@ function Login() {
           email: email.current.value,
           password: password.current.value,
         }),
+        credentials: "include",
       });
       if (response.ok) {
+        const token = response.headers.get("Authorization");
         const auth = await response.json();
+        auth.token = token;
         setUser(auth);
         navigate("/journal");
       } else setError(true);
@@ -39,7 +41,6 @@ function Login() {
       console.error(err);
     }
   };
-
   return (
     <main className="loginPage">
       <img src={Logo} alt="logo" className="login-logo" />

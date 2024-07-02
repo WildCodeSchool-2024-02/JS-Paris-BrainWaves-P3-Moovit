@@ -14,7 +14,7 @@ const {
   edit,
   destroy,
 } = require("../../../controllers/userActions");
-const {login} = require("../../../controllers/authActions")
+const {login, refresh, logout } = require("../../../controllers/authActions")
 const { hashPassword } = require("../../../services/hashPassword");
 const { schema, validateSchema } = require("../../../services/validateData");
 
@@ -29,6 +29,12 @@ router.post('/login', login)
 router.put("/:id", edit);
 
 router.delete("/:id", destroy);
+
+router.get("/refresh/page", refresh);
+
+router.get("/auth/logout", logout)
+
+
 
 /* ************************************************************************* */
 

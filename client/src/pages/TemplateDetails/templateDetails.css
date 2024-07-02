@@ -83,3 +83,12 @@
   box-shadow: none;
   align-self: flex-end;
 }
+
+.templatedetail-logo-type {
+  font-size: 1.4em;
+  color: var(--template-dark);
+}
+
+.templatedetail-title {
+  color: var(--template-dark);
+}

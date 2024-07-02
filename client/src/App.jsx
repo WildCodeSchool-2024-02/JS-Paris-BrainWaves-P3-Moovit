@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { useContext, useEffect, useState } from "react";
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import { toast } from "sonner";
 import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
@@ -12,7 +12,6 @@ function App() {
   const { mode } = useContext(DarkModeContext);
   const { setUser } = useUser();
   const sports = useLoaderData();
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 
   const api = import.meta.env.VITE_API_URL;
@@ -29,11 +28,10 @@ function App() {
         setUser(auth);
         setIsLoading(false);
       } else {
-        navigate("/login");
         setIsLoading(false);
       }
     } catch (error) {
-      toast.error('Token not valid');
+      toast.error("Token not valid");
       setIsLoading(false);
     }
   };

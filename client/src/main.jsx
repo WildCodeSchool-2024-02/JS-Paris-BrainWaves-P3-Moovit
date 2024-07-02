@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import { DarkModeContextProvider } from "./services/DarkModeContext";
-import { UserProvider } from "./contexts/User/User";
+import { UserProvider, useUser } from "./contexts/User/User";
 import Training from "./pages/Training/Training";
 import App from "./App";
 import Journal from "./pages/Journal/Journal";
@@ -15,6 +20,21 @@ import FeedbackDetails from "./pages/FeedbackDetails/FeedbackDetails";
 
 const api = import.meta.env.VITE_API_URL;
 
+const PrivateRoute = ({ children }) => {
+  const { user } = useUser();
+  const { isLoading } = useOutletContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!user) navigate("/login");
+    }
+  }, [user, isLoading, navigate]);
+
+  if (!isLoading && user) return children;
+  return "...loading";
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,38 +42,60 @@ const router = createBrowserRouter([
     loader: () => fetch(`${api}/api/sports`),
     children: [
       {
-        path: "/training/:id",
-        element: <Training />,
+        path: "/",
+        element: (
+          <Landing />
+        ),
       },
       {
-        path: "/",
-        element: <Landing />,
+        path: "/training/:id",
+        element: (
+          <PrivateRoute>
+            <Training />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/journal",
-        element: <Journal />,
+        element: (
+          <PrivateRoute>
+            <Journal />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/templates",
-        element: <Templates />,
+        element: (
+          <PrivateRoute>
+            <Templates />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/templates/:id",
-        element: <TemplateDetails />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
+        element: (
+          <PrivateRoute>
+            <TemplateDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/feedback/:id",
-        element: <FeedbackDetails />,
+        element: (
+          <PrivateRoute>
+            <FeedbackDetails />
+          </PrivateRoute>
+        ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ]);
 

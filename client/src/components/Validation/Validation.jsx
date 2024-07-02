@@ -22,7 +22,7 @@ export default function Validation({ handleClose, handleDeleteFeedback }) {
           },
         }}
       >
-        <p>Es-tu sur de vouloir supprimer ce feedback ?</p>
+        <p>Es-tu sûr de vouloir supprimer ce feedback ?</p>
         <div className="validation-button-container">
           <button
             type="button"

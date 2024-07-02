@@ -1,0 +1,79 @@
+.validation-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.validation-container-light {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 40%;
+  width: 60%;
+  border-radius: 10px;
+  background-color: white;
+  padding: 0 20px;
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.validation-container-dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  height: 40%;
+  width: 60%;
+  border-radius: 10px;
+  background-color: rgb(40, 40, 40);
+  padding: 0 20px;
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.validation-container-light p {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.validation-container-dark p {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.validation-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.validation-yes {
+  background-color: var(--main);
+  color: white;
+}
+
+@media (max-width: 1024px) {
+  .validation-container-light {
+    width: 80%;
+  }
+
+  .validation-container-dark {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .validation-container-light {
+    height: 30%;
+  }
+
+  .validation-container-dark {
+    height: 30%;
+  }
+}

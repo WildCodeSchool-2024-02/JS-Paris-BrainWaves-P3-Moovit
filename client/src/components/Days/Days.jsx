@@ -1,8 +1,6 @@
-/* eslint-disable import/no-duplicates */
 import PropTypes from "prop-types";
 import * as datefns from "date-fns";
-import { IoIosArrowForward } from "react-icons/io";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import "./days.css";
 
 export default function Days({
@@ -13,6 +11,7 @@ export default function Days({
   setDayTraining,
   weekCounter,
   handleReturnToday,
+  getInterval,
 }) {
   // Function that handle display
   const handleDisplay = (day) => {
@@ -35,12 +34,22 @@ export default function Days({
             Cette semaine
           </button>
         )}
-        {weekCounter < 0 && (
+        {weekCounter === -1 && (
+          <button type="button" className="days-current-button">
+            La semaine dernière
+          </button>
+        )}
+        {weekCounter === 1 && (
+          <button type="button" className="days-current-button">
+            La semaine prochaine
+          </button>
+        )}
+        {weekCounter < -1 && (
           <button type="button" className="days-current-button">
             Il y a {-weekCounter} semaine(s)
           </button>
         )}
-        {weekCounter > 0 && (
+        {weekCounter > 1 && (
           <button type="button" className="days-current-button">
             Dans {weekCounter} semaine(s)
           </button>
@@ -72,8 +81,12 @@ export default function Days({
             <p className="days-number">
               {day.date.slice(day.date.length - 2, day.date.length)}
             </p>
-            <p className="days-statut">statut</p>
-            <p className="days-statut-desktop">1 entrainement</p>
+            {getInterval.includes(day.date) && (
+              <p className="days-statut">Test</p>
+            )}
+            {!getInterval.includes(day.date) && (
+              <p className="days-rest">Repos</p>
+            )}
           </button>
         ))}
       </div>
@@ -102,4 +115,5 @@ Days.propTypes = {
   setDayTraining: PropTypes.func.isRequired,
   weekCounter: PropTypes.number.isRequired,
   handleReturnToday: PropTypes.func.isRequired,
+  getInterval: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

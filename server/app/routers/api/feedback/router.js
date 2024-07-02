@@ -14,12 +14,13 @@ const {
   edit,
   readFeedbackDay,
 } = require("../../../controllers/feedbackActions");
+const { verifyToken } = require("../../../services/verifyToken");
 
 // Route to get a list of feedbacks
 router.get("/", browse);
 
 // Route to get all feedbacks for a given day
-router.get("/:day", readFeedbackDay);
+router.get("/:day", verifyToken, readFeedbackDay);
 
 // Route to add a new feedback
 router.post("/", add);

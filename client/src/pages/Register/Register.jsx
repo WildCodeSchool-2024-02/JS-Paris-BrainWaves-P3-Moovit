@@ -2,7 +2,6 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
-
 import "./register.css";
 
 function Register() {

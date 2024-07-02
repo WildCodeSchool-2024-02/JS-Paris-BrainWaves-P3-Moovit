@@ -14,6 +14,7 @@ const {
   edit,
   destroy,
   readDay,
+  intervalWeek,
 } = require("../../../controllers/trainingActions");
 const { verifyToken } = require("../../../services/verifyToken");
 
@@ -36,6 +37,9 @@ router.put("/:id", edit);
 
 // Route to delete a training
 router.delete("/:id", destroy);
+
+// Route to get all trainings for one given week
+router.post("/interval", intervalWeek)
 
 /* ************************************************************************* */
 

@@ -96,7 +96,6 @@ function TemplateForm({ id, training, handleClose }) {
         placeholder="Enregistre les détails de ton activité ici 👌"
         onChange={(e) => setDetails(e.target.value)}
       />
-
       <button type="submit" className="primary-button">
         Enregistrer
       </button>

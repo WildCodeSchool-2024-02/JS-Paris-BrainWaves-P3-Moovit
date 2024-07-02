@@ -18,7 +18,6 @@ const readById = async (req, res, next) => {
       res.json(training);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -35,7 +34,6 @@ const readDay = async (req, res, next) => {
       res.json(todaysTrainings);
     }
   } catch (err) {
-    // Pass any errors to the error-handling middleware
     next(err);
   }
 };
@@ -76,6 +74,15 @@ const destroy = async (req, res, next) => {
   }
 };
 
+const intervalWeek = async (req, res, next) => {
+  try {
+    const interval = await tables.training.readInterval(req.body, req.auth.id)
+    res.json(interval)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   browse,
   readById,
@@ -83,4 +90,5 @@ module.exports = {
   edit,
   destroy,
   readDay,
+  intervalWeek,
 };

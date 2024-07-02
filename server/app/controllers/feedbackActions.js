@@ -1,13 +1,14 @@
 const tables = require("../../database/tables");
 
-const browse = async ({ res, next }) => {
+const browse = async ( req, res, next ) => {
   try {
-    const feedbacks = await tables.feedback.readAll();
+    const feedbacks = await tables.feedback.readAll(req.query);
     res.status(200).json(feedbacks);
   } catch (err) {
     next(err);
   }
 };
+
 
 const add = async (req, res, next) => {
   try {
@@ -47,12 +48,13 @@ const destroy = async (req, res, next) => {
 
 const readFeedbackDay = async (req, res, next) => {
   try {
-    const feedbacks = await tables.feedback.readByDay(req.params.day);
+    const feedbacks = await tables.feedback.readByDay(req.params.day, req.auth.id);
     res.status(200).json(feedbacks);
   } catch (error) {
     next(error);
   }
 };
+
 
 module.exports = {
   add,

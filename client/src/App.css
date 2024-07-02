@@ -38,6 +38,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.blocked {
+  overflow-y: hidden;
+}
+
 :root {
   --font: "Yaldevi", sans serif;
   --dark: #0d1117;

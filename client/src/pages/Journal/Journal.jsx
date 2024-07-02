@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
@@ -12,11 +12,14 @@ import SideBar from "../../components/SideBar/SideBar";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 import { useUser } from "../../contexts/User/User";
-
+import Validation from "../../components/Validation/Validation";
 
 export default function Journal() {
   // Import user
   const { user } = useUser();
+
+  // State to know is the first loading is finished 
+  const { isLoading } = useOutletContext();
 
   const [currentTraining, setCurrentTraining] = useState(null);
   const [statusTraining, setStatusTraining] = useState(false);
@@ -58,37 +61,55 @@ export default function Journal() {
   const [feedbacks, setFeedbacks] = useState([]);
   // Loading state feedbacks
   const [loadingFeedbacks, setLoadingFeedbacks] = useState(false);
-  const navigate = useNavigate();
 
-  // Get datas to get trainings for a giving day
-  useEffect(() => {
-    if (!user) navigate('/login')
-    setLoadingTips(false);
-    setLoadingTrainings(false);
-    setLoadingFeedbacks(false);
-    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        setTrainings(response);
-        setLoadingTrainings(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
-      .then((response) => response.json())
-      .then((response) => {
-        setTips(response);
-        setLoadingTips(true);
-      });
-    fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`)
-      .then((response) => response.json())
-      .then((response) => {
-        setFeedbacks(response);
-        setLoadingFeedbacks(true);
-      });
-  }, [dayTraining, open, statusTraining]);
+  // State pour gestion de toast
+  const [statusFeedback, setStatusFeedback] = useState(false);
+
+  // Validation modal managing
+  const [validation, setValidation] = useState(false);
+  const handleCloseValidation = () => {
+    setValidation(false);
+    document.body.classList.remove("blocked");
+  };
+  const handleOpenValidation = () => {
+    setValidation(true);
+    document.body.classList.add("blocked");
+  };
+
+  // State pour récupérer l'id du feedback cliquer
+  const [idFeedback, setIdFeedback] = useState("");
+  const [trainingFeedback, setTrainingFeedback] = useState("");
+
+  // State to get all training for a week
+  const [getInterval, setGetInterval] = useState([]);
+
+  // Delete feedback if yes is clicked
+  const handleDeleteFeedback = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/feedbacks/${idFeedback}/${trainingFeedback}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        toast.success("Feedback supprimé avec succès", {
+          style: {
+            background: "rgba(145, 225, 166, 0.8)",
+            color: "black",
+          },
+        });
+      } else {
+        toast.error(
+          "Une erreur est survenue, le feedback n'a pas pu être supprimé"
+        );
+      }
+      handleCloseValidation();
+      setStatusFeedback((prevStatus) => !prevStatus);
+    } catch (err) {
+      toast.error("Une erreur est survenue, veuillez réessayer plus tard");
+    }
+  };
 
   // Days of the week
   const daysWeek = [
@@ -160,6 +181,70 @@ export default function Journal() {
     datefns.eachDayOfInterval({ start: firstDay, end: lastDay })
   );
 
+  // Get datas to get trainings for a giving day
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingTips(false);
+      setLoadingTrainings(false);
+      setLoadingFeedbacks(false);
+      fetch(
+        `${import.meta.env.VITE_API_URL}/api/trainings/day/${dayTraining}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          setTrainings(response);
+          setLoadingTrainings(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/tips`)
+        .then((response) => response.json())
+        .then((response) => {
+          setTips(response);
+          setLoadingTips(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/feedbacks/${dayTraining}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          setFeedbacks(response);
+          setLoadingFeedbacks(true);
+        });
+      fetch(`${import.meta.env.VITE_API_URL}/api/trainings/interval`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          firstDay: datefns.format(firstDay, "yyyy-MM-dd"),
+          lastDay: datefns.format(lastDay, "yyyy-MM-dd"),
+        }),
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          const newArray = [];
+          res.forEach((value) =>
+            newArray.push(datefns.format(value.date, "yyyy-MM-dd"))
+          );
+          setGetInterval(newArray);
+        });
+    }
+  }, [
+    dayTraining,
+    open,
+    statusTraining,
+    statusFeedback,
+    currentDate,
+    isLoading,
+  ]);
+
   // Display the previous week
   const handlePrev = () => {
     const date = new Date(
@@ -198,106 +283,128 @@ export default function Journal() {
   );
 
   return (
-    <>
-      <Toaster />
-      <section className="journal">
-        <div className="journal-first-container">
-          <div className="journal-orange-block">
-            <div className="journal-elements">
-              <h1 className="journal-day-desktop">
-                {day} {numb} {month}
-              </h1>
-            </div>
-            {trainings.length === 0 ? (
-              <p className="journal-motivation">
-                Aujourd’hui, tu n'as rien de prévu ! Profites en pour te
-                reposer.
-              </p>
-            ) : (
-              <p className="journal-motivation">
-                Aujourd’hui, tu as {trainings.length} entraînement
-                {trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
-                faire.
-              </p>
-            )}
+    <section className="journal">
+      <div className="journal-first-container">
+        <div className="journal-orange-block">
+          <div className="journal-elements">
+            <h1 className="journal-day-desktop">
+              {day} {numb} {month}
+            </h1>
           </div>
-          <button
-            type="button"
-            className="journal-add-button"
-            onClick={handleOpen}
-          >
-            <p>Ajouter une activité</p>
-            <FaPlus />
-          </button>
-          {loadingFeedbacks && (
-            <div className="journal-card">
-              {feedbacks.map((feedback) => (
-                <FeedbackCard key={feedback.id} feedback={feedback} />
-              ))}
-            </div>
+          {dayTraining === datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {trainings.length === 0
+                ? "Aujourd’hui, tu n'as rien de prévu ! Profites en pour te reposer."
+                : `Aujourd’hui, tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ! Courage, tu peux le
+              faire.`}
+            </p>
           )}
-          {loadingTrainings && (
-            <div className="journal-card">
-              {trainings.map((card) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  handleOpen={handleOpen}
-                  setCurrentTraining={setCurrentTraining}
-                  setStatusTraining={setStatusTraining}
-                />
-              ))}
-            </div>
+          {dayTraining < datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {feedbacks.length > 0 || trainings.length > 0
+                ? `Tu avais ${feedbacks.length + trainings.length} entraînement${feedbacks.length + trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Bravo à toi`
+                : "Tu n'avais rien de prévu ce jour là !"}
+            </p>
           )}
-          {trainings.length > 0 && loadingTips && (
-            <div className="journal-card">
-              <TipsCard
-                tip={
-                  tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]
-                }
-              />
-            </div>
-          )}
-          {trainings.length === 0 && loadingTips && (
-            <div className="journal-card">
-              <TipsCard
-                tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
-              />
-            </div>
-          )}
-          {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
-            <button
-              type="button"
-              className="days-button-today-mobile"
-              onClick={handleReturnToday}
-            >
-              Retour à aujourd'hui
-            </button>
+          {dayTraining > datefns.format(new Date(), "yyyy-MM-dd") && (
+            <p className="journal-motivation">
+              {trainings.length === 0
+                ? "Tu n'as rien de prévu ce jour là ! Profites en pour te reposer"
+                : `Tu as ${trainings.length} entraînement${trainings.length > 1 ? "s" : ""} de prévu ce jour là ! Courage tu peux le faire !`}
+            </p>
           )}
         </div>
-        <div className="journal-second-container">
-          <div className="journal-days-container">
-            <Days
-              daysOfWeek={daysOfWeek}
-              handlePrev={handlePrev}
-              handleNext={handleNext}
-              dayTraining={dayTraining}
-              setDayTraining={setDayTraining}
-              weekCounter={weekCounter}
-              handleReturnToday={handleReturnToday}
+        <button
+          type="button"
+          className="journal-add-button"
+          onClick={handleOpen}
+        >
+          <p>Ajouter une activité</p>
+          <FaPlus />
+        </button>
+        {loadingFeedbacks && (
+          <div className="journal-card">
+            {feedbacks.map((feedback) => (
+              <FeedbackCard
+                key={feedback.id}
+                feedback={feedback}
+                setStatusFeedback={setStatusFeedback}
+                setIdFeedback={setIdFeedback}
+                setTrainingFeedback={setTrainingFeedback}
+                handleOpenValidation={handleOpenValidation}
+              />
+            ))}
+          </div>
+        )}
+        {loadingTrainings && (
+          <div className="journal-card">
+            {trainings.map((card) => (
+              <Card
+                key={card.id}
+                card={card}
+                handleOpen={handleOpen}
+                setCurrentTraining={setCurrentTraining}
+                setStatusFeedback={setStatusFeedback}
+                setStatusTraining={setStatusTraining}
+              />
+            ))}
+          </div>
+        )}
+        {trainings.length > 0 && loadingTips && (
+          <div className="journal-card">
+            <TipsCard
+              tip={tipsTraining[Math.ceil(Math.random() * tipsTraining.length)]}
             />
           </div>
+        )}
+        {trainings.length === 0 && loadingTips && (
+          <div className="journal-card">
+            <TipsCard
+              tip={tipsRepos[Math.ceil(Math.random() * tipsRepos.length)]}
+            />
+          </div>
+        )}
+        {dayTraining !== datefns.format(new Date(), "yyyy-MM-dd") && (
+          <button
+            type="button"
+            className="days-button-today-mobile"
+            onClick={handleReturnToday}
+          >
+            Retour à aujourd'hui
+          </button>
+        )}
+      </div>
+      <div className="journal-second-container">
+        <div className="journal-days-container">
+          <Days
+            daysOfWeek={daysOfWeek}
+            handlePrev={handlePrev}
+            handleNext={handleNext}
+            dayTraining={dayTraining}
+            setDayTraining={setDayTraining}
+            weekCounter={weekCounter}
+            handleReturnToday={handleReturnToday}
+            getInterval={getInterval}
+          />
         </div>
-        <SideBar />
-        <PopUp
-          setOpen={setOpen}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-          open={open}
-          training={findCurrentTraining}
-          id={currentTraining}
+      </div>
+      <SideBar />
+      <PopUp
+        setOpen={setOpen}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
+        open={open}
+        training={findCurrentTraining}
+        id={currentTraining}
+      />
+      <Toaster />
+      {validation && (
+        <Validation
+          handleClose={handleCloseValidation}
+          handleDeleteFeedback={handleDeleteFeedback}
+          handleOpenValidation={handleOpenValidation}
         />
-      </section>
-    </>
+      )}
+    </section>
   );
 }

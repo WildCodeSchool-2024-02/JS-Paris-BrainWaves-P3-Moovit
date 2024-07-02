@@ -19,7 +19,7 @@
   justify-content: center;
   padding: 10px 0;
   width: 14.3%;
-  height: 75px;
+  height: 80px;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
   background-color: rgb(225, 225, 225);
@@ -27,7 +27,15 @@
 }
 
 .days-statut {
-  font-size: 0.5em;
+  color: transparent;
+  height: 15px;
+  width: 15px;
+  background-color: var(--second);
+  border-radius: 50%;
+}
+
+.days-rest {
+  font-size: 0.6em;
 }
 
 .days-number {
@@ -72,10 +80,6 @@
   font-size: 1em;
 }
 
-.days-statut-desktop {
-  display: none;
-}
-
 .days-day-desktop {
   display: none;
 }
@@ -108,20 +112,21 @@
     width: 80%;
     height: 40px;
   }
+
   .days-statut {
-    display: none;
+    position: absolute;
+    right: 20px;
+  }
+
+  .days-rest {
+    position: absolute;
+    right: 20px;
   }
 
   .days-day {
     display: none;
   }
 
-  .days-statut-desktop {
-    display: block;
-    position: absolute;
-    right: 10px;
-    font-size: 0.6em;
-  }
   .days-day-desktop {
     display: block;
   }

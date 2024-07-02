@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
-
 import "./cardTemplate.css";
 import CardMenu from "../CardMenu/CardMenu";
 import { useUser } from "../../contexts/User/User";

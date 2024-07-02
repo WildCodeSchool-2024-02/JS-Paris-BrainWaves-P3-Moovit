@@ -30,6 +30,13 @@ class TrainingRepository extends AbstractRepository {
     );
     return newTraining;
   }
+
+  async readInterval(body, id){
+    const [interval] = await this.database.query(
+      `SELECT date FROM ${this.table} WHERE user_id = ? AND date BETWEEN ? AND ?`, [id, body.firstDay, body.lastDay]
+    );
+    return interval
+  }
 }
 
 module.exports = TrainingRepository;

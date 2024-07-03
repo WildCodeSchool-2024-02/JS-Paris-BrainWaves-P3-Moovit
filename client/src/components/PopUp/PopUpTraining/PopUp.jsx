@@ -17,10 +17,7 @@ export default PopUp;
 PopUp.propTypes = {
   open: PropTypes.bool.isRequired, // Indique si la modale est ouverte
   handleClose: PropTypes.func.isRequired, // Fonction pour fermer la modale
-  id: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.oneOf([undefined, null]),
-  ]).isRequired,
+  id: PropTypes.number,
   training: PropTypes.oneOfType([
     PropTypes.shape({
       title: PropTypes.string.isRequired, // Titre de l'activité
@@ -32,5 +29,10 @@ PopUp.propTypes = {
       sport: PropTypes.number, // ID du sport associé à l'activité
     }),
     PropTypes.oneOf([undefined]),
-  ]).isRequired,
+  ]),
+};
+
+PopUp.defaultProps = {
+  id: null,
+  training: undefined,
 };

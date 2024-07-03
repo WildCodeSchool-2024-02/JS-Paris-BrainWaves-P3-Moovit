@@ -41,7 +41,8 @@ function Templates() {
   }, [api, open, statusTemplate]);
 
   return (
-    <>
+    <section className="templates-container">
+      <SideBar />
       <section className="templates">
         <h1>Mes modèles</h1>
         {templates ? (
@@ -74,8 +75,7 @@ function Templates() {
           training={findCurrentTemplate}
         />
       </section>
-      <SideBar />
-    </>
+    </section>
   );
 }
 

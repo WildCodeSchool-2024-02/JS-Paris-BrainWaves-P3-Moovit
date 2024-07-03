@@ -19,6 +19,7 @@ export default function FeedbackDetails() {
   const [feedback, setFeedback] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -79,11 +80,13 @@ export default function FeedbackDetails() {
   // Edit a feedback
   const handleEdit = () => {
     handleOpenFeedback();
+    setAnchorEl(false);
   };
 
   // Open the modal validation
   const handleDelete = async () => {
     handleOpenValidation();
+    setAnchorEl(false);
   };
 
   // State pour gestion de toast
@@ -120,12 +123,20 @@ export default function FeedbackDetails() {
       >
         <div className="trainingCard-title">
           <h1 className="feedbackdetail-title">{feedback?.title}</h1>
-          <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
+          <CardMenu
+            handleEdit={handleEdit}
+            handleDelete={handleDelete}
+            anchorEl={anchorEl}
+            setAnchorEl={setAnchorEl}
+          />
         </div>
         <div className="feedbackdetail-type-training">
           <IoMdFitness className="feedbackdetail-logo-type" />
           <p>
-            Entraînement | {idSport ? idSport.charAt(0).toUpperCase() + idSport.slice(1) : idSport}
+            Entraînement |{" "}
+            {idSport
+              ? idSport.charAt(0).toUpperCase() + idSport.slice(1)
+              : idSport}
           </p>
         </div>
         <div className="feedbackdetail-duration-container">
@@ -207,8 +218,7 @@ export default function FeedbackDetails() {
       {validation && (
         <Validation
           handleClose={handleCloseValidation}
-          handleDeleteFeedback={handleDeleteFeedback}
-          handleOpenValidation={handleOpenValidation}
+          handleDeleteItem={handleDeleteFeedback}
         />
       )}
       <Feedback

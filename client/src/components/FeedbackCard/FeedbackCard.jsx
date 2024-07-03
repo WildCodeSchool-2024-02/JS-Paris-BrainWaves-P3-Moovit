@@ -12,7 +12,11 @@ export default function FeedbackCard({
   setIdFeedback,
   setTrainingFeedback,
   handleOpenValidation,
+  setBoolFeed,
+  setBoolTrain,
 }) {
+  const [anchorEl, setAnchorEl] = useState(null);
+
   // Open feedback State
   const [openFeedback, setOpenFeedback] = useState(false);
 
@@ -33,6 +37,9 @@ export default function FeedbackCard({
   const handleDelete = async () => {
     setIdFeedback(feedback.id);
     setTrainingFeedback(feedback.training_id);
+    setAnchorEl(false);
+    setBoolFeed(true);
+    setBoolTrain(false);
     handleOpenValidation();
   };
 
@@ -68,7 +75,12 @@ export default function FeedbackCard({
       />
       <section className="trainingCard-title">
         <h1 className="feedback-card-title">{feedback.title}</h1>
-        <CardMenu handleDelete={handleDelete} handleEdit={handleEdit} />
+        <CardMenu
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        />
       </section>
       <section className="feedback-text">
         <p>
@@ -148,4 +160,6 @@ FeedbackCard.propTypes = {
   setIdFeedback: PropTypes.func.isRequired,
   setTrainingFeedback: PropTypes.func.isRequired,
   handleOpenValidation: PropTypes.func.isRequired,
+  setBoolFeed: PropTypes.func.isRequired,
+  setBoolTrain: PropTypes.func.isRequired,
 };

@@ -50,8 +50,8 @@ body {
   --second: #66d9e0;
   --third: #91e1a6;
   --grey: #c3c3c3;
-  --template-dark: rgb(114, 37, 114);
-  --template-light: rgb(228, 211, 228);
+  --template-dark: rgb(114, 37, 114, 0.2);
+  --template-light: rgb(228, 211, 228, 0.5);
 }
 
 a,

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { FaPlus } from "react-icons/fa";
 import CardTemplate from "../../components/CardTemplate/CardTemplate";
 import PopUpTemplate from "../../components/PopUp/PopUpTemplate/PopUpTemplate";
@@ -40,20 +41,42 @@ function Templates() {
       .then((data) => setTemplates(data));
   }, [api, open, statusTemplate]);
 
+  const variants = {
+    open: {
+      opacity: 1,
+      y: 0,
+    },
+    closed: {
+      opacity: 0,
+      y: "100%",
+    },
+  };
+
   return (
     <section className="templates-container">
       <SideBar />
       <section className="templates">
         <h1>Mes modèles</h1>
         {templates ? (
-          templates.map((template) => (
-            <CardTemplate
+          templates.map((template, i) => (
+            <motion.div
               key={`template-${template.id}`}
-              card={template}
-              setCurrentTemplate={setCurrentTemplate}
-              handleOpen={handleOpen}
-              setStatusTemplate={setStatusTemplate}
-            />
+              variants={variants}
+              initial="closed"
+              animate="open"
+              transition={{
+                duration: 0.5,
+                ease: [0.76, 0, 0.24, 1],
+                delay: 0.1 * (i - 1),
+              }}
+            >
+              <CardTemplate
+                card={template}
+                setCurrentTemplate={setCurrentTemplate}
+                handleOpen={handleOpen}
+                setStatusTemplate={setStatusTemplate}
+              />
+            </motion.div>
           ))
         ) : (
           <p>Vous n'avez aucun modèle enregistré</p>

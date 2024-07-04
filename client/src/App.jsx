@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { useContext, useEffect, useState } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
 import DarkMode from "./components/DarkMode/DarkMode";
@@ -46,6 +46,7 @@ function App() {
       <Background />
       <DarkMode />
       <Outlet context={{ sports, isLoading }} />
+      <Toaster />
     </main>
   );
 }

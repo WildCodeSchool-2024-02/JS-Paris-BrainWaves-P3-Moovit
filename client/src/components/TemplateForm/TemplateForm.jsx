@@ -6,7 +6,7 @@ import { useUser } from "../../contexts/User/User";
 
 function TemplateForm({ id, training, handleClose }) {
   const api = import.meta.env.VITE_API_URL;
-  const sports = useOutletContext();
+  const { sports } = useOutletContext();
   const { user } = useUser();
 
   const [title, setTitle] = useState(training?.title);

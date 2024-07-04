@@ -1,0 +1,72 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+}
+
+.my-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 20px;
+}
+
+.parameters-name {
+  font-size: 1em;
+}
+
+.parameters-value {
+  font-size: 1em;
+}
+
+.title-my-profile {
+  width: 100%;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-my-profile h1 {
+  font-size: 1.7em;
+}
+
+@media (min-width: 769px) {
+  .my-profile {
+    gap: 35px;
+    padding: 20px 20px 20px 50px;
+  }
+  .parameters-name {
+    font-size: 1.3em;
+  }
+
+  .parameters-value {
+    font-size: 1.3em;
+  }
+}
+
+@media (min-width: 1025px) {
+  .profile {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    height: 100vh;
+    width: 100vw;
+  }
+  .my-profile {
+    gap: 20px;
+  }
+  .parameters-name {
+    font-size: 1.1em;
+  }
+
+  .parameters-value {
+    font-size: 1.1em;
+  }
+}

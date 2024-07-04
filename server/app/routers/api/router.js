@@ -30,6 +30,10 @@ const sportRouter = require("./sport/router");
 
 router.use("/sports", sportRouter);
 
+const userHasSport = require("./userHasSport/router");
+
+router.use("/userhassport", userHasSport)
+
 /* ************************************************************************* */
 
 module.exports = router;

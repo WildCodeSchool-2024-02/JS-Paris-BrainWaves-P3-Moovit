@@ -1,6 +1,8 @@
+/* eslint-disable import/no-unresolved */
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import { Toaster } from "sonner";
 import Logo from "../../assets/images/Logo.svg";
 import "../Register/register.css";
 import { useUser } from "../../contexts/User/User";
@@ -96,6 +98,7 @@ function Login() {
           <Link to="/register">Je n'ai pas de compte</Link>
         </form>
       </section>
+      <Toaster />
     </main>
   );
 }

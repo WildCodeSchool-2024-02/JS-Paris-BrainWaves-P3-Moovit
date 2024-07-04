@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import "./register.css";
+import { useUser } from "../../contexts/User/User";
 
 function Register() {
   const api = import.meta.env.VITE_API_URL;
@@ -10,6 +11,8 @@ function Register() {
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+
+  const { setUser } = useUser();
 
   const [error, setError] = useState({});
   const [visiblePass, setVisiblePass] = useState(false);
@@ -38,7 +41,8 @@ function Register() {
             }));
           });
         } else {
-          navigate("/login");
+          setUser(data);
+          navigate("/profile/name");
         }
       });
   };
@@ -114,6 +118,7 @@ function Register() {
           <button type="submit" className="primary-button">
             Je m'inscris
           </button>
+          <Link to="/login">J'ai déjà un compte</Link>
         </form>
       </section>
       <section>

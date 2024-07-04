@@ -5,6 +5,7 @@
   min-height: 100vh;
   padding: 30px;
   width: 75%;
+  z-index: 2;
 }
 
 .templates-container {

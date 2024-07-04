@@ -1,6 +1,6 @@
-.login-logo {
+/* .login-logo {
   margin: 0 0 100px;
-}
+} */
 
 .loginPage {
   display: flex;
@@ -10,6 +10,7 @@
   background-color: var(--light);
   min-height: 100vh;
   padding: 5vh 2vw;
+  gap: 100px;
 
   label {
     display: flex;

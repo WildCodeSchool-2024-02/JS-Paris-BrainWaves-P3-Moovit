@@ -31,6 +31,7 @@ export default function FeedbackCard({
   // Edit a feedback
   const handleEdit = () => {
     handleOpenFeedback();
+    setAnchorEl(false);
   };
 
   // Open the modal validation
@@ -51,10 +52,12 @@ export default function FeedbackCard({
 
   const variants = {
     open: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
     },
     closed: {
+      opacity: 0.4,
       y: "100%",
       transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
     },
@@ -138,7 +141,7 @@ export default function FeedbackCard({
         className="feedback-button"
         onClick={handleNavigate}
       >
-        Voir le détail de l'entraînement
+        Voir le détail du feedback
       </button>
     </motion.section>
   );

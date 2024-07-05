@@ -9,11 +9,11 @@ const router = express.Router();
 // Import item-related actions
 const {
   browse,
-  readById,
   add,
   edit,
   destroy,
   nameUpdate,
+  levelUpdate,
 } = require("../../../controllers/userActions");
 const {login, refresh, logout } = require("../../../controllers/authActions")
 const { hashPassword } = require("../../../services/hashPassword");
@@ -21,7 +21,6 @@ const { schema, validateSchema, nameSchema } = require("../../../services/valida
 
 // Route to get a list of users
 router.get("/", browse);
-router.get("/:id", readById);
 
 // Route to add a new user
 router.post("/", validateSchema(schema), hashPassword, add);
@@ -36,6 +35,7 @@ router.get("/refresh/page", refresh);
 router.get("/auth/logout", logout)
 
 router.put("/profile/name", validateSchema(nameSchema), nameUpdate)
+router.put("/profile/level", levelUpdate)
 
 // Route to delete a training
 router.delete("/:id", destroy);

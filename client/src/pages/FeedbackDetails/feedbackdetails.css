@@ -96,7 +96,7 @@
   align-items: flex-start;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .feedbackdetail-page {
     display: flex;
     flex-direction: row-reverse;

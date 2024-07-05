@@ -16,7 +16,6 @@ import Validation from "../../components/Validation/Validation";
 export default function Journal() {
   // Import user
   const { user } = useUser();
-
   const [currentTraining, setCurrentTraining] = useState(null);
   const [statusTraining, setStatusTraining] = useState(false);
 

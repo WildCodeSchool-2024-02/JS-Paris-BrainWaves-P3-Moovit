@@ -1,0 +1,38 @@
+.button-level-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.level-button-light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  height: 70px;
+  border: solid var(--second);
+  border-width: thin;
+  color: black;
+  border-radius: 15px;
+}
+
+.level-button-dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  height: 70px;
+  border: solid var(--second);
+  border-width: thin;
+  background-color: var(--dark);
+  color: white;
+  border-radius: 15px;
+}
+
+.active-sport {
+  background-color: var(--second);
+  border-color: white;
+  color: black;
+}

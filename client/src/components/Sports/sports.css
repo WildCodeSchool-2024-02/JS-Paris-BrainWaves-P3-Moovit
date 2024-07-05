@@ -7,16 +7,6 @@
   gap: 10px;
 }
 
-.sport-container-light {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 120px;
-  height: 120px;
-  border: solid var(--second);
-  border-width: thin;
-}
-
 .sport-container-light p {
   color: black;
 }
@@ -40,4 +30,14 @@
   background-color: var(--second);
   border-color: white;
   color: black;
+}
+
+.sport-container-light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border: solid var(--second);
+  border-width: thin;
 }

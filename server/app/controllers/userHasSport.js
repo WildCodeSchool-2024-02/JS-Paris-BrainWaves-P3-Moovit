@@ -7,16 +7,15 @@ const add = async (req, res, next) => {
         sports.forEach((sport) => newTab.push([id, sport]))
     }
     try {
-        if (sports.length === 0){
-            res.sendStatus(200)
-        }
         if (sports.length > 0){
             const response = await tables.userHasSport.create(newTab)
-            res.status(201).json(response)
+            return res.status(201).json(response)
         }
+        return res.sendStatus(200)
     } catch (error) {
-        next(error) 
+        return next(error)
     }
 }
+
 
 module.exports = { add }

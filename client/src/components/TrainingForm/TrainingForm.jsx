@@ -18,7 +18,7 @@ function TrainingForm({ id, training, handleClose, open }) {
       ? datefns.format(training.date, "yyyy-MM-dd")
       : datefns.format(new Date(), "yyyy-MM-dd")
   );
-  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day || "");
+  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
   const [duration, setDuration] = useState(training?.duration || "");
   const [details, setDetails] = useState(training?.details || "");
   const [sport, setSport] = useState(training?.sport_id || "");

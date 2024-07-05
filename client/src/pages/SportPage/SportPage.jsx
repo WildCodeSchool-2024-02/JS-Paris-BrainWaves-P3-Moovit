@@ -1,48 +1,31 @@
-/* eslint-disable import/no-unresolved */
 import { useNavigate, useOutletContext } from "react-router-dom";
-import "./sportpage.css";
-import { useContext, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/User/User";
-import DarkModeContext from "../../services/DarkModeContext";
+import Sports from "../../components/Sports/Sports";
 
 export default function SportPage() {
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { user } = useUser();
-  const { mode } = useContext(DarkModeContext);
   const navigate = useNavigate();
-  const [activeButtons, setActiveButtons] = useState({
-    fitness: false,
-    running: false,
-    poney: false,
-    other: false,
-  });
+  const [activeButtons, setActiveButtons] = useState({});
   const [data, setData] = useState([]);
+
+  const mapSport = (sportList) => {
+    const newSport = { other: false };
+    sportList.forEach((sp) => {
+      const insert = sp.name;
+      newSport[insert] = false;
+    });
+    setActiveButtons(newSport);
+  };
 
   useEffect(() => {
     if (!user) {
       navigate("/login");
     }
+    mapSport(sports)
   }, []);
-
-  const handleClick = (e) => {
-    const { value } = e.currentTarget;
-    setActiveButtons((prevActiveButtons) => ({
-      ...prevActiveButtons,
-      [value]: !prevActiveButtons[value],
-      other: false,
-    }));
-  };
-
-  const handleOther = () => {
-    setActiveButtons({
-      fitness: false,
-      running: false,
-      poney: false,
-      other: !activeButtons.other,
-    });
-  };
 
   useEffect(() => {
     const selectedSports = [];
@@ -74,10 +57,7 @@ export default function SportPage() {
         }),
       });
       if (response.ok) {
-        navigate("/login");
-        toast.success(
-          "Super ton compte a été créé ! Tu peux maintenant te connecter"
-        );
+        navigate("/profile/level");
       }
     } catch (err) {
       console.error(err);
@@ -93,35 +73,11 @@ export default function SportPage() {
           toi afin de personnaliser ton expérience.
         </p>
       </div>
-      <div className="section-sport">
-        {sports.map((sport) => (
-          <button
-            type="button"
-            key={sport.id}
-            value={sport.name}
-            onClick={handleClick}
-            className={
-              activeButtons[sport.name]
-                ? `sport-container-${mode} active-sport`
-                : `sport-container-${mode}`
-            }
-          >
-            <p>{sport.name[0].toUpperCase() + sport.name.slice(1)}</p>
-          </button>
-        ))}
-        <button
-          type="button"
-          value="other"
-          onClick={handleOther}
-          className={
-            activeButtons.other
-              ? `sport-container-${mode} active-sport`
-              : `sport-container-${mode}`
-          }
-        >
-          <p>Autres</p>
-        </button>
-      </div>
+      <Sports
+        activeButtons={activeButtons}
+        setActiveButtons={setActiveButtons}
+        sports={sports}
+      />
       <div className="name-input-container">
         <button type="button" className="next-button" onClick={addSport}>
           Suivant

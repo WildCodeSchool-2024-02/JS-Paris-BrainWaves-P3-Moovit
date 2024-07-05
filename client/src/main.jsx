@@ -20,6 +20,7 @@ import FeedbackDetails from "./pages/FeedbackDetails/FeedbackDetails";
 import Profile from "./pages/Profile/Profile";
 import NamePage from "./pages/NamePage/NamePage";
 import SportPage from "./pages/SportPage/SportPage";
+import LevelPage from "./pages/LevelPage/LevelPage";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/sport",
         element: <SportPage />,
+      },
+      {
+        path: "/profile/level",
+        element: <LevelPage />,
       },
       {
         path: "/training/:id",
@@ -97,13 +102,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/user/:id",
+        path: "/user",
         element: (
           <PrivateRoute>
             <Profile />
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`${api}/api/users/${params.id}`),
       },
     ],
   },

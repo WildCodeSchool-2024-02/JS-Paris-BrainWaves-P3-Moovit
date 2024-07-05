@@ -29,6 +29,14 @@ class UserRepository extends AbstractRepository {
     )
     return inserted.affectedRows
   }
+
+  async updateLevel(level, id) {
+    const [inseted] = await this.database.query(
+      `UPDATE ${this.table} SET level = ? WHERE id = ?`,
+      [level, id]
+    )
+    return inseted.affectedRows
+  }
 }
 
 module.exports = UserRepository;

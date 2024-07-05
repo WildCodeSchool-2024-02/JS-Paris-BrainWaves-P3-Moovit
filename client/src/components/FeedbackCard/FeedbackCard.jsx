@@ -141,7 +141,7 @@ export default function FeedbackCard({
         className="feedback-button"
         onClick={handleNavigate}
       >
-        Voir le détail du feedback
+        Voir le détail
       </button>
     </motion.section>
   );

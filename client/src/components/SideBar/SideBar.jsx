@@ -9,12 +9,9 @@ import { useContext } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
-import { useUser } from "../../contexts/User/User";
 
 export default function SideBar() {
   const { mode } = useContext(DarkModeContext);
-
-  const { user } = useUser();
 
   const navigate = useNavigate();
 
@@ -46,7 +43,7 @@ export default function SideBar() {
       <div className="sidebar-second-container">
         <div className="sidebar-link">
           <FaRegUserCircle className="sidebar-logo" />
-          <Link to={`/user/${user.id}`} className="sidebar-link-text">
+          <Link to="/user" className="sidebar-link-text">
             Profil
           </Link>
         </div>

@@ -20,8 +20,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     fetch(`${api}/api/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -55,7 +54,7 @@ function Register() {
         <p className="loginIntro">
           Entre ton email et connecte toi à Moov'it !
         </p>
-        <form className="loginForm" onSubmit={handleSubmit}>
+        <form className="loginForm">
           <input
             ref={email}
             placeholder="Adresse mail"
@@ -115,7 +114,11 @@ function Register() {
               Veuillez confirmer votre mot de passe
             </p>
           ) : null}
-          <button type="submit" className="primary-button">
+          <button
+            type="button"
+            className="primary-button"
+            onClick={handleSubmit}
+          >
             Je m'inscris
           </button>
           <Link to="/login">J'ai déjà un compte</Link>

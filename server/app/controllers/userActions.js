@@ -11,13 +11,12 @@ const browse = async (req, res, next) => {
 
 const readById = async (req, res, next) => {
   try {
-    const [user] = await tables.user.readOne(req.params.id);
+    const [user] = await tables.user.readOne(req.auth.id);
     delete user.password
     if (user == null) {
       res.sendStatus(404);
-    } else {
-      res.json(user);
-    }
+    } 
+    res.status(200).json(user);
   } catch (err) {
     next(err);
   }
@@ -65,6 +64,20 @@ const nameUpdate = async (req, res, next) => {
     next(error)
   }
 }
+
+const levelUpdate = async (req, res, next) => {
+  try {
+    if (!req.body.level){
+      res.sendStatus(200)
+    }
+    const response = await tables.user.updateLevel(req.body.level, req.body.id)
+    if (response){
+      res.sendStatus(204)
+    }
+  } catch (error) {
+    next(error)
+  }
+}
 module.exports = {
   browse,
   readById,
@@ -72,4 +85,5 @@ module.exports = {
   edit,
   destroy,
   nameUpdate,
+  levelUpdate
 };

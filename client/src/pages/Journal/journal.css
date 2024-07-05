@@ -111,7 +111,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .journal {
     flex-direction: row-reverse;
     align-items: flex-start;

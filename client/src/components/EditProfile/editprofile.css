@@ -1,0 +1,57 @@
+.edit-profile-popup-light {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--light);
+  color: black;
+  padding: 50px 20px;
+  gap: 50px;
+}
+
+.edit-profile-popup-dark {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(41, 41, 49);
+  color: white;
+  padding: 50px 20px;
+  gap: 50px;
+}
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.label-edit {
+  margin: 20px 0;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.button-edit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  gap: 15px;
+}
+
+.validate-button {
+  background-color: var(--main);
+  color: white;
+  width: 100%;
+  margin: 0 10px;
+}

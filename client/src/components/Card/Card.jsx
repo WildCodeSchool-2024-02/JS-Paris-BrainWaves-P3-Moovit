@@ -93,9 +93,7 @@ export default function Card({
         </div>
       </div>
       <section className="trainingCard-title">
-        <Link to={`/training/${card.id}`}>
-          Voir le détail de l'entraînement
-        </Link>
+        <Link to={`/training/${card.id}`}>Voir le détail</Link>
         <button
           type="button"
           className="card-button-validate"

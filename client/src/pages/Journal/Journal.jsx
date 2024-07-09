@@ -330,6 +330,7 @@ export default function Journal() {
                 setCurrentTraining={setCurrentTraining}
                 setStatusFeedback={setStatusFeedback}
                 setStatusTraining={setStatusTraining}
+                
               />
             ))}
           </div>

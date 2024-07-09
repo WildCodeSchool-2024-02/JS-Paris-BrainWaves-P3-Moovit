@@ -1,17 +1,25 @@
+/* eslint-disable import/no-unresolved */
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
+import { toast } from "sonner";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
+
 import Feedback from "../Feedback/Feedback";
 import { useUser } from "../../contexts/User/User";
 
-export default function Card({ card, handleOpen, setCurrentTraining, setStatusTraining, setStatusFeedback }) {
-
+export default function Card({
+  card,
+  handleOpen,
+  setCurrentTraining,
+  setStatusTraining,
+  setStatusFeedback,
+}) {
   const { user } = useUser();
   const { mode } = useContext(DarkModeContext);
   const api = import.meta.env.VITE_API_URL;
@@ -35,7 +43,13 @@ export default function Card({ card, handleOpen, setCurrentTraining, setStatusTr
         Authorization: `Bearer ${user.token}`,
       },
     });
-    setStatusTraining(prev => !prev)
+    setStatusTraining((prev) => !prev);
+    toast.success("Entraînement supprimé avec succès", {
+      style: {
+        background: "rgba(145, 225, 166, 0.8)",
+        color: "black",
+      },
+    });
   };
 
   // Edit training with the cardMenu

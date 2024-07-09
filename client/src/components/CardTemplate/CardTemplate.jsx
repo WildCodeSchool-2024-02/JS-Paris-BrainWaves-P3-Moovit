@@ -1,4 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import PropTypes from "prop-types";
 import { useContext } from "react";
 import { IoMdFitness } from "react-icons/io";
@@ -24,6 +26,13 @@ export default function CardTemplate({ card, handleOpen, setCurrentTemplate, set
     });
     setStatusTemplate(prev => !prev)
     navigate("/templates");
+    toast.success("Modèle supprimé avec succès", {
+      style: {
+        background: "rgba(145, 225, 166, 0.8)",
+        color: "black",
+      },
+    });
+    
   };
 
   const handleEdit = () => {

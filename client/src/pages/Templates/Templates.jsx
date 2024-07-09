@@ -1,6 +1,8 @@
+/* eslint-disable import/no-unresolved */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import { Toaster } from "sonner";
 import CardTemplate from "../../components/CardTemplate/CardTemplate";
 import PopUpTemplate from "../../components/PopUp/PopUpTemplate/PopUpTemplate";
 import SideBar from "../../components/SideBar/SideBar";
@@ -74,6 +76,7 @@ function Templates() {
           training={findCurrentTemplate}
         />
       </section>
+      <Toaster />
       <SideBar />
     </>
   );

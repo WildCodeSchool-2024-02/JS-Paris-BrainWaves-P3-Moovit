@@ -72,7 +72,7 @@ export default function Card({ card, handleOpen, setCurrentTraining, setStatusTr
         >
           Valider
         </button>
-        <Link to={`/training/${card.id}`}>Détails</Link>
+        {card.details && <Link to={`/training/${card.id}`}>Détails</Link>}
       </section>
       <Feedback
         handleClose={handleCloseFeedback}
@@ -91,6 +91,7 @@ Card.propTypes = {
     time_of_day: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    details: PropTypes.string,
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,

@@ -13,23 +13,25 @@ function Training() {
   const { user } = useUser();
   const api = import.meta.env.VITE_API_URL;
 
-  const [training, setTraining] = useState() ;
+  const [training, setTraining] = useState();
   const { id } = useParams();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user) navigate('/login')
+    if (!user) navigate("/login");
     fetch(`${api}/api/trainings/${id}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
-    }).then(res => res.json()).then(data => setTraining(data))
-  }, [])
+    })
+      .then((res) => res.json())
+      .then((data) => setTraining(data));
+  }, []);
 
   return (
     <>
@@ -69,7 +71,7 @@ function Training() {
         handleOpen={handleOpen}
         handleClose={handleClose}
         open={open}
-        id={id}
+        id={parseInt(id, 10)}
         training={training}
       />
       <SideBar />

@@ -6,6 +6,7 @@ import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
 import DarkMode from "./components/DarkMode/DarkMode";
 import { useUser } from "./contexts/User/User";
+import Background from "./components/Background/Background";
 
 function App() {
   // Contexte DarkMode
@@ -42,6 +43,7 @@ function App() {
 
   return (
     <main className={`container ${mode}`}>
+      <Background />
       <DarkMode />
       <Outlet context={{ sports, isLoading }} />
     </main>

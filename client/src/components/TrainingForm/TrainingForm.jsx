@@ -11,17 +11,17 @@ function TrainingForm({ id, training, handleClose }) {
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
 
-  const [title, setTitle] = useState(training?.title);
+  const [title, setTitle] = useState(training?.title || "");
   const [date, setDate] = useState(
     training
       ? datefns.format(training.date, "yyyy-MM-dd")
       : datefns.format(new Date(), "yyyy-MM-dd")
   );
-  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
-  const [duration, setDuration] = useState(training?.duration);
-  const [details, setDetails] = useState(training?.details);
-  const [sport, setSport] = useState(training?.sport_id);
-  const [templateId, setTemplateId] = useState(null);
+  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day || "");
+  const [duration, setDuration] = useState(training?.duration || "");
+  const [details, setDetails] = useState(training?.details || "");
+  const [sport, setSport] = useState(training?.sport_id || "");
+  const [templateId, setTemplateId] = useState("");
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
 
@@ -113,7 +113,6 @@ function TrainingForm({ id, training, handleClose }) {
         id="use-template"
         name="template"
         value={templateId}
-        defaultValue=""
         onChange={(e) => setTemplateId(e.target.value)}
       >
         <option value="" disabled>
@@ -127,7 +126,6 @@ function TrainingForm({ id, training, handleClose }) {
               </option>
             ))}
       </select>
-
       <input
         type="text"
         id="title"
@@ -151,7 +149,7 @@ function TrainingForm({ id, training, handleClose }) {
         value={timeOfDay}
         onChange={(e) => setTimeOfDay(e.target.value)}
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           Matin, Après-midi ou Soir ? 😉
         </option>
         <option>Matin</option>
@@ -164,7 +162,9 @@ function TrainingForm({ id, training, handleClose }) {
         value={sport}
         onChange={(e) => setSport(e.target.value)}
       >
-        <option>Quel sport ? ⛹️</option>
+        <option value="" disabled>
+          Quel sport ? ⛹️
+        </option>
         {sports
           ? sports.map((activity) => (
               <option key={activity.id} value={activity.id}>
@@ -217,15 +217,19 @@ function TrainingForm({ id, training, handleClose }) {
 export default TrainingForm;
 
 TrainingForm.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
-    .isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]),
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({
-    title: PropTypes.string.isRequired, // Titre de l'activité
-    date: PropTypes.string.isRequired, // Date de l'activité
+    title: PropTypes.string, // Titre de l'activité
+    date: PropTypes.string, // Date de l'activité
     time_of_day: PropTypes.string, // Moment de la journée de l'activité
-    duration: PropTypes.string.isRequired, // Durée de l'activité
-    details: PropTypes.string.isRequired, // Détails de l'activité
+    duration: PropTypes.string, // Durée de l'activité
+    details: PropTypes.string, // Détails de l'activité
     sport_id: PropTypes.number, // ID du sport associé à l'activité
-  }).isRequired,
+  }),
+};
+
+TrainingForm.defaultProps = {
+  id: null,
+  training: undefined,
 };

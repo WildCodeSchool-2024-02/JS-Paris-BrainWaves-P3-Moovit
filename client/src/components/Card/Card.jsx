@@ -8,13 +8,19 @@ import DarkModeContext from "../../services/DarkModeContext";
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 import Feedback from "../Feedback/Feedback";
-import { useUser } from "../../contexts/User/User";
 
-export default function Card({ card, handleOpen, setCurrentTraining, setStatusTraining, setStatusFeedback }) {
-
-  const { user } = useUser();
+export default function Card({
+  card,
+  handleOpen,
+  setCurrentTraining,
+  setStatusFeedback,
+  setIdTraining,
+  handleOpenValidation,
+  setBoolTrain,
+  setBoolFeed,
+}) {
   const { mode } = useContext(DarkModeContext);
-  const api = import.meta.env.VITE_API_URL;
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // Open feedback State
   const [openFeedback, setOpenFeedback] = useState(false);
@@ -27,15 +33,13 @@ export default function Card({ card, handleOpen, setCurrentTraining, setStatusTr
     setOpenFeedback(false);
   };
 
-  // Delete training with the cardMenu
-  const handleDelete = () => {
-    fetch(`${api}/api/trainings/${card.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    setStatusTraining(prev => !prev)
+  // Open the modal validation
+  const handleDelete = async () => {
+    setIdTraining(card.id);
+    setAnchorEl(false);
+    setBoolTrain(true);
+    setBoolFeed(false);
+    handleOpenValidation();
   };
 
   // Edit training with the cardMenu
@@ -48,7 +52,12 @@ export default function Card({ card, handleOpen, setCurrentTraining, setStatusTr
     <section id={`card-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
+        <CardMenu
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        />
       </section>
       <div className="card-type-training">
         <IoMdFitness />
@@ -96,5 +105,8 @@ Card.propTypes = {
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
   setStatusFeedback: PropTypes.func.isRequired,
-  setStatusTraining: PropTypes.func.isRequired,
+  setIdTraining: PropTypes.func.isRequired,
+  handleOpenValidation: PropTypes.func.isRequired,
+  setBoolTrain: PropTypes.func.isRequired,
+  setBoolFeed: PropTypes.func.isRequired,
 };

@@ -72,9 +72,15 @@ export default function Journal() {
     document.body.classList.add("blocked");
   };
 
-  // State pour récupérer l'id du feedback cliquer
+  // State to get Training or Feedback id
   const [idFeedback, setIdFeedback] = useState("");
   const [trainingFeedback, setTrainingFeedback] = useState("");
+  // State to know wich one should be deleted or uppdated
+  const [boolFeed, setBoolFeed] = useState(false);
+  const [boolTrain, setBoolTrain] = useState(false);
+
+  // State pour récupérer l'id du training cliquer
+  const [idTraining, setIdTraining] = useState("");
 
   // State to get all training for a week
   const [getInterval, setGetInterval] = useState([]);
@@ -105,6 +111,18 @@ export default function Journal() {
     } catch (err) {
       toast.error("Une erreur est survenue, veuillez réessayer plus tard");
     }
+  };
+
+  // Delete training with the cardMenu
+  const handleDeleteTraining = () => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${idTraining}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    setStatusTraining((prev) => !prev);
+    handleCloseValidation();
   };
 
   // Days of the week
@@ -316,6 +334,8 @@ export default function Journal() {
                 setIdFeedback={setIdFeedback}
                 setTrainingFeedback={setTrainingFeedback}
                 handleOpenValidation={handleOpenValidation}
+                setBoolFeed={setBoolFeed}
+                setBoolTrain={setBoolTrain}
               />
             ))}
           </div>
@@ -329,7 +349,10 @@ export default function Journal() {
                 handleOpen={handleOpen}
                 setCurrentTraining={setCurrentTraining}
                 setStatusFeedback={setStatusFeedback}
-                setStatusTraining={setStatusTraining}
+                setIdTraining={setIdTraining}
+                handleOpenValidation={handleOpenValidation}
+                setBoolTrain={setBoolTrain}
+                setBoolFeed={setBoolFeed}
               />
             ))}
           </div>
@@ -382,11 +405,16 @@ export default function Journal() {
         id={currentTraining}
       />
       <Toaster />
-      {validation && (
+      {boolFeed && validation && (
         <Validation
           handleClose={handleCloseValidation}
-          handleDeleteFeedback={handleDeleteFeedback}
-          handleOpenValidation={handleOpenValidation}
+          handleDeleteItem={handleDeleteFeedback}
+        />
+      )}
+      {boolTrain && validation && (
+        <Validation
+          handleClose={handleCloseValidation}
+          handleDeleteItem={handleDeleteTraining}
         />
       )}
     </section>

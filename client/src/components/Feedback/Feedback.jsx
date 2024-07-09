@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Modal from "@mui/material/Modal";
 import "./feedback.css";
@@ -93,7 +93,7 @@ export default function Feedback({
             setStatusFeedback((prevStatus) => !prevStatus);
             toast.success("Feedback modifié avec succès", {
               style: {
-                background: "rgba(145, 225, 166, 0.8)",
+                background: "rgba(145, 225, 166)",
                 color: "black",
               },
             });
@@ -143,7 +143,7 @@ export default function Feedback({
             setStatusFeedback((prevStatus) => !prevStatus);
             toast.success("Feedback enregistré avec succès", {
               style: {
-                background: "rgba(145, 225, 166, 0.8)",
+                background: "rgba(145, 225, 166)",
                 color: "black",
               },
             });
@@ -160,6 +160,12 @@ export default function Feedback({
     }
   };
 
+  const styles = {
+    modalStyle1: {
+      overflowY: "auto",
+    },
+  };
+
   const variants = {
     open: {
       x: 0,
@@ -169,100 +175,113 @@ export default function Feedback({
       x: "100%",
       transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
     },
+    exit: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
   };
 
   return (
-    <Modal open={open} onClose={handleClose}>
-      <motion.form
-        className="trainingForm"
-        variants={variants}
-        animate={open ? "open" : "closed"}
-        initial="closed"
-      >
-        <h1>C'est l'heure du Feedback </h1>
-        <input
-          type="text"
-          id="duration"
-          name="duration"
-          className={errors.duration ? "feedback-error" : "feedback-ok"}
-          placeholder="Ca a duré combien de temps ?"
-          defaultValue={feedbackEdit ? feedbackEdit[0]?.duration : ""}
-          ref={duration}
-        />
-        <select
-          type=""
-          id="session-feeling"
-          name="session-feeling"
-          className={errors.global ? "feedback-error" : "feedback-ok"}
-          ref={global}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            La séance s'est bien passée ?
-          </option>
-          <option value="easy">🔥 Très bien passée !</option>
-          <option value="medium">👌 Tranquille</option>
-          <option value="hard">🥵 C'était pas évident</option>
-        </select>
-        <select
-          type=""
-          id="session-effort"
-          name="session-effort"
-          className={errors.difficulty ? "feedback-error" : "feedback-ok"}
-          ref={difficulty}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Quelle a été ta perception de l'effort ?
-          </option>
-          <option value="easy">💪 Facile</option>
-          <option value="medium">😮‍💨 Fatiguant</option>
-          <option value="hard">🥵 Epuisant</option>
-        </select>
-        <select
-          type=""
-          id="mood-feeling"
-          name="mood-feeling"
-          className={errors.after ? "feedback-error" : "feedback-ok"}
-          ref={after}
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Comment te sens-tu après ?
-          </option>
-          <option value="perfect">💪 Super j'en veux encore</option>
-          <option value="good">🥶 Je sens la fatigue arriver</option>
-          <option value="tired">😴 J'ai besoin de repos</option>
-        </select>
-        <textarea
-          type="text"
-          id="details"
-          name="details"
-          placeholder="Dis m'en plus"
-          className={errors.details ? "feedback-error" : "feedback-ok"}
-          defaultValue={feedbackEdit ? feedbackEdit[0]?.details : ""}
-          ref={details}
-        />
-        {(errors.duration ||
-          errors.difficulty ||
-          errors.global ||
-          errors.after ||
-          errors.details) && (
-          <p className="error-message">
-            Renseigne bien tous les champs pour traquer ta progression !
-          </p>
-        )}
-        <button type="button" className="primary-button" onClick={handleClick}>
-          Enregistrer
-        </button>
-        <button
-          type="button"
-          className="secondary-button"
-          onClick={handleClose}
-        >
-          Annuler
-        </button>
-      </motion.form>
+    <Modal open={open} onClose={handleClose} style={styles.modalStyle1}>
+      <div>
+        <AnimatePresence>
+          <motion.form
+            className="trainingForm"
+            variants={variants}
+            animate={open ? "open" : "closed"}
+            initial="closed"
+            exit="exit"
+          >
+            <h1>C'est l'heure du Feedback </h1>
+            <input
+              type="text"
+              id="duration"
+              name="duration"
+              className={errors.duration ? "feedback-error" : "feedback-ok"}
+              placeholder="Ca a duré combien de temps ?"
+              defaultValue={feedbackEdit ? feedbackEdit[0]?.duration : ""}
+              ref={duration}
+            />
+            <select
+              type=""
+              id="session-feeling"
+              name="session-feeling"
+              className={errors.global ? "feedback-error" : "feedback-ok"}
+              ref={global}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                La séance s'est bien passée ?
+              </option>
+              <option value="easy">🔥 Très bien passée !</option>
+              <option value="medium">👌 Tranquille</option>
+              <option value="hard">🥵 C'était pas évident</option>
+            </select>
+            <select
+              type=""
+              id="session-effort"
+              name="session-effort"
+              className={errors.difficulty ? "feedback-error" : "feedback-ok"}
+              ref={difficulty}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Quelle a été ta perception de l'effort ?
+              </option>
+              <option value="easy">💪 Facile</option>
+              <option value="medium">😮‍💨 Fatiguant</option>
+              <option value="hard">🥵 Epuisant</option>
+            </select>
+            <select
+              type=""
+              id="mood-feeling"
+              name="mood-feeling"
+              className={errors.after ? "feedback-error" : "feedback-ok"}
+              ref={after}
+              defaultValue=""
+            >
+              <option value="" disabled>
+                Comment te sens-tu après ?
+              </option>
+              <option value="perfect">💪 Super j'en veux encore</option>
+              <option value="good">🥶 Je sens la fatigue arriver</option>
+              <option value="tired">😴 J'ai besoin de repos</option>
+            </select>
+            <textarea
+              type="text"
+              id="details"
+              name="details"
+              placeholder="Dis m'en plus"
+              className={errors.details ? "feedback-error" : "feedback-ok"}
+              defaultValue={feedbackEdit ? feedbackEdit[0]?.details : ""}
+              ref={details}
+            />
+            {(errors.duration ||
+              errors.difficulty ||
+              errors.global ||
+              errors.after ||
+              errors.details) && (
+              <p className="error-message">
+                Renseigne bien tous les champs pour traquer ta progression !
+              </p>
+            )}
+            <button
+              type="button"
+              className="primary-button"
+              onClick={handleClick}
+            >
+              Enregistrer
+            </button>
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={handleClose}
+            >
+              Annuler
+            </button>
+          </motion.form>
+        </AnimatePresence>
+      </div>
     </Modal>
   );
 }

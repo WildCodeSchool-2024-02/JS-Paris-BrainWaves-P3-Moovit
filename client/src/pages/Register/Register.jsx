@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import "./register.css";
+import { useUser } from "../../contexts/User/User";
 
 function Register() {
   const api = import.meta.env.VITE_API_URL;
@@ -11,14 +12,15 @@ function Register() {
   const password = useRef();
   const confirmPassword = useRef();
 
+  const { setUser } = useUser();
+
   const [error, setError] = useState({});
   const [visiblePass, setVisiblePass] = useState(false);
   const [visibleConfirm, setVisibleConfirm] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     fetch(`${api}/api/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,7 +40,8 @@ function Register() {
             }));
           });
         } else {
-          navigate("/login");
+          setUser(data);
+          navigate("/profile/name");
         }
       });
   };
@@ -51,7 +54,7 @@ function Register() {
         <p className="loginIntro">
           Entre ton email et connecte toi à Moov'it !
         </p>
-        <form className="loginForm" onSubmit={handleSubmit}>
+        <form className="loginForm">
           <input
             ref={email}
             placeholder="Adresse mail"
@@ -111,9 +114,14 @@ function Register() {
               Veuillez confirmer votre mot de passe
             </p>
           ) : null}
-          <button type="submit" className="primary-button">
+          <button
+            type="button"
+            className="primary-button"
+            onClick={handleSubmit}
+          >
             Je m'inscris
           </button>
+          <Link to="/login">J'ai déjà un compte</Link>
         </form>
       </section>
       <section>

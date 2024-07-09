@@ -6,7 +6,7 @@ const DarkModeContext = createContext();
 export default DarkModeContext;
 
 export function DarkModeContextProvider({ children }) {
-  const [mode, setMode] = useState("light");
+  const [mode, setMode] = useState("dark");
   const memo = useMemo(() => ({ mode, setMode }), [mode, setMode]);
 
   return (

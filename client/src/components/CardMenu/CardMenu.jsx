@@ -58,7 +58,7 @@ export default CardMenu;
 CardMenu.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   handleEdit: PropTypes.func.isRequired,
-  anchorEl: PropTypes.bool,
+  anchorEl: PropTypes.instanceOf(Element),
   setAnchorEl: PropTypes.func,
 };
 

@@ -134,12 +134,14 @@ button:hover {
   background-color: rgb(41, 41, 49);
   color: white;
   transition: all 0.3s ease-in-out;
+  z-index: 0;
 }
 
 .light {
   background-color: transparent;
   color: black;
   transition: all 0.3s ease-in-out;
+  z-index: 0;
 }
 
 .darkmode-button {
@@ -147,4 +149,12 @@ button:hover {
   top: 0;
   right: 0;
   z-index: 5;
+}
+
+@media (min-width: 1025px) {
+  input,
+  select,
+  textarea {
+    width: 60vw;
+  }
 }

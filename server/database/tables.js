@@ -5,6 +5,7 @@ const UserRepository = require("./models/UserRepository");
 const TemplateRepository = require("./models/TemplateRepository");
 const FeedbackRepository = require("./models/FeedbackRepository");
 const SportRepository = require("./models/SportRepository");
+const UserHasSportRepository = require("./models/UserHasSportRepository")
 
 // Create an empty object to hold data repositories for different tables
 const tables = {
@@ -14,6 +15,7 @@ const tables = {
   tip: new TipsRepository(),
   feedback: new FeedbackRepository(),
   sport: new SportRepository(),
+  userHasSport: new UserHasSportRepository()
 };
 
 /* ************************************************************************* */

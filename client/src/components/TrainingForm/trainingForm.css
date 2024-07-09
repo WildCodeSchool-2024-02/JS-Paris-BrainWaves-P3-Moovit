@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: center;
   background-color: var(--light);
-  min-height: 100vh;
   padding: 5vh 0;
 
   label {
@@ -18,6 +17,10 @@
   textarea::placeholder {
     color: black;
   }
+}
+
+.trainingForm h1 {
+  text-align: center;
 }
 
 #save-label {
@@ -47,4 +50,10 @@
   width: 50vw;
   text-align: center;
   border-color: var(--template-dark);
+}
+
+@media (max-width: 768px) {
+  .trainingForm h1 {
+    font-size: 1.3em;
+  }
 }

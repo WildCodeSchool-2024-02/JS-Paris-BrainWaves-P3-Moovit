@@ -1,0 +1,40 @@
+.section-sport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 70vw;
+  gap: 10px;
+}
+
+.sport-container-light p {
+  color: black;
+}
+
+.sport-container-dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border: solid var(--second);
+  border-width: thin;
+  background-color: var(--dark);
+  color: white;
+}
+
+.active-sport {
+  background-color: var(--second);
+  border-color: white;
+  color: black;
+}
+
+.sport-container-light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border: solid var(--second);
+  border-width: thin;
+}

@@ -1,12 +1,20 @@
 import { Link, useNavigate } from "react-router-dom";
-import { FaRegUserCircle, FaRegBookmark, FaRegCompass } from "react-icons/fa";
+import {
+  FaRegUserCircle,
+  FaRegBookmark,
+  FaRegCompass,
+  FaPowerOff,
+} from "react-icons/fa";
 import { useContext } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
+import { useUser } from "../../contexts/User/User";
 
 export default function SideBar() {
   const { mode } = useContext(DarkModeContext);
+
+  const { user } = useUser();
 
   const navigate = useNavigate();
 
@@ -30,7 +38,7 @@ export default function SideBar() {
     <section id={`sidebar-${mode}`}>
       <div className="sidebar-first-container">
         <img className="sidebar-logo-moov" src={Logo} alt="logo" />
-        <h1>Bienvenue Toto</h1>
+        <h1>Bienvenue {`${user.name}`}</h1>
         <p>Sportif du dimanche</p>
         <p>N entrainements complétés</p>
         <p>Pratique la course en sac et le ping pong</p>
@@ -38,7 +46,7 @@ export default function SideBar() {
       <div className="sidebar-second-container">
         <div className="sidebar-link">
           <FaRegUserCircle className="sidebar-logo" />
-          <Link to="/" className="sidebar-link-text">
+          <Link to="/user" className="sidebar-link-text">
             Profil
           </Link>
         </div>
@@ -54,9 +62,14 @@ export default function SideBar() {
             Modèles
           </Link>
         </div>
-        <button type="button" onClick={handleLogout}>
-          Disconnect
-        </button>
+        <div
+          className="sidebar-link"
+          role="presentation"
+          onClick={handleLogout}
+        >
+          <FaPowerOff className="sidebar-logo" />
+          <p className="sidebar-link-text">Se déconnecter</p>
+        </div>
         <div className="sidebar-footer-container">
           <p>
             Un site réalisé avec amour par Antoine Delalande et Anthony Dufrenot

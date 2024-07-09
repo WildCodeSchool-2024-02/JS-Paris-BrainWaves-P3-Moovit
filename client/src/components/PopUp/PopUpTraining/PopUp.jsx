@@ -3,10 +3,20 @@ import Modal from "@mui/material/Modal";
 import TrainingForm from "../../TrainingForm/TrainingForm";
 
 function PopUp({ open, handleClose, id, training }) {
+  const styles = {
+    modalStyle1: {
+      overflowY: "auto",
+    },
+  };
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={handleClose} style={styles.modalStyle1}>
       <div>
-        <TrainingForm id={id} training={training} handleClose={handleClose} />
+        <TrainingForm
+          id={id}
+          training={training}
+          handleClose={handleClose}
+          open={open}
+        />
       </div>
     </Modal>
   );

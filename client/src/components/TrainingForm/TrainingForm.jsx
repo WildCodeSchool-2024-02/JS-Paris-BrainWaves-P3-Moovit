@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useOutletContext } from "react-router-dom";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
 
-function TrainingForm({ id, training, handleClose }) {
+function TrainingForm({ id, training, handleClose, open }) {
   const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
@@ -17,7 +18,7 @@ function TrainingForm({ id, training, handleClose }) {
       ? datefns.format(training.date, "yyyy-MM-dd")
       : datefns.format(new Date(), "yyyy-MM-dd")
   );
-  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day || "");
+  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
   const [duration, setDuration] = useState(training?.duration || "");
   const [details, setDetails] = useState(training?.details || "");
   const [sport, setSport] = useState(training?.sport_id || "");
@@ -104,8 +105,25 @@ function TrainingForm({ id, training, handleClose }) {
     handleClose();
   };
 
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "-100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
+
   return (
-    <form className="trainingForm" onSubmit={handleSubmit}>
+    <motion.form
+      className="trainingForm"
+      onSubmit={handleSubmit}
+      variants={variants}
+      animate={open ? "open" : "closed"}
+      initial="closed"
+    >
       <h1>Créer une nouvelle activité</h1>
 
       <select
@@ -210,7 +228,7 @@ function TrainingForm({ id, training, handleClose }) {
       <button type="button" className="secondary-button" onClick={handleClose}>
         Annuler
       </button>
-    </form>
+    </motion.form>
   );
 }
 
@@ -227,6 +245,7 @@ TrainingForm.propTypes = {
     details: PropTypes.string, // Détails de l'activité
     sport_id: PropTypes.number, // ID du sport associé à l'activité
   }),
+  open: PropTypes.bool.isRequired,
 };
 
 TrainingForm.defaultProps = {

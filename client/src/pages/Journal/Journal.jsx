@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
@@ -16,7 +16,6 @@ import Validation from "../../components/Validation/Validation";
 export default function Journal() {
   // Import user
   const { user } = useUser();
-
   const [currentTraining, setCurrentTraining] = useState(null);
   const [statusTraining, setStatusTraining] = useState(false);
 
@@ -97,7 +96,7 @@ export default function Journal() {
       if (response.ok) {
         toast.success("Feedback supprimé avec succès", {
           style: {
-            background: "rgba(145, 225, 166, 0.8)",
+            background: "rgba(145, 225, 166, 1)",
             color: "black",
           },
         });
@@ -404,7 +403,6 @@ export default function Journal() {
         training={findCurrentTraining}
         id={currentTraining}
       />
-      <Toaster />
       {boolFeed && validation && (
         <Validation
           handleClose={handleCloseValidation}

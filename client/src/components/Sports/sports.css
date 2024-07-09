@@ -20,9 +20,6 @@
   border: solid var(--second);
   border-width: thin;
   background-color: var(--dark);
-}
-
-.sport-container-dark p {
   color: white;
 }
 

@@ -200,12 +200,12 @@ export default function FeedbackDetails() {
           </h1>
           <p>{feedback?.details}</p>
         </div>
-        <div className="feedback-training-detail-container">
+        {feedback?.training_details && <div className="feedback-training-detail-container">
           <h1 className="feedback-training-details">
             Détails de l'entraînement
           </h1>
           <p>{feedback?.training_details}</p>
-        </div>
+        </div>}
         <button
           type="button"
           className="feedbackdetail-button"

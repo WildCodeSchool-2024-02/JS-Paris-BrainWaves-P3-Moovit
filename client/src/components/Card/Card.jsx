@@ -119,6 +119,7 @@ Card.propTypes = {
     time_of_day: PropTypes.string.isRequired,
     duration: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
+    details: PropTypes.string,
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,

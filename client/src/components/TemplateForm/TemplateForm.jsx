@@ -1,8 +1,11 @@
+/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
+import { toast } from "sonner";
 import "./templateForm.css";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useUser } from "../../contexts/User/User";
+
 
 function TemplateForm({ id, training, handleClose }) {
   const api = import.meta.env.VITE_API_URL;
@@ -32,6 +35,13 @@ function TemplateForm({ id, training, handleClose }) {
           sport_id: sport,
         }),
       });
+      handleClose();
+      toast.success("Ton modèle a bien été créé !", {
+        style: {
+          background: "rgba(145, 225, 166)",
+          color: "black",
+        },
+      });
     } else if (id) {
       fetch(`${api}/api/templates/${id}`, {
         method: "PUT",
@@ -46,8 +56,14 @@ function TemplateForm({ id, training, handleClose }) {
           sport_id: sport,
         }),
       });
+      handleClose();
+      toast.success("Tes modifications sont bien prises en compte !", {
+        style: {
+          background: "rgba(145, 225, 166)",
+          color: "black",
+        },
+      });
     }
-    handleClose();
   };
 
   return (

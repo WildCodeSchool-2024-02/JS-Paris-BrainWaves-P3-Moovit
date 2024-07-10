@@ -62,10 +62,12 @@ export default function Journal() {
 
   // Validation modal managing
   const [validation, setValidation] = useState(false);
+
   const handleCloseValidation = () => {
     setValidation(false);
     document.body.classList.remove("blocked");
   };
+  
   const handleOpenValidation = () => {
     setValidation(true);
     document.body.classList.add("blocked");
@@ -122,6 +124,12 @@ export default function Journal() {
     });
     setStatusTraining((prev) => !prev);
     handleCloseValidation();
+    toast.success("Entraînement supprimé avec succès", {
+      style: {
+        background: "rgba(145, 225, 166, 0.8)",
+        color: "black",
+      },
+    });
   };
 
   // Days of the week

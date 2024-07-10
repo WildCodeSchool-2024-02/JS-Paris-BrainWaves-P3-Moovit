@@ -8,6 +8,7 @@ import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
+
 import Feedback from "../Feedback/Feedback";
 
 export default function Card({
@@ -20,6 +21,7 @@ export default function Card({
   setBoolTrain,
   setBoolFeed,
 }) {
+
   const { mode } = useContext(DarkModeContext);
   const [anchorEl, setAnchorEl] = useState(null);
 

@@ -46,7 +46,7 @@ function TrainingDetails() {
     document.body.classList.add("blocked");
   };
 
-  // Delete feedback if yes is clicked
+  // Delete training if yes is clicked
   const handleDeleteTraining = async () => {
     try {
       const response = await fetch(

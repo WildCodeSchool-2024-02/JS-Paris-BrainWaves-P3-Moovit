@@ -37,7 +37,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 5px;
   background-color: rgb(228, 211, 228, 0.2);
@@ -70,6 +70,10 @@
 
 .card-title {
   font-size: 1.4em;
+}
+
+.template-card-title {
+  margin: 0;
 }
 
 .card-button-validate {

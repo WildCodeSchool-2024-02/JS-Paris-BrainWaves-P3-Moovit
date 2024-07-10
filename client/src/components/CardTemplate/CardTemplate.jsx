@@ -32,7 +32,7 @@ export default function CardTemplate({
   return (
     <section id={`card-template-${mode}`}>
       <section className="trainingCard-title">
-        <h1 className="card-title">{card.title}</h1>
+        <h2 className="card-title">{card.title}</h2>
         <CardMenu
           handleEdit={handleEdit}
           handleDelete={handleDelete}

@@ -2,28 +2,29 @@
 import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useOutletContext } from "react-router-dom";
 import { toast } from "sonner";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
 
-function TrainingForm({ id, training, handleClose }) {
+function TrainingForm({ id, training, handleClose, open }) {
   const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
 
-  const [title, setTitle] = useState(training?.title);
+  const [title, setTitle] = useState(training?.title || "");
   const [date, setDate] = useState(
     training
       ? datefns.format(training.date, "yyyy-MM-dd")
       : datefns.format(new Date(), "yyyy-MM-dd")
   );
   const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
-  const [duration, setDuration] = useState(training?.duration);
-  const [details, setDetails] = useState(training?.details);
-  const [sport, setSport] = useState(training?.sport_id);
-  const [templateId, setTemplateId] = useState(null);
+  const [duration, setDuration] = useState(training?.duration || "");
+  const [details, setDetails] = useState(training?.details || "");
+  const [sport, setSport] = useState(training?.sport_id || "");
+  const [templateId, setTemplateId] = useState("");
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
 
@@ -119,8 +120,25 @@ function TrainingForm({ id, training, handleClose }) {
     }
   };
 
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "-100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
+
   return (
-    <form className="trainingForm" onSubmit={handleSubmit}>
+    <motion.form
+      className="trainingForm"
+      onSubmit={handleSubmit}
+      variants={variants}
+      animate={open ? "open" : "closed"}
+      initial="closed"
+    >
       <h1>Créer une nouvelle activité</h1>
 
       <select
@@ -128,7 +146,6 @@ function TrainingForm({ id, training, handleClose }) {
         id="use-template"
         name="template"
         value={templateId}
-        defaultValue=""
         onChange={(e) => setTemplateId(e.target.value)}
       >
         <option value="" disabled>
@@ -142,7 +159,6 @@ function TrainingForm({ id, training, handleClose }) {
               </option>
             ))}
       </select>
-
       <input
         type="text"
         id="title"
@@ -166,7 +182,7 @@ function TrainingForm({ id, training, handleClose }) {
         value={timeOfDay}
         onChange={(e) => setTimeOfDay(e.target.value)}
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           Matin, Après-midi ou Soir ? 😉
         </option>
         <option>Matin</option>
@@ -179,7 +195,9 @@ function TrainingForm({ id, training, handleClose }) {
         value={sport}
         onChange={(e) => setSport(e.target.value)}
       >
-        <option>Quel sport ? ⛹️</option>
+        <option value="" disabled>
+          Quel sport ? ⛹️
+        </option>
         {sports
           ? sports.map((activity) => (
               <option key={activity.id} value={activity.id}>
@@ -225,22 +243,27 @@ function TrainingForm({ id, training, handleClose }) {
       <button type="button" className="secondary-button" onClick={handleClose}>
         Annuler
       </button>
-    </form>
+    </motion.form>
   );
 }
 
 export default TrainingForm;
 
 TrainingForm.propTypes = {
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])])
-    .isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]),
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.shape({
-    title: PropTypes.string.isRequired, // Titre de l'activité
-    date: PropTypes.string.isRequired, // Date de l'activité
+    title: PropTypes.string, // Titre de l'activité
+    date: PropTypes.string, // Date de l'activité
     time_of_day: PropTypes.string, // Moment de la journée de l'activité
-    duration: PropTypes.string.isRequired, // Durée de l'activité
-    details: PropTypes.string.isRequired, // Détails de l'activité
+    duration: PropTypes.string, // Durée de l'activité
+    details: PropTypes.string, // Détails de l'activité
     sport_id: PropTypes.number, // ID du sport associé à l'activité
-  }).isRequired,
+  }),
+  open: PropTypes.bool.isRequired,
+};
+
+TrainingForm.defaultProps = {
+  id: null,
+  training: undefined,
 };

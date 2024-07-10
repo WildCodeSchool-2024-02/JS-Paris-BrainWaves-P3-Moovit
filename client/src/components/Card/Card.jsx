@@ -1,28 +1,29 @@
-/* eslint-disable import/no-unresolved */
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
+import { motion } from "framer-motion";
 import { IoMdFitness } from "react-icons/io";
 import { TbSunset2 } from "react-icons/tb";
 import { CiClock2 } from "react-icons/ci";
-import { toast } from "sonner";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./card.css";
 import CardMenu from "../CardMenu/CardMenu";
 
 import Feedback from "../Feedback/Feedback";
-import { useUser } from "../../contexts/User/User";
 
 export default function Card({
   card,
   handleOpen,
   setCurrentTraining,
-  setStatusTraining,
   setStatusFeedback,
+  setIdTraining,
+  handleOpenValidation,
+  setBoolTrain,
+  setBoolFeed,
 }) {
-  const { user } = useUser();
+
   const { mode } = useContext(DarkModeContext);
-  const api = import.meta.env.VITE_API_URL;
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // Open feedback State
   const [openFeedback, setOpenFeedback] = useState(false);
@@ -35,21 +36,13 @@ export default function Card({
     setOpenFeedback(false);
   };
 
-  // Delete training with the cardMenu
-  const handleDelete = () => {
-    fetch(`${api}/api/trainings/${card.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    setStatusTraining((prev) => !prev);
-    toast.success("Entraînement supprimé avec succès", {
-      style: {
-        background: "rgba(145, 225, 166, 0.8)",
-        color: "black",
-      },
-    });
+  // Open the modal validation
+  const handleDelete = async () => {
+    setIdTraining(card.id);
+    setAnchorEl(false);
+    setBoolTrain(true);
+    setBoolFeed(false);
+    handleOpenValidation();
   };
 
   // Edit training with the cardMenu
@@ -58,15 +51,38 @@ export default function Card({
     handleOpen();
   };
 
+  const variants = {
+    open: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      opacity: 0.4,
+      scale: 0.7,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
+
   return (
-    <section id={`card-${mode}`}>
+    <motion.section
+      id={`card-${mode}`}
+      variants={variants}
+      animate="open"
+      initial="closed"
+    >
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
+        <CardMenu
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        />
       </section>
       <div className="card-type-training">
         <IoMdFitness />
-        <p>Entraînement | {card.name}</p>
+        <p>Entraînement | {card.name[0].toUpperCase() + card.name.slice(1)}</p>
       </div>
       <div className="card-time-training">
         <div className="card-plus">
@@ -79,6 +95,7 @@ export default function Card({
         </div>
       </div>
       <section className="trainingCard-title">
+        <Link to={`/training/${card.id}`}>Voir le détail</Link>
         <button
           type="button"
           className="card-button-validate"
@@ -86,7 +103,6 @@ export default function Card({
         >
           Valider
         </button>
-        {card.details && <Link to={`/training/${card.id}`}>Détails</Link>}
       </section>
       <Feedback
         handleClose={handleCloseFeedback}
@@ -94,7 +110,7 @@ export default function Card({
         id={card.id}
         setStatusFeedback={setStatusFeedback}
       />
-    </section>
+    </motion.section>
   );
 }
 
@@ -110,5 +126,8 @@ Card.propTypes = {
   handleOpen: PropTypes.func.isRequired,
   setCurrentTraining: PropTypes.func.isRequired,
   setStatusFeedback: PropTypes.func.isRequired,
-  setStatusTraining: PropTypes.func.isRequired,
+  setIdTraining: PropTypes.func.isRequired,
+  handleOpenValidation: PropTypes.func.isRequired,
+  setBoolTrain: PropTypes.func.isRequired,
+  setBoolFeed: PropTypes.func.isRequired,
 };

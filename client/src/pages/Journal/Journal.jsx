@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import "./journal.css";
 import * as datefns from "date-fns";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import Days from "../../components/Days/Days";
 import Card from "../../components/Card/Card";
 import TipsCard from "../../components/TipsCard/TipsCard";
@@ -16,7 +16,6 @@ import Validation from "../../components/Validation/Validation";
 export default function Journal() {
   // Import user
   const { user } = useUser();
-
   const [currentTraining, setCurrentTraining] = useState(null);
   const [statusTraining, setStatusTraining] = useState(false);
 
@@ -63,18 +62,26 @@ export default function Journal() {
 
   // Validation modal managing
   const [validation, setValidation] = useState(false);
+
   const handleCloseValidation = () => {
     setValidation(false);
     document.body.classList.remove("blocked");
   };
+  
   const handleOpenValidation = () => {
     setValidation(true);
     document.body.classList.add("blocked");
   };
 
-  // State pour récupérer l'id du feedback cliquer
+  // State to get Training or Feedback id
   const [idFeedback, setIdFeedback] = useState("");
   const [trainingFeedback, setTrainingFeedback] = useState("");
+  // State to know wich one should be deleted or uppdated
+  const [boolFeed, setBoolFeed] = useState(false);
+  const [boolTrain, setBoolTrain] = useState(false);
+
+  // State pour récupérer l'id du training cliquer
+  const [idTraining, setIdTraining] = useState("");
 
   // State to get all training for a week
   const [getInterval, setGetInterval] = useState([]);
@@ -91,7 +98,7 @@ export default function Journal() {
       if (response.ok) {
         toast.success("Feedback supprimé avec succès", {
           style: {
-            background: "rgba(145, 225, 166, 0.8)",
+            background: "rgba(145, 225, 166, 1)",
             color: "black",
           },
         });
@@ -105,6 +112,24 @@ export default function Journal() {
     } catch (err) {
       toast.error("Une erreur est survenue, veuillez réessayer plus tard");
     }
+  };
+
+  // Delete training with the cardMenu
+  const handleDeleteTraining = () => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/trainings/${idTraining}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    setStatusTraining((prev) => !prev);
+    handleCloseValidation();
+    toast.success("Entraînement supprimé avec succès", {
+      style: {
+        background: "rgba(145, 225, 166, 0.8)",
+        color: "black",
+      },
+    });
   };
 
   // Days of the week
@@ -316,6 +341,8 @@ export default function Journal() {
                 setIdFeedback={setIdFeedback}
                 setTrainingFeedback={setTrainingFeedback}
                 handleOpenValidation={handleOpenValidation}
+                setBoolFeed={setBoolFeed}
+                setBoolTrain={setBoolTrain}
               />
             ))}
           </div>
@@ -329,8 +356,10 @@ export default function Journal() {
                 handleOpen={handleOpen}
                 setCurrentTraining={setCurrentTraining}
                 setStatusFeedback={setStatusFeedback}
-                setStatusTraining={setStatusTraining}
-                
+                setIdTraining={setIdTraining}
+                handleOpenValidation={handleOpenValidation}
+                setBoolTrain={setBoolTrain}
+                setBoolFeed={setBoolFeed}
               />
             ))}
           </div>
@@ -382,12 +411,16 @@ export default function Journal() {
         training={findCurrentTraining}
         id={currentTraining}
       />
-      <Toaster />
-      {validation && (
+      {boolFeed && validation && (
         <Validation
           handleClose={handleCloseValidation}
-          handleDeleteFeedback={handleDeleteFeedback}
-          handleOpenValidation={handleOpenValidation}
+          handleDeleteItem={handleDeleteFeedback}
+        />
+      )}
+      {boolTrain && validation && (
+        <Validation
+          handleClose={handleCloseValidation}
+          handleDeleteItem={handleDeleteTraining}
         />
       )}
     </section>

@@ -7,10 +7,13 @@ const router = express.Router();
 /* ************************************************************************* */
 
 // Import item-related actions
-const { browse } = require("../../../controllers/sportActions");
+const { browse, readSports } = require("../../../controllers/sportActions");
+const { verifyToken } = require("../../../services/verifyToken");
 
 // Route to get a list of users
 router.get("/", browse);
+
+router.get("/profile", verifyToken, readSports)
 
 /* ************************************************************************* */
 

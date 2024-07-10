@@ -1,0 +1,13 @@
+.cancel-button-light {
+  width: 100%;
+  margin: 0 10px;
+  background-color: var(--light);
+  color: black;
+}
+
+.cancel-button-dark {
+  width: 100%;
+  margin: 0 10px;
+  background-color: rgb(41, 41, 49);
+  color: white;
+}

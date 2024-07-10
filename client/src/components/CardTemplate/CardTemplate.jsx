@@ -1,50 +1,44 @@
-/* eslint-disable import/no-unresolved */
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./cardTemplate.css";
 import CardMenu from "../CardMenu/CardMenu";
-import { useUser } from "../../contexts/User/User";
 
-const api = import.meta.env.VITE_API_URL;
-
-export default function CardTemplate({ card, handleOpen, setCurrentTemplate, setStatusTemplate }) {
+export default function CardTemplate({
+  card,
+  handleOpen,
+  setCurrentTemplate,
+  handleOpenValidation,
+}) {
   const { mode } = useContext(DarkModeContext);
-  const { user } = useUser();
-  const navigate = useNavigate();
 
-  const handleDelete = () => {
-    fetch(`${api}/api/templates/${card.id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    setStatusTemplate(prev => !prev)
-    navigate("/templates");
-    toast.success("Modèle supprimé avec succès", {
-      style: {
-        background: "rgba(145, 225, 166, 0.8)",
-        color: "black",
-      },
-    });
-    
-  };
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleEdit = () => {
     setCurrentTemplate(card.id);
     handleOpen();
   };
 
+  const handleDelete = async () => {
+    setCurrentTemplate(card.id)
+    setAnchorEl(false);
+    handleOpenValidation();
+  }
+
   return (
     <section id={`card-template-${mode}`}>
       <section className="trainingCard-title">
         <h1 className="card-title">{card.title}</h1>
-        <CardMenu handleEdit={handleEdit} handleDelete={handleDelete} />
+        <CardMenu
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          anchorEl={anchorEl}
+          setAnchorEl={setAnchorEl}
+        />
       </section>
       <div className="card-type-training">
         <IoMdFitness />
@@ -82,5 +76,5 @@ CardTemplate.propTypes = {
   }).isRequired,
   handleOpen: PropTypes.func.isRequired,
   setCurrentTemplate: PropTypes.func.isRequired,
-  setStatusTemplate: PropTypes.func.isRequired
+  handleOpenValidation: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import Menu from "@mui/material/Menu";
@@ -9,9 +9,8 @@ import DarkModeContext from "../../services/DarkModeContext";
 
 const ITEM_HEIGHT = 48;
 
-function CardMenu({ handleDelete, handleEdit }) {
+function CardMenu({ handleDelete, handleEdit, anchorEl, setAnchorEl }) {
   const { mode } = useContext(DarkModeContext);
-  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (e) => {
@@ -59,4 +58,11 @@ export default CardMenu;
 CardMenu.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   handleEdit: PropTypes.func.isRequired,
+  anchorEl: PropTypes.instanceOf(Element),
+  setAnchorEl: PropTypes.func,
+};
+
+CardMenu.defaultProps = {
+  anchorEl: null,
+  setAnchorEl: undefined,
 };

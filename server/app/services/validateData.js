@@ -12,6 +12,12 @@ const schema = joi.object({
   repeat_password: joi.ref("password"),
 });
 
+const nameSchema = joi.object({
+  id: joi.number(),
+  name: joi
+    .string()
+});
+
 const validateSchema = (validator) => async (req, res, next) => {
   try {
     await validator.validateAsync(req.body, { abortEarly: false });
@@ -22,4 +28,4 @@ const validateSchema = (validator) => async (req, res, next) => {
   }
 };
 
-module.exports = { schema, validateSchema };
+module.exports = { schema, nameSchema, validateSchema };

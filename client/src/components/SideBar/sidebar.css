@@ -10,6 +10,7 @@
   height: 100vh;
   box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: white;
+  z-index: 3;
 }
 
 #sidebar-dark {
@@ -24,6 +25,7 @@
   height: 100vh;
   box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
   background-color: rgb(41, 41, 49);
+  z-index: 3;
 }
 
 .sidebar-logo-moov {
@@ -74,6 +76,7 @@
   color: var(--main);
   font-size: 1.2em;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .sidebar-footer-container {
@@ -115,6 +118,7 @@
     background-color: white;
     position: sticky;
     bottom: 0;
+    z-index: 3;
   }
   #sidebar-dark {
     flex-direction: row;
@@ -125,5 +129,6 @@
     background-color: rgb(41, 41, 49);
     position: sticky;
     bottom: 0;
+    z-index: 3;
   }
 }

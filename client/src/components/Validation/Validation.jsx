@@ -4,7 +4,7 @@ import { useContext } from "react";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./validation.css";
 
-export default function Validation({ handleClose, handleDeleteFeedback }) {
+export default function Validation({ handleClose, handleDeleteItem }) {
   const { mode } = useContext(DarkModeContext);
   return (
     <section className="validation-modal">
@@ -27,7 +27,7 @@ export default function Validation({ handleClose, handleDeleteFeedback }) {
           <button
             type="button"
             className="validation-yes"
-            onClick={handleDeleteFeedback}
+            onClick={handleDeleteItem}
           >
             OUI
           </button>
@@ -42,5 +42,6 @@ export default function Validation({ handleClose, handleDeleteFeedback }) {
 
 Validation.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  handleDeleteFeedback: PropTypes.func.isRequired,
+  handleDeleteItem: PropTypes.func.isRequired,
 };
+

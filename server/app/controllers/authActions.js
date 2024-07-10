@@ -34,7 +34,7 @@ const refresh = async (req, res, next) => {
   const {refreshToken} = req.cookies;
   try {
     if (!refreshToken) {
-      res.sendStatus(401).send("Access denied, no refresToken provided");
+      return res.sendStatus(401);
     }
     const decoded = jwt.verify(refreshToken, process.env.APP_SECRET);
     const [user] = await tables.user.readOne(decoded.id);
@@ -42,9 +42,9 @@ const refresh = async (req, res, next) => {
     const accessToken = jwt.sign({ id: user.id }, process.env.APP_SECRET, {
       expiresIn: "1h",
     });
-    res.status(200).header("Authorization", accessToken).json(user);
+    return res.status(200).header("Authorization", accessToken).json(user);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 

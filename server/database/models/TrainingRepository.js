@@ -24,7 +24,7 @@ class TrainingRepository extends AbstractRepository {
   async create(title, date, duration, details, timeOfDay, userId, sportId) {
     const newTraining = await this.database.query(
       `INSERT INTO ${this.table} 
-        (title, date, duration, details, time_of_day, user_id, sport_id) VALUE (?, ?, ?, ?, ?, ?, ?)
+        (title, date, duration, details, time_of_day, user_id, sport_id) VALUES (?, ?, ?, ?, ?, ?, ?)
         `,
       [title, date, duration, details, timeOfDay, userId, sportId]
     );

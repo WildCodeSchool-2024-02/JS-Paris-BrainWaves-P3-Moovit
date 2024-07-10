@@ -17,6 +17,10 @@ import TemplateDetails from "./pages/TemplateDetails/TemplateDetails";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import FeedbackDetails from "./pages/FeedbackDetails/FeedbackDetails";
+import Profile from "./pages/Profile/Profile";
+import NamePage from "./pages/NamePage/NamePage";
+import SportPage from "./pages/SportPage/SportPage";
+import LevelPage from "./pages/LevelPage/LevelPage";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -43,9 +47,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <Landing />
-        ),
+        element: <Landing />,
+      },
+      {
+        path: "/profile/name",
+        element: <NamePage />,
+      },
+      {
+        path: "/profile/sport",
+        element: <SportPage />,
+      },
+      {
+        path: "/profile/level",
+        element: <LevelPage />,
       },
       {
         path: "/training/:id",
@@ -84,6 +98,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <FeedbackDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/user",
+        element: (
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         ),
       },

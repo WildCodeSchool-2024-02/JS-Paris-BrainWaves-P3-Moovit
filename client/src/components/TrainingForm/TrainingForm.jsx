@@ -1,8 +1,10 @@
+/* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import "./trainingForm.css";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useOutletContext } from "react-router-dom";
+import { toast } from "sonner";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
 
@@ -84,6 +86,13 @@ function TrainingForm({ id, training, handleClose, open }) {
           sport_id: sport,
         }),
       });
+      handleClose();
+      toast.success("Ton entraînement a bien été créé !", {
+        style: {
+          background: "rgba(145, 225, 166)",
+          color: "black",
+        },
+      });
     } else if (id) {
       fetch(`${api}/api/trainings/${id}`, {
         method: "PUT",
@@ -101,8 +110,14 @@ function TrainingForm({ id, training, handleClose, open }) {
           sport_id: sport,
         }),
       });
+      handleClose();
+      toast.success("Tes modifications sont bien prises en compte !", {
+        style: {
+          background: "rgba(145, 225, 166)",
+          color: "black",
+        },
+      });
     }
-    handleClose();
   };
 
   const variants = {

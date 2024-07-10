@@ -1,21 +1,26 @@
+/* eslint-disable import/no-unresolved */
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaPlus } from "react-icons/fa";
+import { Toaster, toast } from "sonner";
 import CardTemplate from "../../components/CardTemplate/CardTemplate";
 import PopUpTemplate from "../../components/PopUp/PopUpTemplate/PopUpTemplate";
 import SideBar from "../../components/SideBar/SideBar";
 import "./templates.css";
 import { useUser } from "../../contexts/User/User";
+import Validation from "../../components/Validation/Validation";
 
 function Templates() {
+  
   const api = import.meta.env.VITE_API_URL;
-
+  const { user } = useUser();
+  
   const [templates, setTemplates] = useState([]);
   const [statusTemplate, setStatusTemplate] = useState(false);
-  const { user } = useUser();
 
   const [currentTemplate, setCurrentTemplate] = useState(null);
+
   // Get template ID for edition
   const findCurrentTemplate = templates.find(
     (template) => template.id === currentTemplate
@@ -28,7 +33,40 @@ function Templates() {
     setOpen(false);
     setCurrentTemplate(null);
   };
+
   const navigate = useNavigate();
+
+  const [validation, setValidation] = useState(false);
+  
+  const handleCloseValidation = () => {
+    setValidation(false);
+    document.body.classList.remove("blocked");
+  };
+  
+  const handleOpenValidation = () => {
+    setValidation(true);
+    document.body.classList.add("blocked");
+  };
+
+  const handleDelete = () => {
+    fetch(`${api}/api/templates/${currentTemplate}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    setStatusTemplate(prev => !prev)
+    handleCloseValidation();
+    setCurrentTemplate(null)
+    navigate("/templates");
+    toast.success("Modèle supprimé avec succès", {
+      style: {
+        background: "rgba(145, 225, 166, 0.8)",
+        color: "black",
+      },
+    });
+    
+  };
 
   useEffect(() => {
     if (!user) navigate("/login");
@@ -53,8 +91,8 @@ function Templates() {
   };
 
   return (
+    <>
     <section className="templates-container">
-      <SideBar />
       <section className="templates">
         <h1>Mes modèles</h1>
         {templates ? (
@@ -75,6 +113,8 @@ function Templates() {
                 setCurrentTemplate={setCurrentTemplate}
                 handleOpen={handleOpen}
                 setStatusTemplate={setStatusTemplate}
+                handleOpenValidation={handleOpenValidation}
+                handleCloseValidation={handleCloseValidation}
               />
             </motion.div>
           ))
@@ -98,7 +138,16 @@ function Templates() {
           training={findCurrentTemplate}
         />
       </section>
+      <Toaster />
+      
+      
     </section>
+    {validation && <Validation
+          handleClose={handleCloseValidation}
+          handleDeleteItem={handleDelete}
+        />}
+    <SideBar />
+    </>
   );
 }
 

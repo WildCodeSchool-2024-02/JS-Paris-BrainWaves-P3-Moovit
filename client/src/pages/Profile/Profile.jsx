@@ -1,4 +1,6 @@
+/* eslint-disable import/no-unresolved */
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import "./profile.css";
 import SideBar from "../../components/SideBar/SideBar";
 import { useUser } from "../../contexts/User/User";
@@ -9,14 +11,29 @@ export default function Profile() {
   const { user } = useUser();
   const [userSports, setUserSports] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
+  const [newUser, setNewUser] = useState({});
+  const [update, setUpdate] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleCloseEdit = () => {
-    setOpenEdit(false);
-  };
-  const handleOpenEdit = () => {
-    setOpenEdit(true);
+  // Async function to update user information
+  const getUser = async () => {
+    try {
+      const response = await fetch(`${api}/api/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        data.token = user.token;
+        setNewUser(data);
+      }
+    } catch (err) {
+      toast.error("Une erreur est survenue");
+    }
   };
 
+  // Async function to get all sports from one user
   const getSports = async () => {
     try {
       const response = await fetch(`${api}/api/sports/profile`, {
@@ -28,14 +45,25 @@ export default function Profile() {
         const data = await response.json();
         setUserSports(data);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error("Une erreur est survenue");
     }
   };
 
+  // Managing opening & closing editing modal
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+    setError(false);
+  };
+  const handleOpenEdit = () => {
+    setOpenEdit(true);
+  };
+
+  // useEffect for handling updating display
   useEffect(() => {
     getSports();
-  }, []);
+    getUser();
+  }, [update]);
 
   return (
     <section className="profile">
@@ -45,26 +73,26 @@ export default function Profile() {
         </div>
         <div className="container-paramaters">
           <h1 className="parameters-name">PRENOM</h1>
-          <p className="parameters-value">{user.name}</p>
+          <p className="parameters-value">{newUser.name}</p>
         </div>
         <div className="container-parameters">
           <h1 className="parameters-name">MAIL</h1>
-          <p className="parameters-value">{user.email}</p>
+          <p className="parameters-value">{newUser.email}</p>
         </div>
         <div className="container-parameters">
           <h1 className="parameters-name">MON NIVEAU</h1>
-          {user.level === 1 && (
+          {newUser.level === 1 && (
             <p className="parameters-value">Je commence le sport</p>
           )}
-          {user.level === 2 && (
+          {newUser.level === 2 && (
             <p className="parameters-value">Je pratique de temps en temps</p>
           )}
-          {user.level === 3 && (
+          {newUser.level === 3 && (
             <p className="parameters-value">
               Je fais du sport très régulièrement
             </p>
           )}
-          {!user.level && (
+          {!newUser.level && (
             <p className="parameters-value">Aucun niveau renseigné</p>
           )}
         </div>
@@ -98,6 +126,11 @@ export default function Profile() {
         handleClose={handleCloseEdit}
         userSports={userSports}
         user={user}
+        newUser={newUser}
+        setUpdate={setUpdate}
+        update={update}
+        error={error}
+        setError={setError}
       />
     </section>
   );

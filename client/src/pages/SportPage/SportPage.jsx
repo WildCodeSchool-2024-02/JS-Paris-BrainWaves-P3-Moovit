@@ -24,23 +24,19 @@ export default function SportPage() {
     if (!user) {
       navigate("/login");
     }
-    mapSport(sports)
+    mapSport(sports);
   }, []);
 
+  // Listening to activeSport to fill dataSports state
+  const tabActive = Object.entries(activeButtons);
   useEffect(() => {
     const selectedSports = [];
-    if (activeButtons.fitness === true) {
-      const tab = sports.find((sport) => sport.name === "fitness");
-      selectedSports.push(tab.id);
-    }
-    if (activeButtons.running === true) {
-      const tab = sports.find((sport) => sport.name === "running");
-      selectedSports.push(tab.id);
-    }
-    if (activeButtons.poney === true) {
-      const tab = sports.find((sport) => sport.name === "poney");
-      selectedSports.push(tab.id);
-    }
+    tabActive.forEach((value) => {
+      if (value[1] === true && value[0] !== "other") {
+        const tab = sports.find((sport) => sport.name === value[0]);
+        selectedSports.push(tab.id);
+      }
+    });
     setData(selectedSports);
   }, [activeButtons]);
 

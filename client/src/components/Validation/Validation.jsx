@@ -4,7 +4,7 @@ import { useContext } from "react";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./validation.css";
 
-export default function Validation({ handleClose, handleDeleteItem }) {
+export default function Validation({ handleClose, handleDeleteItem, message }) {
   const { mode } = useContext(DarkModeContext);
   return (
     <section className="validation-modal">
@@ -22,7 +22,7 @@ export default function Validation({ handleClose, handleDeleteItem }) {
           },
         }}
       >
-        <p>Es-tu sûr de vouloir supprimer ce feedback ?</p>
+        <p>{message}</p>
         <div className="validation-button-container">
           <button
             type="button"
@@ -43,5 +43,5 @@ export default function Validation({ handleClose, handleDeleteItem }) {
 Validation.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleDeleteItem: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
 };
-

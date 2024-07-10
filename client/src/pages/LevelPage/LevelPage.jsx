@@ -28,11 +28,11 @@ export default function LevelPage() {
     }
   }, [activeButtons]);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleLevel = async () => {
     try {

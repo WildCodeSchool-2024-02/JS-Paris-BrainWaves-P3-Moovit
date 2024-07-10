@@ -12,10 +12,9 @@ import { useUser } from "../../contexts/User/User";
 import Validation from "../../components/Validation/Validation";
 
 function Templates() {
-  
   const api = import.meta.env.VITE_API_URL;
   const { user } = useUser();
-  
+
   const [templates, setTemplates] = useState([]);
   const [statusTemplate, setStatusTemplate] = useState(false);
 
@@ -37,12 +36,12 @@ function Templates() {
   const navigate = useNavigate();
 
   const [validation, setValidation] = useState(false);
-  
+
   const handleCloseValidation = () => {
     setValidation(false);
     document.body.classList.remove("blocked");
   };
-  
+
   const handleOpenValidation = () => {
     setValidation(true);
     document.body.classList.add("blocked");
@@ -55,9 +54,9 @@ function Templates() {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    setStatusTemplate(prev => !prev)
+    setStatusTemplate((prev) => !prev);
     handleCloseValidation();
-    setCurrentTemplate(null)
+    setCurrentTemplate(null);
     navigate("/templates");
     toast.success("Modèle supprimé avec succès", {
       style: {
@@ -65,7 +64,6 @@ function Templates() {
         color: "black",
       },
     });
-    
   };
 
   useEffect(() => {
@@ -92,61 +90,61 @@ function Templates() {
 
   return (
     <>
-    <section className="templates-container">
-      <section className="templates">
-        <h1>Mes modèles</h1>
-        {templates ? (
-          templates.map((template, i) => (
-            <motion.div
-              key={`template-${template.id}`}
-              variants={variants}
-              initial="closed"
-              animate="open"
-              transition={{
-                duration: 0.5,
-                ease: [0.76, 0, 0.24, 1],
-                delay: 0.1 * (i - 1),
-              }}
-            >
-              <CardTemplate
-                card={template}
-                setCurrentTemplate={setCurrentTemplate}
-                handleOpen={handleOpen}
-                setStatusTemplate={setStatusTemplate}
-                handleOpenValidation={handleOpenValidation}
-                handleCloseValidation={handleCloseValidation}
-              />
-            </motion.div>
-          ))
-        ) : (
-          <p>Vous n'avez aucun modèle enregistré</p>
-        )}
-        <button
-          type="button"
-          className="journal-add-button"
-          onClick={handleOpen}
-        >
-          <p>Ajouter un modèle</p>
-          <FaPlus />
-        </button>
-        <PopUpTemplate
-          setOpen={setOpen}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-          open={open}
-          id={currentTemplate}
-          training={findCurrentTemplate}
-        />
+      <section className="templates-container">
+        <section className="templates">
+          <h1>Mes modèles</h1>
+          {templates ? (
+            templates.map((template, i) => (
+              <motion.div
+                key={`template-${template.id}`}
+                variants={variants}
+                initial="closed"
+                animate="open"
+                transition={{
+                  duration: 0.5,
+                  ease: [0.76, 0, 0.24, 1],
+                  delay: 0.1 * (i - 1),
+                }}
+              >
+                <CardTemplate
+                  card={template}
+                  setCurrentTemplate={setCurrentTemplate}
+                  handleOpen={handleOpen}
+                  setStatusTemplate={setStatusTemplate}
+                  handleOpenValidation={handleOpenValidation}
+                  handleCloseValidation={handleCloseValidation}
+                />
+              </motion.div>
+            ))
+          ) : (
+            <p>Vous n'avez aucun modèle enregistré</p>
+          )}
+          <button
+            type="button"
+            className="journal-add-button"
+            onClick={handleOpen}
+          >
+            <p>Ajouter un modèle</p>
+            <FaPlus />
+          </button>
+          <PopUpTemplate
+            setOpen={setOpen}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+            open={open}
+            id={currentTemplate}
+            training={findCurrentTemplate}
+          />
+        </section>
+        <Toaster />
+        <SideBar />
       </section>
-      <Toaster />
-      <SideBar />
-      
-    </section>
-    {validation && <Validation
+      {validation && (
+        <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDelete}
-        />}
-    
+        />
+      )}
     </>
   );
 }

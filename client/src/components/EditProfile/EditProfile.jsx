@@ -11,9 +11,17 @@ import Level from "../Level/Level";
 import DarkModeContext from "../../services/DarkModeContext";
 import CancelButton from "../CancelButton/CancelButton";
 
-export default function EditProfile({ open, handleClose, userSports, user }) {
+export default function EditProfile({
+  open,
+  handleClose,
+  userSports,
+  setUpdate,
+  update,
+  newUser,
+  error,
+  setError,
+}) {
   const api = import.meta.env.VITE_API_URL;
-  const [error, setError] = useState(false);
   const { sports } = useOutletContext();
   const { mode } = useContext(DarkModeContext);
   const name = useRef();
@@ -43,23 +51,18 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
 
   useEffect(() => {
     mapSport(sports);
-  }, []);
+  }, [update]);
 
   // Listening to activeSport to fill dataSports state
+  const tabActive = Object.entries(activeSports);
   useEffect(() => {
     const selectedSports = [];
-    if (activeSports.fitness === true) {
-      const tab = sports.find((sport) => sport.name === "fitness");
-      selectedSports.push(tab.id);
-    }
-    if (activeSports.running === true) {
-      const tab = sports.find((sport) => sport.name === "running");
-      selectedSports.push(tab.id);
-    }
-    if (activeSports.poney === true) {
-      const tab = sports.find((sport) => sport.name === "poney");
-      selectedSports.push(tab.id);
-    }
+    tabActive.forEach((value) => {
+      if (value[1] === true && value[0] !== "other") {
+        const tab = sports.find((sport) => sport.name === value[0]);
+        selectedSports.push(tab.id);
+      }
+    });
     setDataSports(selectedSports);
   }, [activeSports]);
 
@@ -78,6 +81,12 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
 
   // Display the sports and the level of the user when he click on update
   useEffect(() => {
+    setActiveLevel({
+      none: false,
+      moderate: false,
+      pro: false,
+    });
+    setActiveSports({});
     if (userSports) {
       userSports.forEach((userSport) => {
         const value = userSport.name;
@@ -88,29 +97,26 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
         }));
       });
     }
-    if (user.level === 1) {
+    if (newUser.level === 1) {
       setActiveLevel((prevActiveLevel) => ({
         ...prevActiveLevel,
         none: true,
       }));
     }
-    if (user.level === 2) {
+    if (newUser.level === 2) {
       setActiveLevel((prevActiveLevel) => ({
         ...prevActiveLevel,
         moderate: true,
       }));
     }
-    if (user.level === 3) {
+    if (newUser.level === 3) {
       setActiveLevel((prevActiveLevel) => ({
         ...prevActiveLevel,
         pro: true,
       }));
     }
-  }, [open]);
+  }, [open, update]);
 
-  const [isName, setIsName] = useState(false);
-  const [isSport, setIsSport] = useState(false);
-  const [isLevel, setIsLevel] = useState(false);
   // Async function to edit name
   const handleEdit = async () => {
     // Update name fetch
@@ -121,37 +127,32 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: user.id,
+          id: newUser.id,
           name: name.current.value,
         }),
       });
-      if (response.ok) {
-        setIsName(true);
-        toast.success("Ton nom a bien été modifié");
-      } else {
+      if (!response.ok) {
         setError(true);
+        return error;
       }
     } catch (err) {
-      console.error(err);
+      setError(true);
+      toast.error("Une erreur est survenue");
     }
     // Update sports fetch
     try {
-      const response = await fetch(`${api}/api/userhassport`, {
+      await fetch(`${api}/api/userhassport`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: user.id,
+          id: newUser.id,
           sports: dataSports,
         }),
       });
-      if (response.ok) {
-        setIsSport(true);
-        toast.success("Tes sports ont bien été mis à jour");
-      }
     } catch (err) {
-      console.error(err);
+      toast.error("Une erreur est survenue");
     }
     // Update level fetch
     try {
@@ -161,20 +162,29 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: user.id,
+          id: newUser.id,
           level: dataLevel,
         }),
       });
       if (response.ok) {
-        setIsLevel(true);
-        toast.success("Ton niveau a été mis à jour");
+        setActiveLevel({
+          none: false,
+          moderate: false,
+          pro: false,
+        });
       }
     } catch (err) {
-      console.error(err);
+      toast.error("Une erreur est survenue");
     }
-    if (isLevel && isName && isSport) {
-      handleClose();
-    }
+    handleClose();
+    toast.success("Tes informations ont été mis à jour", {
+      style: {
+        background: "rgba(145, 225, 166)",
+        color: "black",
+      },
+    });
+    setUpdate((prev) => !prev);
+    return error;
   };
 
   // Variants for animation modal
@@ -209,6 +219,7 @@ export default function EditProfile({ open, handleClose, userSports, user }) {
             <input
               type="text"
               placeholder="Choisi le bon pseudo"
+              defaultValue={newUser.name}
               className={error ? "input-error" : ""}
               ref={name}
             />
@@ -256,8 +267,21 @@ EditProfile.propTypes = {
       name: PropTypes.string.isRequired,
     })
   ).isRequired,
-  user: PropTypes.shape({
-    level: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-  }).isRequired,
+  newUser: PropTypes.shape({
+    id: PropTypes.number,
+    level: PropTypes.number,
+    name: PropTypes.string,
+  }),
+  setUpdate: PropTypes.func.isRequired,
+  update: PropTypes.bool.isRequired,
+  setError: PropTypes.func.isRequired,
+  error: PropTypes.bool.isRequired,
+};
+
+EditProfile.defaultProps = {
+  newUser: {
+    id: undefined,
+    level: 0,
+    name: "",
+  },
 };

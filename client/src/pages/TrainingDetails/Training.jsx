@@ -4,7 +4,7 @@ import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { toast, Toaster } from 'sonner';
+import { toast, Toaster } from "sonner";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import DarkMode from "../../components/DarkMode/DarkMode";
@@ -87,8 +87,6 @@ function TrainingDetails() {
     setAnchorEl(false);
   };
 
- 
-
   const variants = {
     open: {
       x: 0,
@@ -166,23 +164,23 @@ function TrainingDetails() {
             </button>
           </section>
         </motion.div>
-      </section>
-      <PopUp
-        setOpen={setOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        open={open}
-        id={parseInt(id, 10)}
-        training={training}
-      />
-      {validation && (
-        <Validation
-          handleClose={handleCloseValidation}
-          handleDeleteItem={handleDeleteTraining}
+        <PopUp
+          setOpen={setOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          id={parseInt(id, 10)}
+          training={training}
         />
-      )}
-      <Toaster />
-      <SideBar />
+        {validation && (
+          <Validation
+            handleClose={handleCloseValidation}
+            handleDeleteItem={handleDeleteTraining}
+          />
+        )}
+        <Toaster />
+        <SideBar />
+      </section>
     </>
   );
 }

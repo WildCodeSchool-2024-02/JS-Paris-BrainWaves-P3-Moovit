@@ -80,3 +80,19 @@
   box-shadow: none;
   align-self: flex-end;
 }
+
+@media (min-width: 1025px) {
+  .training-details-page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .training-details-container {
+    width: 70%;
+    margin: 0 20px 0 0;
+  }
+}

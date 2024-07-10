@@ -91,3 +91,25 @@
   border: none;
   font-size: 0.8em;
 }
+
+@media (max-width: 1024px) {
+  .templates-container {
+    flex-direction: row-reverse;
+  }
+}
+
+@media (min-width: 1025px) {
+  .template-details-page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .template-details-container {
+    width: 70%;
+    margin: 0 20px 0 0;
+  }
+}

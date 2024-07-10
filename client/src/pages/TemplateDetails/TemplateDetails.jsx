@@ -101,9 +101,8 @@ function TemplateDetails() {
   };
 
   return (
-    <>
-      <DarkMode />
       <section className="template-details-page">
+        <DarkMode />
         <motion.div
           className="template-details-container"
           variants={variants}
@@ -148,8 +147,7 @@ function TemplateDetails() {
             </button>
           </section>
         </motion.div>
-      </section>
-      <PopUpTemplate
+        <PopUpTemplate
         setOpen={setOpen}
         handleOpen={handleOpen}
         handleClose={handleClose}
@@ -165,7 +163,7 @@ function TemplateDetails() {
       )}
       <Toaster />
       <SideBar />
-    </>
+      </section>
   );
 }
 

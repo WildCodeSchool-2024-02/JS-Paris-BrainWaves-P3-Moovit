@@ -134,14 +134,16 @@ button:hover {
   background-color: rgb(41, 41, 49);
   color: white;
   transition: all 0.3s ease-in-out;
-  z-index: 0;
+  position: relative;
+  z-index: -1;
 }
 
 .light {
   background-color: transparent;
   color: black;
   transition: all 0.3s ease-in-out;
-  z-index: 0;
+  position: relative;
+  z-index: -1;
 }
 
 .darkmode-button {

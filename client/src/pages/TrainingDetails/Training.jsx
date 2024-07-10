@@ -1,16 +1,23 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import {
+  useNavigate,
+  useParams,
+  useOutletContext,
+} from "react-router-dom";
+import { IoMdFitness } from "react-icons/io";
+import { CiClock2 } from "react-icons/ci";
+import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import DarkMode from "../../components/DarkMode/DarkMode";
-import DarkModeContext from "../../services/DarkModeContext";
 import SideBar from "../../components/SideBar/SideBar";
+
 import "./training.css";
 import { useUser } from "../../contexts/User/User";
 
-function Training() {
-  const { mode } = useContext(DarkModeContext);
+function TrainingDetails() {
   const { user } = useUser();
+  const { sports } = useOutletContext();
   const api = import.meta.env.VITE_API_URL;
 
   const [training, setTraining] = useState();
@@ -21,6 +28,17 @@ function Training() {
   const handleClose = () => setOpen(false);
 
   const navigate = useNavigate();
+
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
 
   useEffect(() => {
     if (!user) navigate("/login");
@@ -33,28 +51,43 @@ function Training() {
       .then((data) => setTraining(data));
   }, []);
 
+  const idSport = sports?.find(
+    (value) => training?.sport_id === value.id
+  )?.name;
+
   return (
     <>
       <DarkMode />
-      <section className="templates">
-        <section className="trainingCard" id={`card-${mode}`}>
+      <section className="training-details-page">
+        <motion.div
+          className="training-details-container"
+          variants={variants}
+          animate="open"
+          initial="closed"
+        >
           <section className="trainingCard-title">
             <h1>{training?.title}</h1>
             <CardMenu handleOpen={handleOpen} id={id} />
           </section>
-          <section className="card-type-training">
-            <p>Entraînement</p>
-            <p>{training?.sport}</p>
+          <section className="feedbackdetail-type-training">
+            <IoMdFitness className="training-details-logo-type" />
+            <p>
+              Entraînement |{" "}
+              {idSport
+                ? idSport.charAt(0).toUpperCase() + idSport.slice(1)
+                : idSport}
+            </p>
           </section>
-          <section className="card-time-training">
+          <section className="training-details-time-training">
+          <CiClock2 className="training-details-logo-type" />
             {training?.time_of_day === "Matin" ? <p>Matin</p> : null}
             {training?.time_of_day === "Après-midi" ? <p>Après-midi</p> : null}
             {training?.time_of_day === "Soir" ? <p>Soir</p> : null}
-            <p>{training?.duration}</p>
+            <p>| {training?.duration}</p>
           </section>
-          <p>{training?.details}</p>
+          <p className="feedbackdetail-duration">{training?.details}</p>
 
-          <section className="trainingCard-title">
+          <section className="training-details-footer">
             {training?.is_completed === 0 ? (
               <button type="button" className="card-button-validate">
                 Valider
@@ -62,9 +95,9 @@ function Training() {
             ) : (
               <p>Feeback enregistré</p>
             )}
-            <Link to="/journal">Revenir au journal</Link>
+            <button type="button" className="card-button-validate">Revenir au journal</button>
           </section>
-        </section>
+        </motion.div>
       </section>
       <PopUp
         setOpen={setOpen}
@@ -79,4 +112,4 @@ function Training() {
   );
 }
 
-export default Training;
+export default TrainingDetails;

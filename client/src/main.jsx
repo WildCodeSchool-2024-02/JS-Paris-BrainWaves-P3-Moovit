@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { DarkModeContextProvider } from "./services/DarkModeContext";
 import { UserProvider, useUser } from "./contexts/User/User";
-import Training from "./pages/Training/Training";
+import TrainingDetails from "./pages/TrainingDetails/Training";
 import App from "./App";
 import Journal from "./pages/Journal/Journal";
 import Landing from "./pages/Landing/Landing";
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
         path: "/training/:id",
         element: (
           <PrivateRoute>
-            <Training />
+            <TrainingDetails />
           </PrivateRoute>
         ),
       },

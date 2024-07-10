@@ -78,7 +78,7 @@ export default function Journal() {
   const [boolFeed, setBoolFeed] = useState(false);
   const [boolTrain, setBoolTrain] = useState(false);
 
-  // State pour récupérer l'id du training cliquer
+  // State to get clicked id training
   const [idTraining, setIdTraining] = useState("");
 
   // State to get all training for a week
@@ -407,12 +407,14 @@ export default function Journal() {
         <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDeleteFeedback}
+          message="Es-tu sûr de vouloir supprimer ce feedback ?"
         />
       )}
       {boolTrain && validation && (
         <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDeleteTraining}
+          message="Es-tu sûr de vouloir supprimer ce training ?"
         />
       )}
     </section>

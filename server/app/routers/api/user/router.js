@@ -14,13 +14,18 @@ const {
   destroy,
   nameUpdate,
   levelUpdate,
+  readById,
 } = require("../../../controllers/userActions");
 const {login, refresh, logout } = require("../../../controllers/authActions")
 const { hashPassword } = require("../../../services/hashPassword");
 const { schema, validateSchema, nameSchema } = require("../../../services/validateData");
+const { verifyToken } = require("../../../services/verifyToken");
 
 // Route to get a list of users
 router.get("/", browse);
+
+// Route to get one user
+router.get("/profile", verifyToken, readById)
 
 // Route to add a new user
 router.post("/", validateSchema(schema), hashPassword, add);

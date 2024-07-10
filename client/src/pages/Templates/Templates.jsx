@@ -139,14 +139,14 @@ function Templates() {
         />
       </section>
       <Toaster />
-      
+      <SideBar />
       
     </section>
     {validation && <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDelete}
         />}
-    <SideBar />
+    
     </>
   );
 }

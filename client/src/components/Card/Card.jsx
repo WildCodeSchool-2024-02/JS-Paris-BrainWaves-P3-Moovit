@@ -118,7 +118,7 @@ Card.propTypes = {
   card: PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    time_of_day: PropTypes.string.isRequired,
+    time_of_day: PropTypes.string,
     duration: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     details: PropTypes.string,

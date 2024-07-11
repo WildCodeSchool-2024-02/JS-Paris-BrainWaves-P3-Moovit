@@ -212,7 +212,7 @@ export default function EditProfile({
         initial="closed"
         exit="exit"
       >
-        <h1>Modification du profil</h1>
+        <h1 className="edit-profile-title">Modification du profil</h1>
         <div className="edit-container">
           <div className="name-input-container">
             <p className="label-edit">Prénom</p>

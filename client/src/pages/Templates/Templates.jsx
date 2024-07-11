@@ -143,6 +143,7 @@ function Templates() {
         <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDelete}
+          message="Es-tu sûr de vouloir supprimer ce modèle ?"
         />
       )}
     </>

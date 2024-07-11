@@ -4,19 +4,24 @@
   align-items: center;
   flex-wrap: wrap;
   width: 70vw;
-  gap: 10px;
+  gap: 0;
 }
 
 .sport-container-light p {
+  font-size: 0.7em;
   color: black;
+}
+
+.sport-container-dark p {
+  font-size: 0.7em;
 }
 
 .sport-container-dark {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   border: solid var(--second);
   border-width: thin;
   background-color: var(--dark);

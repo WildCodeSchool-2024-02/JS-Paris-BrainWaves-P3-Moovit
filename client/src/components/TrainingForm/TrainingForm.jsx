@@ -20,13 +20,16 @@ function TrainingForm({ id, training, handleClose, open }) {
       ? datefns.format(training.date, "yyyy-MM-dd")
       : datefns.format(new Date(), "yyyy-MM-dd")
   );
-  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day);
+  const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day || "");
   const [duration, setDuration] = useState(training?.duration || "");
   const [details, setDetails] = useState(training?.details || "");
   const [sport, setSport] = useState(training?.sport_id || "");
   const [templateId, setTemplateId] = useState("");
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
+
+  // state for managing errors in form
+  const [error, setError] = useState({});
 
   const handleSave = () => {
     fetch(`${api}/api/templates`, {
@@ -66,11 +69,12 @@ function TrainingForm({ id, training, handleClose, open }) {
       .then((data) => setTemplates(data));
   }, [api]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (checked) handleSave();
+    setError({});
     if (!id) {
-      fetch(`${api}/api/trainings`, {
+      await fetch(`${api}/api/trainings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,16 +89,28 @@ function TrainingForm({ id, training, handleClose, open }) {
           user_id: user.id,
           sport_id: sport,
         }),
-      });
-      handleClose();
-      toast.success("Ton entraînement a bien été créé !", {
-        style: {
-          background: "rgba(145, 225, 166)",
-          color: "black",
-        },
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.details) {
+            data.details.forEach((detail) => {
+              setError((prev) => ({
+                ...prev,
+                [detail.context.key]: [detail.message],
+              }));
+            });
+          } else {
+            handleClose();
+            toast.success("Ton entraînement a bien été créé !", {
+              style: {
+                background: "rgba(145, 225, 166)",
+                color: "black",
+              },
+            });
+          }
+        });
     } else if (id) {
-      fetch(`${api}/api/trainings/${id}`, {
+      await fetch(`${api}/api/trainings/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -109,14 +125,26 @@ function TrainingForm({ id, training, handleClose, open }) {
           user_id: user.id,
           sport_id: sport,
         }),
-      });
-      handleClose();
-      toast.success("Tes modifications sont bien prises en compte !", {
-        style: {
-          background: "rgba(145, 225, 166)",
-          color: "black",
-        },
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data.details)) {
+            data.details.forEach((detail) => {
+              setError((prev) => ({
+                ...prev,
+                [detail.context.key]: [detail.message],
+              }));
+            });
+          } else {
+            handleClose();
+            toast.success("Tes modifications sont bien prises en compte !", {
+              style: {
+                background: "rgba(145, 225, 166)",
+                color: "black",
+              },
+            });
+          }
+        });
     }
   };
 
@@ -166,7 +194,13 @@ function TrainingForm({ id, training, handleClose, open }) {
         placeholder="Titre de ton entraînement"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className={error.title ? "input-error" : ""}
       />
+      {error.title ? (
+        <p className="error-message">
+          Merci de donner un titre à ton entraînement
+        </p>
+      ) : null}
       <input
         type="date"
         id="date"
@@ -174,6 +208,7 @@ function TrainingForm({ id, training, handleClose, open }) {
         placeholder="Quel jour ?"
         value={date}
         onChange={(e) => setDate(e.target.value)}
+        className={error.date ? "input-error" : ""}
       />
       <select
         type=""
@@ -181,6 +216,7 @@ function TrainingForm({ id, training, handleClose, open }) {
         name="time-of-day"
         value={timeOfDay}
         onChange={(e) => setTimeOfDay(e.target.value)}
+        className={error.time_of_day ? "input-error" : ""}
       >
         <option value="" disabled>
           Matin, Après-midi ou Soir ? 😉
@@ -189,11 +225,15 @@ function TrainingForm({ id, training, handleClose, open }) {
         <option>Après-midi</option>
         <option>Soir</option>
       </select>
+      {error.time_of_day ? (
+        <p className="error-message">Merci de choisir une option</p>
+      ) : null}
       <select
         id="sport-select"
         name="type"
         value={sport}
         onChange={(e) => setSport(e.target.value)}
+        className={error.sport_id ? "input-error" : ""}
       >
         <option value="" disabled>
           Quel sport ? ⛹️
@@ -206,6 +246,10 @@ function TrainingForm({ id, training, handleClose, open }) {
             ))
           : null}
       </select>
+      {error.sport_id ? (
+        <p className="error-message">Merci de choisir un sport</p>
+      ) : null}
+
       <input
         type="text"
         id="duration"
@@ -213,7 +257,13 @@ function TrainingForm({ id, training, handleClose, open }) {
         value={duration}
         placeholder="Combien de temps ?"
         onChange={(e) => setDuration(e.target.value)}
+        className={error.duration ? "input-error" : ""}
       />
+      {error.duration ? (
+        <p className="error-message">
+          Merci de renseigner une durée pour ton entraînement
+        </p>
+      ) : null}
       <textarea
         type="text"
         id="details"

@@ -58,8 +58,15 @@ const add = async (req, res, next) => {
 
 const edit = async (req, res, next) => {
   try {
-    await tables.training.update(req.body, req.params.id);
-    res.sendStatus(204);
+    const editTraining = await tables.training.update(req.body, req.params.id);
+    if (editTraining) {
+      const findTraining = await tables.training.readOne(req.params.id);
+      res.status(200).json(findTraining);
+    } else {
+      res
+        .status(400)
+        .json({ message: "votre entraînement n'a pas pu être édité" });
+    }
   } catch (err) {
     next(err);
   }
@@ -76,12 +83,12 @@ const destroy = async (req, res, next) => {
 
 const intervalWeek = async (req, res, next) => {
   try {
-    const interval = await tables.training.readInterval(req.body, req.auth.id)
-    res.json(interval)
+    const interval = await tables.training.readInterval(req.body, req.auth.id);
+    res.json(interval);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 module.exports = {
   browse,

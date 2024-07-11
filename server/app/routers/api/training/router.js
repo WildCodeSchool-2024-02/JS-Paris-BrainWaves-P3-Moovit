@@ -17,6 +17,7 @@ const {
   intervalWeek,
 } = require("../../../controllers/trainingActions");
 const { verifyToken } = require("../../../services/verifyToken");
+const { validateSchema, training } = require("../../../services/validateData");
 
 router.get("/", browse); // get all trainings for all users
 
@@ -30,10 +31,10 @@ router.get("/:id", readById);
 router.get("/day/:day", readDay);
 
 // Route to add a new training
-router.post("/", add);
+router.post("/", validateSchema(training), add);
 
 // Route to edit a training
-router.put("/:id", edit);
+router.put("/:id", validateSchema(training), edit);
 
 // Route to delete a training
 router.delete("/:id", destroy);

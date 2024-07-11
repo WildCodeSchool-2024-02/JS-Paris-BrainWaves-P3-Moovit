@@ -93,7 +93,7 @@
 }
 
 @media (max-width: 1024px) {
-  .templates-container {
+  .templates-details-page {
     flex-direction: row-reverse;
   }
 }

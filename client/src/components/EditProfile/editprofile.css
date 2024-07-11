@@ -26,6 +26,10 @@
   gap: 50px;
 }
 
+.edit-profile-title {
+  line-height: 10px;
+}
+
 .edit-container {
   display: flex;
   flex-direction: column;

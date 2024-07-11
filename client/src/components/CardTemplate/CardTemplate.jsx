@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
@@ -20,14 +19,15 @@ export default function CardTemplate({
 
   const handleEdit = () => {
     setCurrentTemplate(card.id);
+    setAnchorEl(false);
     handleOpen();
   };
 
   const handleDelete = async () => {
-    setCurrentTemplate(card.id)
+    setCurrentTemplate(card.id);
     setAnchorEl(false);
     handleOpenValidation();
-  }
+  };
 
   return (
     <section id={`card-template-${mode}`}>

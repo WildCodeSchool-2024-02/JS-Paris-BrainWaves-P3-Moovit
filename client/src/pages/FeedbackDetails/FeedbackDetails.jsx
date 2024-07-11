@@ -200,12 +200,14 @@ export default function FeedbackDetails() {
           </h1>
           <p>{feedback?.details}</p>
         </div>
-        {feedback?.training_details && <div className="feedback-training-detail-container">
-          <h1 className="feedback-training-details">
-            Détails de l'entraînement
-          </h1>
-          <p>{feedback?.training_details}</p>
-        </div>}
+        {feedback?.training_details && (
+          <div className="feedback-training-detail-container">
+            <h1 className="feedback-training-details">
+              Détails de l'entraînement
+            </h1>
+            <p>{feedback?.training_details}</p>
+          </div>
+        )}
         <button
           type="button"
           className="feedbackdetail-button"
@@ -219,6 +221,7 @@ export default function FeedbackDetails() {
         <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDeleteFeedback}
+          message="Es-tu sûr de vouloir supprimer ce feedback ?"
         />
       )}
       <Feedback

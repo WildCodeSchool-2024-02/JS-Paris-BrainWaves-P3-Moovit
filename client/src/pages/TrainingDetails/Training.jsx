@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { toast, Toaster } from "sonner";
 import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
-import DarkMode from "../../components/DarkMode/DarkMode";
 import SideBar from "../../components/SideBar/SideBar";
 import Validation from "../../components/Validation/Validation";
 
@@ -114,8 +113,6 @@ function TrainingDetails() {
   )?.name;
 
   return (
-    <>
-      <DarkMode />
       <section className="training-details-page">
         <motion.div
           className="training-details-container"
@@ -181,7 +178,6 @@ function TrainingDetails() {
         <Toaster />
         <SideBar />
       </section>
-    </>
   );
 }
 

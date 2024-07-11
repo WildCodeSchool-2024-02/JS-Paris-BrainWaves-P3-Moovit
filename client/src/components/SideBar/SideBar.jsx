@@ -38,7 +38,7 @@ export default function SideBar() {
     <section id={`sidebar-${mode}`}>
       <div className="sidebar-first-container">
         <img className="sidebar-logo-moov" src={Logo} alt="logo" />
-        <h1>Bienvenue {`${user.name}`}</h1>
+        <h1>Bienvenue {`${user?.name}`}</h1>
         <p>Sportif du dimanche</p>
         <p>N entrainements complétés</p>
         <p>Pratique la course en sac et le ping pong</p>

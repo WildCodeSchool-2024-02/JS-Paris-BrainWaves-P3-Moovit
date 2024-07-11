@@ -6,6 +6,8 @@ import { Toaster } from "sonner";
 import Logo from "../../assets/images/Logo.svg";
 import "../Register/register.css";
 import { useUser } from "../../contexts/User/User";
+import PrivacyPolicy from "../../components/PrivacyPolicy/PrivacyPolicy";
+
 
 function Login() {
   const api = import.meta.env.VITE_API_URL;
@@ -43,6 +45,14 @@ function Login() {
       console.error(err);
     }
   };
+
+// Managin modal for privacy policy
+const [open, setOpen] = useState(false);
+const handleOpen = () => setOpen(true);
+const handleClose = () => {
+  setOpen(false);
+};
+
   return (
     <main className="loginPage">
       <img src={Logo} alt="logo" className="login-logo" />
@@ -95,9 +105,16 @@ function Login() {
           <button type="submit" className="primary-button">
             Je me connecte
           </button>
-          <Link to="/register">Je n'ai pas de compte</Link>
+          <Link className="policy-link" to="/register">Je n'ai pas de compte</Link>
         </form>
+        <section className="login-privacy">
+          <p>
+            En cliquant sur Je m’inscris, vous certifiez avoir pris connaissance
+            de notre <button className="policy-link" type="button" onClick={handleOpen}>politique de confidentialité</button>
+          </p>
+        </section>
       </section>
+      <PrivacyPolicy open={open} handleClose={handleClose}/>
       <Toaster />
     </main>
   );

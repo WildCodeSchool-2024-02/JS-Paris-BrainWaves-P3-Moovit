@@ -43,7 +43,6 @@ function App() {
   return (
     <main className={`container ${mode}`}>
       <Background />
-      {/* <DarkMode /> */}
       <Outlet context={{ sports, isLoading }} />
       <Toaster />
     </main>

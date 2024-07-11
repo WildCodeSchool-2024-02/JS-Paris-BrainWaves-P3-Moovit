@@ -72,8 +72,8 @@ function TrainingForm({ id, training, handleClose, open }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (checked) handleSave();
+    setError({});
     if (!id) {
-      setError({});
       await fetch(`${api}/api/trainings`, {
         method: "POST",
         headers: {
@@ -110,7 +110,7 @@ function TrainingForm({ id, training, handleClose, open }) {
           }
         });
     } else if (id) {
-      fetch(`${api}/api/trainings/${id}`, {
+      await fetch(`${api}/api/trainings/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ function TrainingForm({ id, training, handleClose, open }) {
       })
         .then((res) => res.json())
         .then((data) => {
-          if (data.details) {
+          if (Array.isArray(data.details)) {
             data.details.forEach((detail) => {
               setError((prev) => ({
                 ...prev,

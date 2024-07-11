@@ -75,10 +75,10 @@ export default function SideBar() {
           </Link>
         </div>
         <div className="sidebar-footer-container">
-          <p>
+          <p className="sidebar-credit">
             Un site réalisé avec amour par Antoine Delalande et Anthony Dufrenot
-            c 2024
           </p>
+          <p>© 2024</p>
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import { toast, Toaster } from "sonner";
 import DarkModeContext from "./services/DarkModeContext";
 import "./App.css";
-import DarkMode from "./components/DarkMode/DarkMode";
 import { useUser } from "./contexts/User/User";
 import Background from "./components/Background/Background";
 
@@ -44,7 +43,6 @@ function App() {
   return (
     <main className={`container ${mode}`}>
       <Background />
-      <DarkMode />
       <Outlet context={{ sports, isLoading }} />
       <Toaster />
     </main>

@@ -422,7 +422,7 @@ export default function Journal() {
         <Validation
           handleClose={handleCloseValidation}
           handleDeleteItem={handleDeleteTraining}
-          message="Es-tu sûr de vouloir supprimer ce training ?"
+          message="Es-tu sûr de vouloir supprimer cet entraînement ?"
         />
       )}
     </section>

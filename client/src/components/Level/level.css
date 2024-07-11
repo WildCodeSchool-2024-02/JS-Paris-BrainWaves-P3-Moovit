@@ -3,36 +3,47 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
 }
 
 .level-button-light {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60vw;
-  height: 70px;
+  width: 40vw;
+  height: 40px;
+  font-size: 0.8em;
   border: solid var(--second);
   border-width: thin;
   color: black;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .level-button-dark {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60vw;
-  height: 70px;
+  width: 40vw;
+  height: 40px;
+  font-size: 0.8em;
   border: solid var(--second);
   border-width: thin;
   background-color: var(--dark);
   color: white;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .active-sport {
   background-color: var(--second);
   border-color: white;
   color: black;
+}
+
+@media (max-width: 1024px) {
+  .level-button-light {
+    width: 7ch;
+  }
+
+  .level-button-dark {
+    width: 70vw;
+  }
 }

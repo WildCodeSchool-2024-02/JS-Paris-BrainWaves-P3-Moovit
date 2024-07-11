@@ -42,6 +42,22 @@
   text-decoration: underline;
 }
 
+.container-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+}
+
+.container-logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
 @media (min-width: 769px) {
   .my-profile {
     gap: 35px;

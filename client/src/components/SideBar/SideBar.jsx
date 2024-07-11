@@ -1,11 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import {
-  FaRegUserCircle,
-  FaRegBookmark,
-  FaRegCompass,
-  FaPowerOff,
-} from "react-icons/fa";
-import { useContext } from "react";
+/* eslint-disable import/no-unresolved */
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { FaRegUserCircle, FaRegBookmark, FaRegCompass } from "react-icons/fa";
+import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
@@ -16,40 +13,49 @@ export default function SideBar() {
 
   const { user } = useUser();
 
-  const navigate = useNavigate();
+  const api = import.meta.env.VITE_API_URL;
 
-  const handleLogout = async () => {
+  const [sports, setSports] = useState([]);
+
+  // Async function to get all sports from one user
+  const getSports = async () => {
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/users/auth/logout`,
-        {
-          credentials: "include",
-        }
-      );
+      const response = await fetch(`${api}/api/sports/profile`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       if (response.ok) {
-        navigate("/login");
+        const data = await response.json();
+        setSports(data);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error("Une erreur est survenue");
     }
   };
+
+  useEffect(() => {
+    getSports();
+  }, []);
 
   return (
     <section id={`sidebar-${mode}`}>
       <div className="sidebar-first-container">
         <img className="sidebar-logo-moov" src={Logo} alt="logo" />
-        <h1>Bienvenue {`${user?.name}`}</h1>
-        <p>Sportif du dimanche</p>
-        <p>N entrainements complétés</p>
-        <p>Pratique la course en sac et le ping pong</p>
+        <h1>Bienvenue {`${user.name}`}</h1>
+        {user.level === 1 && <p>Apprenti sportif</p>}
+        {user.level === 2 && <p>Sportif du dimanche</p>}
+        {user.level === 3 && <p>Futur médaille d'or</p>}
+        {sports.length > 0 && (
+          <p>
+            Sports pratiqués:{" "}
+            {sports
+              .map((sport) => sport.name[0].toUpperCase() + sport.name.slice(1))
+              .join(" ")}
+          </p>
+        )}
       </div>
       <div className="sidebar-second-container">
-        <div className="sidebar-link">
-          <FaRegUserCircle className="sidebar-logo" />
-          <Link to="/user" className="sidebar-link-text">
-            Profil
-          </Link>
-        </div>
         <div className="sidebar-link">
           <FaRegCompass className="sidebar-logo" />
           <Link to="/journal" className="sidebar-link-text">
@@ -62,13 +68,11 @@ export default function SideBar() {
             Modèles
           </Link>
         </div>
-        <div
-          className="sidebar-link"
-          role="presentation"
-          onClick={handleLogout}
-        >
-          <FaPowerOff className="sidebar-logo" />
-          <p className="sidebar-link-text">Se déconnecter</p>
+        <div className="sidebar-link">
+          <FaRegUserCircle className="sidebar-logo" />
+          <Link to="/user" className="sidebar-link-text">
+            Profil
+          </Link>
         </div>
         <div className="sidebar-footer-container">
           <p>

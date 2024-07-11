@@ -76,6 +76,7 @@ h1 {
 p,
 li {
   font-size: 1em;
+  text-wrap: pretty;
 }
 
 input,

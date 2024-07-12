@@ -49,8 +49,13 @@ const add = async (req, res, next) => {
 
 const edit = async (req, res, next) => {
   try {
-    await tables.template.update(req.body, req.params.id);
-    res.sendStatus(204);
+    const editTemplate = await tables.template.update(req.body, req.params.id);
+    if (editTemplate) {
+      const findTemplate = await tables.template.readOne(req.params.id);
+      res.status(200).json(findTemplate);
+    } else {
+      res.status(400).json({ message: "votre modèle n'a pas pu être édité" });
+    }
   } catch (err) {
     next(err);
   }

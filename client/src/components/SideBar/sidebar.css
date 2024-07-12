@@ -84,6 +84,11 @@
   margin: 20px 0;
 }
 
+.sidebar-credit {
+  text-wrap: balance;
+  font-size: 0.8em;
+}
+
 @media (max-width: 1024px) {
   .sidebar-first-container {
     display: none;

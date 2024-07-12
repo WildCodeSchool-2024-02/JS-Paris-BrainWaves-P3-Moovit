@@ -18,6 +18,25 @@ const nameSchema = joi.object({
     .string()
 });
 
+const training = joi.object({
+  title: joi.string(),
+  date: joi.date(),
+  time_of_day: joi.string(),
+  sport_id: joi.number(),
+  duration: joi.string(),
+  details: joi.string().allow('', null),
+  user_id: joi.any(),
+  is_completed: joi.any()
+})
+
+const template = joi.object({
+  title: joi.string().required(),
+  duration: joi.string().required(),
+  sport_id: joi.number().required(),
+  details: joi.string().allow('', null),
+  user_id: joi.any(),
+})
+
 const validateSchema = (validator) => async (req, res, next) => {
   try {
     await validator.validateAsync(req.body, { abortEarly: false });
@@ -28,4 +47,4 @@ const validateSchema = (validator) => async (req, res, next) => {
   }
 };
 
-module.exports = { schema, nameSchema, validateSchema };
+module.exports = { schema, nameSchema, training, template, validateSchema };

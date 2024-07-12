@@ -66,13 +66,13 @@ export default function SideBar({ update }) {
         <h1>Bienvenue {`${newUser?.name}`}</h1>
         {newUser?.level === 1 && <p>Apprenti sportif</p>}
         {newUser?.level === 2 && <p>Sportif du dimanche</p>}
-        {newUser?.level === 3 && <p>Futur médaille d'or</p>}
+        {newUser?.level === 3 && <p>Futur médaillé d'or</p>}
         {sports.length > 0 && (
           <p>
-            Sports pratiqués:{" "}
+            Sport(s) pratiqué(s) :{" "}
             {sports
               .map((sport) => sport.name[0].toUpperCase() + sport.name.slice(1))
-              .join(" ")}
+              .join(" - ")}
           </p>
         )}
       </div>
@@ -96,10 +96,10 @@ export default function SideBar({ update }) {
           </Link>
         </div>
         <div className="sidebar-footer-container">
-          <p>
+          <p className="sidebar-credit">
             Un site réalisé avec amour par Antoine Delalande et Anthony Dufrenot
-            c 2024
           </p>
+          <p>© 2024</p>
         </div>
       </div>
     </section>

@@ -126,7 +126,7 @@ export default function Journal() {
     handleCloseValidation();
     toast.success("Entraînement supprimé avec succès", {
       style: {
-        background: "rgba(145, 225, 166, 0.8)",
+        background: "rgba(145, 225, 166, 1)",
         color: "black",
       },
     });

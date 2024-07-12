@@ -59,7 +59,7 @@ export default function NamePage() {
         <button type="button" className="next-button" onClick={handleNext}>
           Suivant
         </button>
-        <p className="name-question-number">Quesion 1/3</p>
+        <p className="name-question-number">Question 1/3</p>
       </div>
     </section>
   );

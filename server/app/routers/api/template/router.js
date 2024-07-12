@@ -15,6 +15,7 @@ const {
   destroy,
 } = require("../../../controllers/templateActions");
 const { verifyToken } = require("../../../services/verifyToken");
+const { validateSchema, template } = require("../../../services/validateData");
 
 router.get("/", browse);
 
@@ -22,12 +23,11 @@ router.get("/", browse);
 router.use(verifyToken);
 
 router.get("/all", browseByUser);
-
 router.get("/detail/:id", readById);
 
-router.post("/", add);
+router.post("/", validateSchema(template), add);
 
-router.put("/:id", edit);
+router.put("/:id", validateSchema(template), edit);
 
 router.delete("/:id", destroy);
 

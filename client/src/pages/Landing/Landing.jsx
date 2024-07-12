@@ -19,7 +19,9 @@ export default function Landing() {
           <p role="presentation" onClick={() => navigate("/login")}>
             Se connecter
           </p>
-          <button type="button">S'inscrire</button>
+          <button type="button" onClick={() => navigate("/register")}>
+            S'inscrire
+          </button>
         </div>
       </nav>
       <section className="landing-page">

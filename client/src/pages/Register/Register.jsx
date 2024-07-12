@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import "./register.css";
 import { useUser } from "../../contexts/User/User";
+import PrivacyPolicy from "../../components/PrivacyPolicy/PrivacyPolicy";
 
 function Register() {
   const api = import.meta.env.VITE_API_URL;
@@ -44,6 +45,13 @@ function Register() {
           navigate("/profile/name");
         }
       });
+  };
+
+  // Managin modal for privacy policy
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -125,11 +133,12 @@ function Register() {
         </form>
       </section>
       <section>
-        <p>
-          En cliquant sur Je m'inscris, vous certifiez avoir pris connaissance
-          de notre <Link to="/">politique de confidentialité</Link>
-        </p>
+      <p>
+            En cliquant sur Je m’inscris, vous certifiez avoir pris connaissance
+            de notre <button className="policy-link" type="button" onClick={handleOpen}>politique de confidentialité</button>
+          </p>
       </section>
+      <PrivacyPolicy open={open} handleClose={handleClose}/>
     </main>
   );
 }

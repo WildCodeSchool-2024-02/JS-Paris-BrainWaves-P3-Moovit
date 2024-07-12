@@ -1,13 +1,13 @@
 /* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import "./templateForm.css";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useUser } from "../../contexts/User/User";
 
-
-function TemplateForm({ id, training, handleClose }) {
+function TemplateForm({ id, training, handleClose, open }) {
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { user } = useUser();
@@ -17,12 +17,16 @@ function TemplateForm({ id, training, handleClose }) {
   const [details, setDetails] = useState(training?.details);
   const [sport, setSport] = useState(training?.sport_id);
 
-  // Fonction qui gère l'affichage du formulaire selon que l'utilisateur crée ou édite son activité.
+  // state for managing errors in form
+  const [error, setError] = useState({});
 
-  const handleSubmit = (e) => {
+  // managing form shown to user (case 1 : creation / case 2: edition)
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError({});
+    // case 1 : creation of a new template
     if (!id) {
-      fetch(`${api}/api/templates`, {
+      await fetch(`${api}/api/templates`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,16 +38,29 @@ function TemplateForm({ id, training, handleClose }) {
           details,
           sport_id: sport,
         }),
-      });
-      handleClose();
-      toast.success("Ton modèle a bien été créé !", {
-        style: {
-          background: "rgba(145, 225, 166)",
-          color: "black",
-        },
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.details) {
+            data.details.forEach((detail) => {
+              setError((prev) => ({
+                ...prev,
+                [detail.context.key]: [detail.message],
+              }));
+            });
+          } else {
+            handleClose();
+            toast.success("Ton modèle a bien été créé !", {
+              style: {
+                background: "rgba(145, 225, 166)",
+                color: "black",
+              },
+            });
+          }
+        });
+      // case 2 : edition of existing template
     } else if (id) {
-      fetch(`${api}/api/templates/${id}`, {
+      await fetch(`${api}/api/templates/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -55,21 +72,54 @@ function TemplateForm({ id, training, handleClose }) {
           details,
           sport_id: sport,
         }),
-      });
-      handleClose();
-      toast.success("Tes modifications sont bien prises en compte !", {
-        style: {
-          background: "rgba(145, 225, 166)",
-          color: "black",
-        },
-      });
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data.details)) {
+            data.details.forEach((detail) => {
+              setError((prev) => ({
+                ...prev,
+                [detail.context.key]: [detail.message],
+              }));
+            });
+          } else {
+            handleClose();
+            toast.success("Tes modifications sont bien prises en compte !", {
+              style: {
+                background: "rgba(145, 225, 166)",
+                color: "black",
+              },
+            });
+          }
+        });
     }
   };
 
-  return (
-    <form className="trainingForm" onSubmit={handleSubmit}>
-      <h1>Créer une nouvelle activité</h1>
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    exit: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
 
+  return (
+    <motion.form
+      className="trainingForm"
+      onSubmit={handleSubmit}
+      variants={variants}
+      animate={open ? "open" : "closed"}
+      initial="closed"
+      exit="exit"
+    >
+      <h1>Créer une nouvelle activité</h1>
       <input
         type="text"
         id="title"
@@ -77,12 +127,19 @@ function TemplateForm({ id, training, handleClose }) {
         placeholder="Titre de ton modèle"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        className={error.title ? "input-error" : ""}
       />
+      {error.title ? (
+        <p className="error-message">
+          Merci de donner un titre à ton entraînement
+        </p>
+      ) : null}
       <select
         id="sport-select"
         name="type"
         value={sport}
         onChange={(e) => setSport(e.target.value)}
+        className={error.sport_id ? "input-error" : ""}
       >
         <option>Quel sport ? ⛹️</option>
         {sports
@@ -96,6 +153,9 @@ function TemplateForm({ id, training, handleClose }) {
             ))
           : null}
       </select>
+      {error.sport_id ? (
+        <p className="error-message">Merci de choisir un sport</p>
+      ) : null}
       <input
         type="text"
         id="duration"
@@ -103,7 +163,13 @@ function TemplateForm({ id, training, handleClose }) {
         value={duration}
         placeholder="Combien de temps ?"
         onChange={(e) => setDuration(e.target.value)}
+        className={error.duration ? "input-error" : ""}
       />
+      {error.duration ? (
+        <p className="error-message">
+          Merci de renseigner une durée pour ton entraînement
+        </p>
+      ) : null}
       <textarea
         type="text"
         id="details"
@@ -118,7 +184,7 @@ function TemplateForm({ id, training, handleClose }) {
       <button type="button" className="secondary-button" onClick={handleClose}>
         Annuler
       </button>
-    </form>
+    </motion.form>
   );
 }
 
@@ -126,6 +192,7 @@ export default TemplateForm;
 
 TemplateForm.propTypes = {
   id: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.oneOfType([
     PropTypes.shape({

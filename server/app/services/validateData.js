@@ -28,6 +28,14 @@ const training = joi.object({
   user_id: joi.any(),
 })
 
+const template = joi.object({
+  title: joi.string().required(),
+  duration: joi.string().required(),
+  sport_id: joi.number().required(),
+  details: joi.string().allow('', null),
+  user_id: joi.any(),
+})
+
 const validateSchema = (validator) => async (req, res, next) => {
   try {
     await validator.validateAsync(req.body, { abortEarly: false });
@@ -38,4 +46,4 @@ const validateSchema = (validator) => async (req, res, next) => {
   }
 };
 
-module.exports = { schema, nameSchema, training, validateSchema };
+module.exports = { schema, nameSchema, training, template, validateSchema };

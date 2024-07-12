@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { FaRegUserCircle, FaRegBookmark, FaRegCompass } from "react-icons/fa";
@@ -8,7 +9,7 @@ import DarkModeContext from "../../services/DarkModeContext";
 import "./sidebar.css";
 import { useUser } from "../../contexts/User/User";
 
-export default function SideBar() {
+export default function SideBar({ update }) {
   const { mode } = useContext(DarkModeContext);
 
   const { user } = useUser();
@@ -16,6 +17,7 @@ export default function SideBar() {
   const api = import.meta.env.VITE_API_URL;
 
   const [sports, setSports] = useState([]);
+  const [newUser, setNewUser] = useState([]);
 
   // Async function to get all sports from one user
   const getSports = async () => {
@@ -34,18 +36,37 @@ export default function SideBar() {
     }
   };
 
+  // Async function to update user information
+  const getUser = async () => {
+    try {
+      const response = await fetch(`${api}/api/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        data.token = user.token;
+        setNewUser(data);
+      }
+    } catch (err) {
+      toast.error("Une erreur est survenue");
+    }
+  };
+
   useEffect(() => {
     getSports();
-  }, []);
+    getUser();
+  }, [update]);
 
   return (
     <section id={`sidebar-${mode}`}>
       <div className="sidebar-first-container">
         <img className="sidebar-logo-moov" src={Logo} alt="logo" />
-        <h1>Bienvenue {`${user.name}`}</h1>
-        {user.level === 1 && <p>Apprenti sportif</p>}
-        {user.level === 2 && <p>Sportif du dimanche</p>}
-        {user.level === 3 && <p>Futur médaille d'or</p>}
+        <h1>Bienvenue {`${newUser?.name}`}</h1>
+        {newUser?.level === 1 && <p>Apprenti sportif</p>}
+        {newUser?.level === 2 && <p>Sportif du dimanche</p>}
+        {newUser?.level === 3 && <p>Futur médaille d'or</p>}
         {sports.length > 0 && (
           <p>
             Sports pratiqués:{" "}
@@ -84,3 +105,11 @@ export default function SideBar() {
     </section>
   );
 }
+
+SideBar.propTypes = {
+  update: PropTypes.bool,
+};
+
+SideBar.defaultProps = {
+  update: undefined,
+};

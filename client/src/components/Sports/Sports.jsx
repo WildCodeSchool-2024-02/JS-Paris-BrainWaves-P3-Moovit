@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { useContext } from "react";
 import "./sports.css";
 import DarkModeContext from "../../services/DarkModeContext";
@@ -15,13 +15,15 @@ export default function Sports({ activeButtons, setActiveButtons, sports }) {
   };
 
   const handleOther = () => {
-    setActiveButtons({
-      fitness: false,
-      running: false,
-      poney: false,
-      other: !activeButtons.other,
+    setActiveButtons((prevState) => {
+      const newState = Object.keys(prevState).reduce((acc, key) => {
+        acc[key] = key === "other" ? !prevState.other : false;
+        return acc;
+      }, {});
+      return newState;
     });
   };
+  
   return (
     <div className="section-sport">
       {sports.map((sport) => (
@@ -56,12 +58,12 @@ export default function Sports({ activeButtons, setActiveButtons, sports }) {
 }
 
 Sports.propTypes = {
-    activeButtons: PropTypes.objectOf(PropTypes.bool).isRequired,
-    setActiveButtons: PropTypes.func.isRequired,
-    sports: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  };
+  activeButtons: PropTypes.objectOf(PropTypes.bool).isRequired,
+  setActiveButtons: PropTypes.func.isRequired,
+  sports: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};

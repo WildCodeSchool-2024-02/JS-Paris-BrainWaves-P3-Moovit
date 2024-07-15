@@ -20,7 +20,8 @@ const login = async (req, res, next) => {
         .cookie("refreshToken", refreshToken, {
           httpOnly: true,
           sameSite: "lax",
-          expires: new Date(Date.now() + 90000000)
+          expires: new Date(Date.now() + 90000000),
+          secure: process.env.APP_ENV !== 'development'
         })
         .header("Authorization", accessToken)
         .json(user);

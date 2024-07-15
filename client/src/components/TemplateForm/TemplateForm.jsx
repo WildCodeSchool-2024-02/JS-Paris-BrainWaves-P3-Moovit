@@ -1,12 +1,13 @@
 /* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 import "./templateForm.css";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useUser } from "../../contexts/User/User";
 
-function TemplateForm({ id, training, handleClose }) {
+function TemplateForm({ id, training, handleClose, open }) {
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { user } = useUser();
@@ -57,7 +58,7 @@ function TemplateForm({ id, training, handleClose }) {
             });
           }
         });
-        // case 2 : edition of existing template
+      // case 2 : edition of existing template
     } else if (id) {
       await fetch(`${api}/api/templates/${id}`, {
         method: "PUT",
@@ -94,10 +95,31 @@ function TemplateForm({ id, training, handleClose }) {
     }
   };
 
-  return (
-    <form className="trainingForm" onSubmit={handleSubmit}>
-      <h1>Créer une nouvelle activité</h1>
+  const variants = {
+    open: {
+      x: 0,
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    closed: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+    exit: {
+      x: "100%",
+      transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
+    },
+  };
 
+  return (
+    <motion.form
+      className="trainingForm"
+      onSubmit={handleSubmit}
+      variants={variants}
+      animate={open ? "open" : "closed"}
+      initial="closed"
+      exit="exit"
+    >
+      <h1>Créer une nouvelle activité</h1>
       <input
         type="text"
         id="title"
@@ -162,7 +184,7 @@ function TemplateForm({ id, training, handleClose }) {
       <button type="button" className="secondary-button" onClick={handleClose}>
         Annuler
       </button>
-    </form>
+    </motion.form>
   );
 }
 
@@ -170,6 +192,7 @@ export default TemplateForm;
 
 TemplateForm.propTypes = {
   id: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
   training: PropTypes.oneOfType([
     PropTypes.shape({

@@ -6,7 +6,7 @@ function PopUp({ open, handleClose, id, training }) {
   return (
     <Modal open={open} onClose={handleClose}>
       <div>
-        <TemplateForm id={id} training={training} handleClose={handleClose} />
+        <TemplateForm id={id} training={training} handleClose={handleClose} open={open}/>
       </div>
     </Modal>
   );

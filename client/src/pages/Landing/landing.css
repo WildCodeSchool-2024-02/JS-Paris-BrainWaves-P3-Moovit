@@ -212,7 +212,7 @@
   align-items: center;
   gap: 100px;
   padding: 70px 0;
-  background-color: rgba(244, 95, 34, 0.7);
+  background-color: rgba(102, 217, 224, 0.7);
 }
 
 .notice-title {
@@ -228,6 +228,7 @@
 }
 
 .notice-items {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -242,6 +243,7 @@
   justify-content: flex-start;
   width: 100%;
   padding: 0 20px;
+  z-index: 1;
 }
 
 .notice-training {
@@ -250,6 +252,7 @@
   justify-content: flex-end;
   width: 100vw;
   padding: 0 20px;
+  z-index: 1;
 }
 
 .notice-model {
@@ -258,6 +261,7 @@
   justify-content: flex-start;
   width: 100vw;
   padding: 0 20px;
+  z-index: 1;
 }
 
 .notice-journal {
@@ -266,6 +270,7 @@
   justify-content: flex-end;
   width: 100vw;
   padding: 0 20px;
+  z-index: 1;
 }
 
 .notice-card {
@@ -292,6 +297,27 @@
 .notice-card p {
   text-align: center;
   font-size: 0.8em;
+}
+
+.svg {
+  position: absolute;
+  top: 50px;
+}
+
+.notice-items button {
+  background-color: var(--main);
+  color: white;
+}
+
+.landing-footer {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-footer a {
+  color: white;
 }
 
 @media (min-width: 768px) {

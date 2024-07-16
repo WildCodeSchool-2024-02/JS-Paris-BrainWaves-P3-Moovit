@@ -38,6 +38,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -56,6 +57,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  width: 100%;
   gap: 20px;
 }
 
@@ -81,11 +83,14 @@
 
 .sidebar-footer-container {
   text-align: center;
+  width: 100%;
   margin: 20px 0;
 }
 
 .sidebar-credit {
   text-wrap: balance;
+  width: 100%;
+  text-align: center;
   font-size: 0.8em;
 }
 

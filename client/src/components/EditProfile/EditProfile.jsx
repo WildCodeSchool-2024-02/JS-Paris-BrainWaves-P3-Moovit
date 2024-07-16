@@ -10,6 +10,7 @@ import Sports from "../Sports/Sports";
 import Level from "../Level/Level";
 import DarkModeContext from "../../services/DarkModeContext";
 import CancelButton from "../CancelButton/CancelButton";
+import { useUser } from "../../contexts/User/User";
 
 export default function EditProfile({
   open,
@@ -21,6 +22,9 @@ export default function EditProfile({
   error,
   setError,
 }) {
+
+  const {user, setUser} = useUser();
+
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { mode } = useContext(DarkModeContext);
@@ -135,6 +139,7 @@ export default function EditProfile({
         setError(true);
         return error;
       }
+      setUser({...user, name: name.current.value})
     } catch (err) {
       setError(true);
       toast.error("Une erreur est survenue");

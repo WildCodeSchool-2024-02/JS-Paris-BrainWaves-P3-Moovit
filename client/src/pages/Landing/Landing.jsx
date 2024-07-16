@@ -43,6 +43,31 @@ export default function Landing() {
               Je me connecte
             </button>
           </div>
+          <div className="scroll-logo-container" role="presentation">
+            <div className="phone-logo">
+              <svg
+                className="svg-logo"
+                xmlns="http://www.w3.org/2000/svg"
+                id="Layer_1"
+                data-name="Layer 1"
+                viewBox="0 0 24 24"
+                width="60"
+                height="100"
+              >
+                <path d="M15,0h-6c-2.757,0-5,2.243-5,5v14c0,2.757,2.243,5,5,5h6c2.757,0,5-2.243,5-5V5c0-2.757-2.243-5-5-5Zm-2,21h-2c-.552,0-1-.448-1-1s.448-1,1-1h2c.552,0,1,.448,1,1s-.448,1-1,1Z" />
+              </svg>
+              <svg
+                className="svg-arrow"
+                xmlns="http://www.w3.org/2000/svg"
+                id="Bold"
+                viewBox="0 0 24 24"
+                width="15"
+                height="30"
+              >
+                <path d="M18.427,16.935a1.5,1.5,0,0,0-2.121,0l-2.781,2.779L13.5,1.5A1.5,1.5,0,0,0,12,0h0a1.5,1.5,0,0,0-1.5,1.5l.023,18.2L7.76,16.935a1.5,1.5,0,0,0-2.121,2.121l3.919,3.919a3.5,3.5,0,0,0,4.949,0l3.92-3.919A1.5,1.5,0,0,0,18.427,16.935Z" />
+              </svg>
+            </div>
+          </div>
         </section>
         <div className="landing-demo">
           <div className="landing-demo-img" />

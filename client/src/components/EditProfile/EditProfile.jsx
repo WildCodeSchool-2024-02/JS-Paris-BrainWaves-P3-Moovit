@@ -10,6 +10,7 @@ import Sports from "../Sports/Sports";
 import Level from "../Level/Level";
 import DarkModeContext from "../../services/DarkModeContext";
 import CancelButton from "../CancelButton/CancelButton";
+import { useUser } from "../../contexts/User/User";
 
 export default function EditProfile({
   open,
@@ -25,6 +26,8 @@ export default function EditProfile({
   const { sports } = useOutletContext();
   const { mode } = useContext(DarkModeContext);
   const name = useRef();
+
+  const { user, setUser } = useUser();
 
   // State to track active sports
   const [activeSports, setActiveSports] = useState({});
@@ -135,6 +138,7 @@ export default function EditProfile({
         setError(true);
         return error;
       }
+      setUser({ ...user, name: name.current.value });
     } catch (err) {
       setError(true);
       toast.error("Une erreur est survenue");

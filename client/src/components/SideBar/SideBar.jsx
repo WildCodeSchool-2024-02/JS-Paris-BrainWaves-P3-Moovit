@@ -17,7 +17,7 @@ export default function SideBar({ update }) {
   const api = import.meta.env.VITE_API_URL;
 
   const [sports, setSports] = useState([]);
-  const [newUser, setNewUser] = useState([]);
+  const [newUser, setNewUser] = useState(user);
 
   // Async function to get all sports from one user
   const getSports = async () => {

@@ -38,6 +38,7 @@
 }
 
 .landing-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -318,6 +319,104 @@
 
 .landing-footer a {
   color: white;
+}
+
+.scroll-logo-container {
+  position: absolute;
+  bottom: 20px;
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.phone-logo {
+  position: relative;
+}
+
+.svg-logo path {
+  fill: none;
+  stroke: white;
+  stroke-width: 0.5;
+  stroke-dasharray: 80;
+  animation: animate-phone 3s infinite forwards;
+}
+
+.svg-arrow {
+  position: absolute;
+  top: 7px;
+  left: 23px;
+  animation: animate-arrow 3s infinite forwards;
+}
+.svg-arrow path {
+  fill: var(--second);
+  stroke: transparent;
+}
+
+.svg-logo:hover path {
+  animation: pause;
+  stroke: var(--second);
+}
+
+.svg-arrow:hover path {
+  animation: pause-arrow;
+}
+
+@keyframes animate-phone {
+  0% {
+    stroke-dashoffset: 0;
+    stroke: white;
+  }
+  25% {
+    stroke-dashoffset: 80;
+    stroke: var(--second);
+  }
+  50% {
+    stroke-dashoffset: 160;
+    stroke: white;
+  }
+  100% {
+    stroke-dashoffset: 160;
+    stroke: white;
+  }
+}
+
+@keyframes animate-arrow {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+    top: 0;
+  }
+  25% {
+    transform: translateY(-50%);
+    opacity: 0;
+    top: 0;
+  }
+  50% {
+    transform: translateY(140%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0.7;
+    bottom: 0;
+  }
+}
+
+@keyframes pause {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pause-arrow {
+  to {
+    transform: translateY(150%);
+    opacity: 1;
+  }
 }
 
 @media (min-width: 768px) {

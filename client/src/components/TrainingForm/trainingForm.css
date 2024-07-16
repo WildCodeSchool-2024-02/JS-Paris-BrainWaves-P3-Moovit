@@ -34,7 +34,7 @@
 
 .save-template {
   display: flex;
-  width: 90vw;
+  width: 60vw;
   justify-content: flex-end;
   align-items: center;
 }
@@ -55,5 +55,11 @@
 @media (max-width: 768px) {
   .trainingForm h1 {
     font-size: 1.3em;
+  }
+  .save-template {
+    display: flex;
+    width: 90vw;
+    justify-content: flex-end;
+    align-items: center;
   }
 }

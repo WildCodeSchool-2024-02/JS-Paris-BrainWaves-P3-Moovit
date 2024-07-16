@@ -28,7 +28,7 @@
 }
 
 .next-button {
-  width: 90vw;
+  width: 40vw;
   background-color: var(--main);
   color: white;
   margin: 0 10px;
@@ -38,4 +38,10 @@
   position: absolute;
   bottom: -30px;
   right: 10px;
+}
+
+@media (max-width: 1024px) {
+  .next-button {
+    width: 70vw;
+  }
 }

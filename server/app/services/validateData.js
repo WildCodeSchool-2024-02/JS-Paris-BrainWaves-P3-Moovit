@@ -19,13 +19,14 @@ const nameSchema = joi.object({
 });
 
 const training = joi.object({
-  title: joi.string().required(),
-  date: joi.date().required(),
-  time_of_day: joi.string().required(),
-  sport_id: joi.number().required(),
-  duration: joi.string().required(),
+  title: joi.string(),
+  date: joi.date(),
+  time_of_day: joi.string(),
+  sport_id: joi.number(),
+  duration: joi.string(),
   details: joi.string().allow('', null),
   user_id: joi.any(),
+  is_completed: joi.any()
 })
 
 const template = joi.object({

@@ -100,57 +100,63 @@ function TemplateDetails() {
   };
 
   return (
-    <section className="template-details-page">
-      <motion.div
-        className="template-details-container"
-        variants={variants}
-        animate="open"
-        initial="closed"
-      >
-        <section className="trainingCard-title">
-          <h1 className="templatedetail-title">{training?.title}</h1>
-          <CardMenu
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            id={id}
-          />
-        </section>
-        <section className="card-type-training">
-          <IoMdFitness className="templatedetail-logo-type" />
-          <p>
-            Entraînement |
-            {training?.name
-              ? training.name.charAt(0).toUpperCase() + training.name.slice(1)
-              : null}
-          </p>
-        </section>
-        <section className="feedbackdetail-duration-container">
-          <CiClock2 className="templatedetail-logo-type" />
-          <p>{training?.duration}</p>
-        </section>
-        <h2 className="feedback-training-details">Détails de l'entraînement</h2>
-        <p>{training?.details}</p>
+    <>
+      <section className="template-details-page">
+        <motion.div
+          className="template-details-container"
+          variants={variants}
+          animate="open"
+          initial="closed"
+        >
+          <section className="trainingCard-title">
+            <h1 className="templatedetail-title">{training?.title}</h1>
+            <CardMenu
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
+              id={id}
+            />
+          </section>
+          <section className="card-type-training">
+            <IoMdFitness className="templatedetail-logo-type" />
+            <p>
+              Entraînement |
+              {training?.name
+                ? training.name.charAt(0).toUpperCase() + training.name.slice(1)
+                : null}
+            </p>
+          </section>
+          <section className="feedbackdetail-duration-container">
+            <CiClock2 className="templatedetail-logo-type" />
+            <p>{training?.duration}</p>
+          </section>
+          <h2 className="feedback-training-details">
+            Détails de l'entraînement
+          </h2>
+          <p>{training?.details}</p>
 
-        <section className="trainingCard-title">
-          <button
-            type="button"
-            className="template-details-button"
-            onClick={() => navigate("/templates")}
-          >
-            Revenir aux modèles
-          </button>
-        </section>
-      </motion.div>
-      <PopUpTemplate
-        setOpen={setOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        open={open}
-        id={id}
-        training={training}
-      />
+          <section className="trainingCard-title">
+            <button
+              type="button"
+              className="template-details-button"
+              onClick={() => navigate("/templates")}
+            >
+              Revenir aux modèles
+            </button>
+          </section>
+        </motion.div>
+        <PopUpTemplate
+          setOpen={setOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          id={id}
+          training={training}
+        />
+        <Toaster />
+        <SideBar />
+      </section>
       {validation && (
         <Validation
           handleClose={handleCloseValidation}
@@ -158,9 +164,7 @@ function TemplateDetails() {
           message="Es-tu sûr de vouloir supprimer ce modèle ?"
         />
       )}
-      <Toaster />
-      <SideBar />
-    </section>
+    </>
   );
 }
 

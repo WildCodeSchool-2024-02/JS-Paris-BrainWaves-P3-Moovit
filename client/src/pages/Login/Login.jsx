@@ -1,16 +1,19 @@
 /* eslint-disable import/no-unresolved */
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Toaster } from "sonner";
 import Logo from "../../assets/images/Logo.svg";
 import "../Register/register.css";
 import { useUser } from "../../contexts/User/User";
 import PrivacyPolicy from "../../components/PrivacyPolicy/PrivacyPolicy";
+import DarkModeContext from "../../services/DarkModeContext";
 
 
 function Login() {
   const api = import.meta.env.VITE_API_URL;
+
+  const { mode } = useContext(DarkModeContext);
 
   const email = useRef();
   const password = useRef();
@@ -105,12 +108,12 @@ const handleClose = () => {
           <button type="submit" className="primary-button">
             Je me connecte
           </button>
-          <Link className="policy-link" to="/register">Je n'ai pas de compte</Link>
+          <Link className={`policy-link-${mode}`} to="/register">Je n'ai pas de compte</Link>
         </form>
         <section className="login-privacy">
           <p>
             En cliquant sur Je m’inscris, vous certifiez avoir pris connaissance
-            de notre <button className="policy-link" type="button" onClick={handleOpen}>politique de confidentialité</button>
+            de notre <button className={`policy-link-${mode}`} type="button" onClick={handleOpen}>politique de confidentialité</button>
           </p>
         </section>
       </section>

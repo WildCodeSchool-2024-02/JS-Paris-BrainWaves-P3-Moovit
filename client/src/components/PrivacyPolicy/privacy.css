@@ -23,7 +23,8 @@
   }
 }
 
-.policy-link {
+.policy-link-dark,
+.policy-link-light {
   border-radius: 0;
   font-size: 1em;
   font-weight: 600;
@@ -33,7 +34,14 @@
   border-width: 0;
   background-color: transparent;
   transition: none;
-  color: -webkit-link;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.policy-link-dark {
+  color: white;
+}
+
+.policy-link-light {
+  color: black;
 }

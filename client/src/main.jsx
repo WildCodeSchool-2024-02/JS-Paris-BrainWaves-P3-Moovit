@@ -48,7 +48,7 @@ const PublicRoute = ({ children }) => {
     if (!isLoading) {
       if (user) navigate("/journal");
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, navigate]);
 
   if (!isLoading && !user) return children;
   return "...loading";
@@ -134,7 +134,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/register",
-        element: <Register />,
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
       },
     ],
   },

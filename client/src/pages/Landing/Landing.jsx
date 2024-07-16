@@ -42,6 +42,12 @@ export default function Landing() {
             <button type="button" onClick={() => navigate("/login")}>
               Je me connecte
             </button>
+            <div className="landing-div">
+              <div className="landing-arrow-down">
+                <div className="landing-arrow-left" />
+                <div className="landing-arrow-right" />
+              </div>
+            </div>
           </div>
           <div className="scroll-logo-container" role="presentation">
             <div className="phone-logo">
@@ -115,7 +121,7 @@ export default function Landing() {
         </div>
       </section>
       <section className="advantages">
-        <h1>UNE BONNE ETOILE VEILLE SUR TOUS LES PROS</h1>
+        <h1>TIME TO MOOV'IT</h1>
         <p>
           Des solutions ludiques et pratiques pour t'aider dans ta pratique du
           sport et progresser de manière rapide et efficace

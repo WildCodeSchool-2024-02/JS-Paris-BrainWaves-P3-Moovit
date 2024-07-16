@@ -22,6 +22,7 @@ export default function EditProfile({
   error,
   setError,
 }) {
+
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { mode } = useContext(DarkModeContext);
@@ -138,7 +139,7 @@ export default function EditProfile({
         setError(true);
         return error;
       }
-      setUser({ ...user, name: name.current.value });
+      setUser({...user, name: name.current.value})
     } catch (err) {
       setError(true);
       toast.error("Une erreur est survenue");
@@ -181,7 +182,7 @@ export default function EditProfile({
       toast.error("Une erreur est survenue");
     }
     handleClose();
-    toast.success("Tes informations ont été mis à jour", {
+    toast.success("Tes informations ont été mises à jour", {
       style: {
         background: "rgba(145, 225, 166)",
         color: "black",

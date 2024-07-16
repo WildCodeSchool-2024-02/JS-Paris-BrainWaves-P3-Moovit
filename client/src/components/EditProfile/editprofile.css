@@ -5,6 +5,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100vw;
+  min-height: 100vh;
   background-color: var(--light);
   color: black;
   padding: 40px 20px;
@@ -18,7 +19,7 @@
   justify-content: flex-start;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgb(41, 41, 49);
   color: white;
   padding: 50px 20px;

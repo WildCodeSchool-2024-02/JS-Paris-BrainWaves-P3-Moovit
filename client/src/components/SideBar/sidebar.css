@@ -71,12 +71,12 @@
 
 .sidebar-logo {
   color: var(--main);
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 
 .sidebar-link-text {
   color: var(--main);
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 600;
   cursor: pointer;
 }
@@ -114,7 +114,7 @@
     margin: 0;
   }
   .sidebar-logo {
-    font-size: 1.6em;
+    font-size: 1.8em;
   }
   .sidebar-link-text {
     font-size: 0.8em;

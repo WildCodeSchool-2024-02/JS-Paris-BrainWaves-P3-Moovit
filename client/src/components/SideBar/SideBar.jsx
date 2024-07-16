@@ -77,24 +77,24 @@ export default function SideBar({ update }) {
         )}
       </div>
       <div className="sidebar-second-container">
-        <div className="sidebar-link">
-          <FaRegCompass className="sidebar-logo" />
-          <Link to="/journal" className="sidebar-link-text">
+        <Link to="/journal" className="sidebar-link-text">
+          <div className="sidebar-link">
+            <FaRegCompass className="sidebar-logo" />
             Journal
-          </Link>
-        </div>
-        <div className="sidebar-link">
-          <FaRegBookmark className="sidebar-logo" />
-          <Link to="/templates" className="sidebar-link-text">
+          </div>
+        </Link>
+        <Link to="/templates" className="sidebar-link-text">
+          <div className="sidebar-link">
+            <FaRegBookmark className="sidebar-logo" />
             Modèles
-          </Link>
-        </div>
-        <div className="sidebar-link">
-          <FaRegUserCircle className="sidebar-logo" />
-          <Link to="/user" className="sidebar-link-text">
+          </div>
+        </Link>
+        <Link to="/user" className="sidebar-link-text">
+          <div className="sidebar-link">
+            <FaRegUserCircle className="sidebar-logo" />
             Profil
-          </Link>
-        </div>
+          </div>
+        </Link>
         <div className="sidebar-footer-container">
           <p className="sidebar-credit">
             Un site réalisé avec amour par Antoine Delalande et Anthony Dufrenot

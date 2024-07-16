@@ -13,6 +13,7 @@ export default function Feedback({
   id,
   feedbackId,
   setStatusFeedback,
+  statusFeedback
 }) {
   const api = import.meta.env.VITE_API_URL;
 
@@ -90,7 +91,7 @@ export default function Feedback({
           );
           if (response.ok) {
             handleClose();
-            setStatusFeedback((prevStatus) => !prevStatus);
+            setStatusFeedback(!statusFeedback);
             toast.success("Feedback modifié avec succès", {
               style: {
                 background: "rgba(145, 225, 166)",
@@ -140,7 +141,7 @@ export default function Feedback({
           );
           if (response.ok && response2.ok) {
             handleClose();
-            setStatusFeedback((prevStatus) => !prevStatus);
+            setStatusFeedback(!statusFeedback);
             toast.success("Feedback enregistré avec succès", {
               style: {
                 background: "rgba(145, 225, 166)",
@@ -295,6 +296,7 @@ Feedback.propTypes = {
     PropTypes.oneOf([undefined]),
   ]),
   setStatusFeedback: PropTypes.func.isRequired,
+  statusFeedback: PropTypes.bool.isRequired
 };
 
 Feedback.defaultProps = {

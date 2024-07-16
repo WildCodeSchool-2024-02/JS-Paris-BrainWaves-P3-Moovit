@@ -39,6 +39,21 @@ const PrivateRoute = ({ children }) => {
   return "...loading";
 };
 
+const PublicRoute = ({ children }) => {
+  const { user } = useUser();
+  const { isLoading } = useOutletContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (user) navigate("/journal");
+    }
+  }, [user, isLoading, navigate]);
+
+  if (!isLoading && !user) return children;
+  return "...loading";
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -109,15 +124,23 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/login",
+        element: (
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        ),
+      },
+      {
+        path: "/register",
+        element: (
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        ),
+      },
     ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
   },
 ]);
 

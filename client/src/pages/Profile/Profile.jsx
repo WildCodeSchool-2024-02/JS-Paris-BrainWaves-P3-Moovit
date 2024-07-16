@@ -11,7 +11,7 @@ import EditProfile from "../../components/EditProfile/EditProfile";
 
 export default function Profile() {
   const api = import.meta.env.VITE_API_URL;
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [userSports, setUserSports] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
   const [newUser, setNewUser] = useState({});
@@ -79,6 +79,7 @@ export default function Profile() {
         }
       );
       if (response.ok) {
+        setUser(null);
         navigate("/login");
       }
     } catch (err) {

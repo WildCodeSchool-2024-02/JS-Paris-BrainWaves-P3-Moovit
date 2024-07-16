@@ -1,6 +1,81 @@
 .landing-page-container {
-  position: relative;
   z-index: 2;
+}
+
+.landing-arrow-down {
+  margin: 30 0 0 0px;
+  position: relative;
+  z-index: 10;
+  bottom: 0px;
+  -webkit-animation: arrow 0.5s 1s infinite ease-out alternate;
+  animation: arrow 0.5s 1s infinite ease-out alternate;
+}
+
+.landing-div {
+  padding: 20px;
+  position: relative;
+}
+
+.landing-arrow-down:hover {
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+
+.landing-arrow-left {
+  position: absolute;
+  height: 10px;
+  width: 40px;
+  background: var(--main);
+  -webkit-transform: rotate(240deg);
+  transform: rotate(240deg);
+  top: 40px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transform-origin: 5px 50%;
+  transform-origin: 5px 50%;
+  -webkit-animation: leftArrow 0.5s 1s infinite ease-out alternate;
+  animation: leftArrow 0.5s 1s infinite ease-out alternate;
+}
+
+.landing-arrow-right {
+  position: absolute;
+  height: 10px;
+  width: 40px;
+  background: var(--main);
+  -webkit-transform: rotate(-60deg);
+  transform: rotate(-60deg);
+  top: 40px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transform-origin: 5px 50%;
+  transform-origin: 5px 50%;
+  -webkit-animation: rightArrow 0.5s 1s infinite ease-out alternate;
+  animation: rightArrow 0.5s 1s infinite ease-out alternate;
+}
+
+@keyframes arrow {
+  0% {
+    bottom: 0px;
+  }
+  100% {
+    bottom: 20px;
+  }
+}
+
+@keyframes leftArrow {
+  0% {
+  }
+  100% {
+    -webkit-transform: rotate(225deg);
+  }
+}
+
+@keyframes rightArrow {
+  0% {
+  }
+  100% {
+    -webkit-transform: rotate(-45deg);
+  }
 }
 
 .landing-nav {
@@ -47,6 +122,7 @@
   background-image: url("../../assets/images/LandingPage3.webp");
   background-size: cover;
   background-position: bottom;
+  position: relative;
 }
 
 .landing-logo {
@@ -307,11 +383,13 @@
 .notice-items button {
   background-color: var(--main);
   color: white;
+  z-index: 10;
 }
 
 .landing-footer {
   padding: 20px 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

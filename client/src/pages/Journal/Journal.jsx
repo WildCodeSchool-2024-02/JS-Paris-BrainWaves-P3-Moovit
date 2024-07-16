@@ -108,7 +108,7 @@ export default function Journal() {
         );
       }
       handleCloseValidation();
-      setStatusFeedback((prevStatus) => !prevStatus);
+      setStatusFeedback(!statusFeedback);
     } catch (err) {
       toast.error("Une erreur est survenue, veuillez réessayer plus tard");
     }
@@ -360,6 +360,7 @@ export default function Journal() {
                 handleOpenValidation={handleOpenValidation}
                 setBoolTrain={setBoolTrain}
                 setBoolFeed={setBoolFeed}
+                statusFeedback={statusFeedback}
               />
             ))}
           </div>

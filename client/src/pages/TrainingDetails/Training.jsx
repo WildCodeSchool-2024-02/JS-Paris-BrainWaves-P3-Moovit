@@ -9,6 +9,7 @@ import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import CardMenu from "../../components/CardMenu/CardMenu";
 import SideBar from "../../components/SideBar/SideBar";
 import Validation from "../../components/Validation/Validation";
+import Feedback from "../../components/Feedback/Feedback";
 
 import "./training.css";
 import { useUser } from "../../contexts/User/User";
@@ -27,6 +28,7 @@ function TrainingDetails() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [statusFeedback, setStatusFeedback] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -45,6 +47,18 @@ function TrainingDetails() {
     document.body.classList.add("blocked");
   };
 
+  // Open feedback State
+  const [openFeedback, setOpenFeedback] = useState(false);
+
+  // Managing opening and closing Modal (feedback)
+  const handleOpenFeedback = () => {
+    setOpenFeedback(true);
+  };
+  const handleCloseFeedback = () => {
+    setOpenFeedback(false);
+    navigate('/journal')
+  };
+  
   // Delete training if yes is clicked
   const handleDeleteTraining = async () => {
     try {
@@ -150,7 +164,7 @@ function TrainingDetails() {
 
         <section className="training-details-footer">
           {training?.is_completed === 0 ? (
-            <button type="button" className="card-button-validate">
+            <button type="button" className="card-button-validate" onClick={handleOpenFeedback}>
               Valider
             </button>
           ) : (
@@ -182,6 +196,13 @@ function TrainingDetails() {
       )}
       <Toaster />
       <SideBar />
+      <Feedback 
+        handleClose={handleCloseFeedback}
+        open={openFeedback}
+        id={id}
+        setStatusFeedback={setStatusFeedback}
+        statusFeedback={statusFeedback}
+      />
     </section>
   );
 }

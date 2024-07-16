@@ -16,6 +16,7 @@ export default function Card({
   handleOpen,
   setCurrentTraining,
   setStatusFeedback,
+  statusFeedback,
   setIdTraining,
   handleOpenValidation,
   setBoolTrain,
@@ -109,6 +110,7 @@ export default function Card({
         open={openFeedback}
         id={card.id}
         setStatusFeedback={setStatusFeedback}
+        statusFeedback={statusFeedback}
       />
     </motion.section>
   );
@@ -130,4 +132,5 @@ Card.propTypes = {
   handleOpenValidation: PropTypes.func.isRequired,
   setBoolTrain: PropTypes.func.isRequired,
   setBoolFeed: PropTypes.func.isRequired,
+  statusFeedback: PropTypes.bool.isRequired
 };

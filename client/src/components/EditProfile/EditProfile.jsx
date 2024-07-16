@@ -182,7 +182,7 @@ export default function EditProfile({
       toast.error("Une erreur est survenue");
     }
     handleClose();
-    toast.success("Tes informations ont été mis à jour", {
+    toast.success("Tes informations ont été mises à jour", {
       style: {
         background: "rgba(145, 225, 166)",
         color: "black",

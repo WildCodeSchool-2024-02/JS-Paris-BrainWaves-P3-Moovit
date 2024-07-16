@@ -66,6 +66,7 @@ label,
 select,
 textarea {
   font-family: "Yaldevi", serif;
+  text-wrap: balance;
   overflow-wrap: break-word;
 }
 

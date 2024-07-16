@@ -22,7 +22,6 @@ export default function EditProfile({
   error,
   setError,
 }) {
-
   const api = import.meta.env.VITE_API_URL;
   const { sports } = useOutletContext();
   const { mode } = useContext(DarkModeContext);
@@ -139,7 +138,7 @@ export default function EditProfile({
         setError(true);
         return error;
       }
-      setUser({...user, name: name.current.value})
+      setUser({ ...user, name: name.current.value });
     } catch (err) {
       setError(true);
       toast.error("Une erreur est survenue");
@@ -208,8 +207,14 @@ export default function EditProfile({
     },
   };
 
+  const styles = {
+    modalStyle1: {
+      overflowY: "auto",
+    },
+  };
+
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={handleClose} style={styles.modalStyle1}>
       <motion.section
         className={`edit-profile-popup-${mode}`}
         variants={variants}

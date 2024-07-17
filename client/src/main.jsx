@@ -21,6 +21,7 @@ import Profile from "./pages/Profile/Profile";
 import NamePage from "./pages/NamePage/NamePage";
 import SportPage from "./pages/SportPage/SportPage";
 import LevelPage from "./pages/LevelPage/LevelPage";
+import Recap from "./pages/Recap/Recap";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -138,6 +139,14 @@ const router = createBrowserRouter([
           <PublicRoute>
             <Register />
           </PublicRoute>
+        ),
+      },
+      {
+        path: "/recap",
+        element: (
+          <PrivateRoute>
+            <Recap />
+          </PrivateRoute>
         ),
       },
     ],

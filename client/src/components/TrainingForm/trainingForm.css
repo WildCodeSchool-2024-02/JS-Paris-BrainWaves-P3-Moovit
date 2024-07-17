@@ -34,7 +34,7 @@
 
 .save-template {
   display: flex;
-  width: 60vw;
+  width: 70vw;
   justify-content: flex-end;
   align-items: center;
 }
@@ -50,6 +50,12 @@
   width: 50vw;
   text-align: center;
   border-color: var(--template-dark);
+}
+
+@media (max-width: 1024px) {
+  .save-template {
+    width: 90vw;
+  }
 }
 
 @media (max-width: 768px) {

@@ -56,9 +56,9 @@ function TrainingDetails() {
   };
   const handleCloseFeedback = () => {
     setOpenFeedback(false);
-    navigate('/journal')
+    navigate("/journal");
   };
-  
+
   // Delete training if yes is clicked
   const handleDeleteTraining = async () => {
     try {
@@ -164,7 +164,11 @@ function TrainingDetails() {
 
         <section className="training-details-footer">
           {training?.is_completed === 0 ? (
-            <button type="button" className="card-button-validate" onClick={handleOpenFeedback}>
+            <button
+              type="button"
+              className="card-button-validate"
+              onClick={handleOpenFeedback}
+            >
               Valider
             </button>
           ) : (
@@ -196,10 +200,10 @@ function TrainingDetails() {
       )}
       <Toaster />
       <SideBar />
-      <Feedback 
+      <Feedback
         handleClose={handleCloseFeedback}
         open={openFeedback}
-        id={id}
+        id={parseInt(id, 10)}
         setStatusFeedback={setStatusFeedback}
         statusFeedback={statusFeedback}
       />

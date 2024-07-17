@@ -67,7 +67,7 @@ export default function Journal() {
     setValidation(false);
     document.body.classList.remove("blocked");
   };
-  
+
   const handleOpenValidation = () => {
     setValidation(true);
     document.body.classList.add("blocked");
@@ -411,6 +411,7 @@ export default function Journal() {
         open={open}
         training={findCurrentTraining}
         id={currentTraining}
+        dayTraining={dayTraining}
       />
       {boolFeed && validation && (
         <Validation

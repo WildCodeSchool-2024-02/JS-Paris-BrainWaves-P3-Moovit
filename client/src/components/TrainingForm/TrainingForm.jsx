@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
 
-function TrainingForm({ id, training, handleClose, open }) {
+function TrainingForm({ id, training, handleClose, open, dayTraining }) {
   const { user } = useUser();
 
   const api = import.meta.env.VITE_API_URL;
@@ -16,9 +16,7 @@ function TrainingForm({ id, training, handleClose, open }) {
 
   const [title, setTitle] = useState(training?.title || "");
   const [date, setDate] = useState(
-    training
-      ? datefns.format(training.date, "yyyy-MM-dd")
-      : datefns.format(new Date(), "yyyy-MM-dd")
+    training ? datefns.format(training.date, "yyyy-MM-dd") : dayTraining
   );
   const [timeOfDay, setTimeOfDay] = useState(training?.time_of_day || "");
   const [duration, setDuration] = useState(training?.duration || "");
@@ -302,6 +300,7 @@ export default TrainingForm;
 TrainingForm.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]),
   handleClose: PropTypes.func.isRequired, // ID de l'activité en cours d'édition
+  dayTraining: PropTypes.string,
   training: PropTypes.shape({
     title: PropTypes.string, // Titre de l'activité
     date: PropTypes.string, // Date de l'activité
@@ -316,4 +315,5 @@ TrainingForm.propTypes = {
 TrainingForm.defaultProps = {
   id: null,
   training: undefined,
+  dayTraining: undefined
 };

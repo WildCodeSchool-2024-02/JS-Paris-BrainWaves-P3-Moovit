@@ -37,6 +37,29 @@ class UserRepository extends AbstractRepository {
     )
     return inseted.affectedRows
   }
+
+  async totalTrainingAmonth(id, body) {
+    const [totalTraining] = await this.database.query(`SELECT COUNT(*) AS total_training FROM training WHERE user_id = ? AND date BETWEEN ? AND ?`, 
+    [id, body.firstDay, body.lastDay]
+  );
+  return totalTraining
+  }
+
+  async totalValidateTraining(id, body) {
+    const [totalTraining] = await this.database.query(`SELECT COUNT(*) AS total_validate FROM training WHERE user_id = ? AND is_completed = 1 AND date BETWEEN ? AND ?`, 
+      [id, body.firstDay, body.lastDay]
+  );
+  return totalTraining
+  }
+
+  async totalSportValidate(id, body) {
+    const [total] =  await this.database.query(`SELECT sport.name, COUNT(*) AS total FROM sport 
+      JOIN training ON sport.id = training.sport_id 
+      WHERE user_id = ? AND is_completed = 1 AND date BETWEEN ? AND ? GROUP BY sport.name`,
+      [id, body.firstDay, body.lastDay]
+    )
+    return total
+  }
 }
 
 module.exports = UserRepository;

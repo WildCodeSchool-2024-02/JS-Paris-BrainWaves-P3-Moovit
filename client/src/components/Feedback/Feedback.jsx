@@ -13,7 +13,7 @@ export default function Feedback({
   id,
   feedbackId,
   setStatusFeedback,
-  statusFeedback
+  statusFeedback,
 }) {
   const api = import.meta.env.VITE_API_URL;
 
@@ -290,13 +290,13 @@ export default function Feedback({
 Feedback.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([undefined])]),
+  id: PropTypes.number,
   feedbackId: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.oneOf([undefined]),
   ]),
   setStatusFeedback: PropTypes.func.isRequired,
-  statusFeedback: PropTypes.bool.isRequired
+  statusFeedback: PropTypes.bool.isRequired,
 };
 
 Feedback.defaultProps = {

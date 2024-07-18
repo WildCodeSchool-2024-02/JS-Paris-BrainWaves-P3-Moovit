@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { FaRegUserCircle, FaRegBookmark, FaRegCompass } from "react-icons/fa";
+import { GiProgression } from "react-icons/gi";
 import { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/images/Logo.svg";
 import DarkModeContext from "../../services/DarkModeContext";
@@ -16,7 +17,7 @@ export default function SideBar({ update }) {
 
   const api = import.meta.env.VITE_API_URL;
 
-  const [sports, setSports] = useState([{name: 'chargement'}]);
+  const [sports, setSports] = useState([{ name: "chargement" }]);
   const [newUser, setNewUser] = useState(user);
 
   // Async function to get all sports from one user
@@ -87,6 +88,12 @@ export default function SideBar({ update }) {
           <div className="sidebar-link">
             <FaRegBookmark className="sidebar-logo" />
             Modèles
+          </div>
+        </Link>
+        <Link to="/recap" className="sidebar-link-text">
+          <div className="sidebar-link">
+            <GiProgression className="sidebar-logo" />
+            Récap
           </div>
         </Link>
         <Link to="/user" className="sidebar-link-text">

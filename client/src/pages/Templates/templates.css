@@ -25,7 +25,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .templates-container {
     flex-direction: row-reverse;
   }

@@ -15,6 +15,8 @@ const {
   nameUpdate,
   levelUpdate,
   readById,
+  getRatioValidateTraining,
+  getAllTrainingSport,
 } = require("../../../controllers/userActions");
 const {login, refresh, logout } = require("../../../controllers/authActions")
 const { hashPassword } = require("../../../services/hashPassword");
@@ -26,6 +28,12 @@ router.get("/", browse);
 
 // Route to get one user
 router.get("/profile", verifyToken, readById)
+
+// Route to get the percentage of validate workout
+router.post("/ratio",verifyToken, getRatioValidateTraining)
+
+// Route to get all the training per sport
+router.post("/recap",verifyToken, getAllTrainingSport)
 
 // Route to add a new user
 router.post("/", validateSchema(schema), hashPassword, add);

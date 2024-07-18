@@ -296,10 +296,11 @@ Feedback.propTypes = {
     PropTypes.oneOf([undefined]),
   ]),
   setStatusFeedback: PropTypes.func.isRequired,
-  statusFeedback: PropTypes.bool.isRequired,
+  statusFeedback: PropTypes.bool,
 };
 
 Feedback.defaultProps = {
   id: undefined,
   feedbackId: undefined,
+  statusFeedback: undefined,
 };

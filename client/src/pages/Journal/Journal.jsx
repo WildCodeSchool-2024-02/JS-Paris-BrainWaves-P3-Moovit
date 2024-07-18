@@ -12,6 +12,7 @@ import PopUp from "../../components/PopUp/PopUpTraining/PopUp";
 import FeedbackCard from "../../components/FeedbackCard/FeedbackCard";
 import { useUser } from "../../contexts/User/User";
 import Validation from "../../components/Validation/Validation";
+import MonthCalendar from "../../components/MonthCalendar/MonthCalendar";
 
 export default function Journal() {
   // Import user
@@ -25,6 +26,15 @@ export default function Journal() {
   const handleClose = () => {
     setOpen(false);
     setCurrentTraining(null);
+  };
+
+  // Managing calendar modal
+  const [openCalendar, setOpenCalendar] = useState(false);
+  const handleOpenCalendar = () => {
+    setOpenCalendar(true);
+  };
+  const handleCloseCalendar = () => {
+    setOpenCalendar(false);
   };
 
   // Current date
@@ -293,6 +303,14 @@ export default function Journal() {
 
   return (
     <section className="journal">
+      <MonthCalendar
+        open={openCalendar}
+        handleClose={handleCloseCalendar}
+        setCurrentDate={setCurrentDate}
+        setDayTraining={setDayTraining}
+        statusFeedback={statusFeedback}
+        statusTraining={statusTraining}
+      />
       <div className="journal-first-container">
         <div className="journal-orange-block">
           <div className="journal-elements">
@@ -400,6 +418,7 @@ export default function Journal() {
             weekCounter={weekCounter}
             handleReturnToday={handleReturnToday}
             getInterval={getInterval}
+            handleOpenCalendar={handleOpenCalendar}
           />
         </div>
       </div>

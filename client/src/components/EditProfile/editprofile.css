@@ -13,7 +13,6 @@
 }
 
 .edit-profile-popup-dark {
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

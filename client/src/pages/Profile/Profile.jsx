@@ -157,7 +157,7 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <SideBar update={update}/>
+      <SideBar update={update} />
       <EditProfile
         open={openEdit}
         handleClose={handleCloseEdit}

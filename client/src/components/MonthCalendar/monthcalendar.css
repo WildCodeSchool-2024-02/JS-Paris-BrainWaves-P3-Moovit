@@ -1,0 +1,14 @@
+.calendar-month-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-mark-calendar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+}

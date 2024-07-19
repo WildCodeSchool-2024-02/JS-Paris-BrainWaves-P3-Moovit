@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import * as datefns from "date-fns";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { CiCalendarDate } from "react-icons/ci";
 import "./days.css";
 
 export default function Days({
@@ -12,6 +13,7 @@ export default function Days({
   weekCounter,
   handleReturnToday,
   getInterval,
+  handleOpenCalendar,
 }) {
   // Function that handle display
   const handleDisplay = (day) => {
@@ -30,28 +32,53 @@ export default function Days({
           <IoIosArrowBack />
         </button>
         {weekCounter === 0 && (
-          <button type="button" className="days-current-button">
-            Cette semaine
+          <button
+            type="button"
+            className="days-current-button"
+            onClick={handleOpenCalendar}
+          >
+            <p>Cette semaine</p>
+            <CiCalendarDate className="icon-calendar" />
           </button>
         )}
         {weekCounter === -1 && (
-          <button type="button" className="days-current-button">
-            La semaine dernière
+          <button
+            type="button"
+            className="days-current-button"
+            onClick={handleOpenCalendar}
+          >
+            <p>La semaine dernière</p>
+            <CiCalendarDate className="icon-calendar" />
           </button>
         )}
         {weekCounter === 1 && (
-          <button type="button" className="days-current-button">
-            La semaine prochaine
+          <button
+            type="button"
+            className="days-current-button"
+            onClick={handleOpenCalendar}
+          >
+            <p>La semaine prochaine</p>
+            <CiCalendarDate className="icon-calendar" />
           </button>
         )}
         {weekCounter < -1 && (
-          <button type="button" className="days-current-button">
-            Il y a {-weekCounter} semaine(s)
+          <button
+            type="button"
+            className="days-current-button"
+            onClick={handleOpenCalendar}
+          >
+            <p>Il y a {-weekCounter} semaine(s)</p>
+            <CiCalendarDate className="icon-calendar" />
           </button>
         )}
         {weekCounter > 1 && (
-          <button type="button" className="days-current-button">
-            Dans {weekCounter} semaine(s)
+          <button
+            type="button"
+            className="days-current-button"
+            onClick={handleOpenCalendar}
+          >
+            <p>Dans {weekCounter} semaine(s)</p>
+            <CiCalendarDate className="icon-calendar" />
           </button>
         )}
         <button
@@ -116,4 +143,5 @@ Days.propTypes = {
   weekCounter: PropTypes.number.isRequired,
   handleReturnToday: PropTypes.func.isRequired,
   getInterval: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleOpenCalendar: PropTypes.func.isRequired,
 };

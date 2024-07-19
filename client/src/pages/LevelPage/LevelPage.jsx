@@ -7,7 +7,7 @@ import Level from "../../components/Level/Level";
 
 export default function LevelPage() {
   const api = import.meta.env.VITE_API_URL;
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [activeButtons, setActiveButtons] = useState({
     none: false,
@@ -50,6 +50,7 @@ export default function LevelPage() {
         toast.success(
           "Super ton compte a été créé ! Tu peux maintenant te connecter"
         );
+        setUser(null);
         navigate("/login");
       }
     } catch (error) {

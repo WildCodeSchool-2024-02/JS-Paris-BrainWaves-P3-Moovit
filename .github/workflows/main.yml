@@ -18,6 +18,8 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: 22
         script: |
+          export NVM_DIR=/.nvm
+          source ~/.nvm/nvm.sh
           cd /var/www/html/moovit
           git pull origin main
           npm i

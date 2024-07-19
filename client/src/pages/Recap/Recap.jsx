@@ -38,6 +38,8 @@ export default function Recap() {
       if (response.ok) {
         const data = await response.json();
         setRatio(data);
+      } else {
+        setRatio(0);
       }
     } catch (err) {
       console.error(err);
@@ -63,6 +65,8 @@ export default function Recap() {
       if (response.ok) {
         const data = await response.json();
         setRecap(data);
+      } else {
+        setRecap([]);
       }
     } catch (err) {
       console.error(err);
@@ -111,19 +115,23 @@ export default function Recap() {
         </div>
         <h1 className="subtitle">Nombre d'entraînements validés par sport :</h1>
         <div className="sport-list">
-          {recap.map((s) => (
-            <div key={s.name} className="sport-detail-recap">
-              <button type="button" className="button-recap">
-                {s.name[0].toUpperCase() + s.name.slice(1)}
-              </button>
-              <h1>
-                {s.total}{" "}
-                <span className="entrainement">
-                  entraînement{s.total > 1 ? "s" : ""}
-                </span>
-              </h1>
-            </div>
-          ))}
+          {recap.length > 0 ? (
+            recap.map((s) => (
+              <div key={s.name} className="sport-detail-recap">
+                <button type="button" className="button-recap">
+                  {s.name[0].toUpperCase() + s.name.slice(1)}
+                </button>
+                <h1>
+                  {s.total}{" "}
+                  <span className="entrainement">
+                    entraînement{s.total > 1 ? "s" : ""}
+                  </span>
+                </h1>
+              </div>
+            ))
+          ) : (
+            <p>Tu n'as pas validé d'entrainement ce mois-ci</p>
+          )}
         </div>
         <h1 className="subtitle">Nombre total d'entraînements validés </h1>
         <section className="progress-max">

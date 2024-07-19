@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   gap: 50px;
-  width: 100%;
+  width: 75%;
   height: 100vh;
   padding: 50px;
 }
@@ -108,6 +108,9 @@
     flex-direction: column;
     justify-content: space-between;
   }
+  .recap-container {
+    width: 100%;
+  }
   .sport-list {
     justify-content: center;
   }
@@ -120,5 +123,6 @@
 @media (max-width: 768px) {
   .recap-container {
     padding: 20px;
+    margin-bottom: 50px;
   }
 }

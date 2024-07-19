@@ -29,8 +29,10 @@
 
 .eye-password {
   position: absolute;
+  color: black;
   right: 30px;
   transform: translateY(150%);
+  cursor: pointer;
 }
 
 .eye-password:hover {

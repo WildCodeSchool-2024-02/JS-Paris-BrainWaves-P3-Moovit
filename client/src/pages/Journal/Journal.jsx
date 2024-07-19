@@ -305,6 +305,7 @@ export default function Journal() {
     <section className="journal">
       <MonthCalendar
         open={openCalendar}
+        setOpen={setOpenCalendar}
         handleClose={handleCloseCalendar}
         setCurrentDate={setCurrentDate}
         setDayTraining={setDayTraining}

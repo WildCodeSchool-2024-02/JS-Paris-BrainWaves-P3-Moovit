@@ -13,6 +13,7 @@ import renderDay from "./renderDay";
 
 export default function MonthCalendar({
   open,
+  setOpen,
   handleClose,
   setCurrentDate,
   setDayTraining,
@@ -20,11 +21,26 @@ export default function MonthCalendar({
   statusTraining,
 }) {
   const { user } = useUser();
+
+  // State to display a initial value on the calendar
   const [initialValue, setInitialValue] = useState(new Date());
+
+  // State to display skeleton when changing month and fetch data
   const [isLoading, setIsLoading] = useState(false);
+
+  // State to store all the training of a selected month
   const [interval, setInterval] = useState([]);
+
+  // First day of the month
   const firstDay = datefns.startOfMonth(initialValue);
+
+  // Last day of the month
   const lastDay = datefns.endOfMonth(initialValue);
+
+  const handleCloseCalendar = () => {
+    setInitialValue(new Date());
+    setOpen(false);
+  };
 
   const getTraining = async () => {
     setIsLoading(true);
@@ -63,6 +79,7 @@ export default function MonthCalendar({
     getTraining();
   }, [initialValue, statusFeedback, statusTraining]);
 
+  // Provided by Material UI to handleMonth display
   const handleMonthChange = (newMonth) => {
     setInitialValue(newMonth);
   };
@@ -120,7 +137,7 @@ export default function MonthCalendar({
             <Button
               variant="contained"
               color="secondary"
-              onClick={handleClose}
+              onClick={handleCloseCalendar}
               sx={{
                 position: "absolute",
                 bottom: "-40px",
@@ -140,6 +157,7 @@ export default function MonthCalendar({
 
 MonthCalendar.propTypes = {
   open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
   setCurrentDate: PropTypes.func.isRequired,
   setDayTraining: PropTypes.func.isRequired,

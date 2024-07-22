@@ -162,7 +162,7 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
     return newSport;
   }
 
-  const handleTest = async () => {
+  const handleAI = async () => {
     setLoadingAi(true);
     try {
       const response = await fetch(`${api}/api/groq`, {
@@ -324,7 +324,7 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
         </p>
       ) : null}
       <div>
-        <button type="button" onClick={handleTest} className="ai-proposition">
+        <button type="button" onClick={handleAI} className="ai-proposition">
           <BsStars />
           Générer un entraînement
         </button>

@@ -47,8 +47,8 @@ function CardMenu({ handleDelete, handleEdit, anchorEl, setAnchorEl }) {
           },
         }}
       >
-        <MenuItem onClick={handleEdit}>éditer</MenuItem>
-        <MenuItem onClick={handleDelete}>supprimer</MenuItem>
+        <MenuItem onClick={handleEdit}>Editer</MenuItem>
+        <MenuItem onClick={handleDelete}>Supprimer</MenuItem>
       </Menu>
     </div>
   );

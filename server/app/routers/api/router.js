@@ -34,6 +34,10 @@ const userHasSport = require("./userHasSport/router");
 
 router.use("/userhassport", userHasSport)
 
+const groqRouter = require("./groq/router")
+
+router.use('/groq', groqRouter)
+
 /* ************************************************************************* */
 
 module.exports = router;

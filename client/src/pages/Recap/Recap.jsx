@@ -96,7 +96,7 @@ export default function Recap() {
   return (
     <section className="recap">
       <section className="recap-container">
-        <h1 className="recap-title">Ton recapitulatif</h1>
+        <h1 className="recap-title">Ton récapitulatif</h1>
         <div className="month-selection">
           <button
             type="button"

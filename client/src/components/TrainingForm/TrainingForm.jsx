@@ -1,9 +1,12 @@
 /* eslint-disable import/no-unresolved */
 import PropTypes from "prop-types";
 import "./trainingForm.css";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useOutletContext } from "react-router-dom";
+import { BsStars } from "react-icons/bs";
 import { toast } from "sonner";
 import * as datefns from "date-fns";
 import { useUser } from "../../contexts/User/User";
@@ -25,6 +28,8 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
   const [templateId, setTemplateId] = useState("");
   const [templates, setTemplates] = useState([]);
   const [checked, setChecked] = useState(false);
+  const [ai, setAi] = useState("");
+  const [loadingAi, setLoadingAi] = useState(false);
 
   // state for managing errors in form
   const [error, setError] = useState({});
@@ -83,7 +88,7 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
           date,
           time_of_day: timeOfDay,
           duration,
-          details,
+          details: ai.length > 0 ? ai : details,
           user_id: user.id,
           sport_id: sport,
         }),
@@ -146,6 +151,43 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
     }
   };
 
+  function removeAsterisks(text) {
+    return text.replace(/\*/g, "");
+  }
+
+  function findSport(idSport) {
+    const newSport = sports.find(
+      (s) => parseInt(s.id, 10) === parseInt(idSport, 10)
+    );
+    return newSport;
+  }
+
+  const handleAI = async () => {
+    setLoadingAi(true);
+    try {
+      const response = await fetch(`${api}/api/groq`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          duration,
+          sportId: findSport(sport).name,
+          userLevel: user.level,
+        }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setAi(data);
+        setLoadingAi(false);
+      }
+    } catch (err) {
+      console.error(err);
+      setLoadingAi(false);
+    }
+  };
+
   const variants = {
     open: {
       x: 0,
@@ -156,6 +198,17 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
       transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] },
     },
   };
+
+  const timeArray = [
+    "15min",
+    "30min",
+    "45min",
+    "1h",
+    "1h15",
+    "1h30",
+    "1h45",
+    "2h",
+  ];
 
   return (
     <motion.form
@@ -247,29 +300,48 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
       {error.sport_id ? (
         <p className="error-message">Merci de choisir un sport</p>
       ) : null}
-
-      <input
-        type="text"
+      <select
+        type="time"
         id="duration"
         name="duration"
         value={duration}
         placeholder="Combien de temps ?"
         onChange={(e) => setDuration(e.target.value)}
         className={error.duration ? "input-error" : ""}
-      />
+      >
+        <option value="" disabled>
+          Combien de temps ? ⏱️
+        </option>
+        {timeArray.map((t) => (
+          <option key={t} value={t}>
+            {t}
+          </option>
+        ))}
+      </select>
       {error.duration ? (
         <p className="error-message">
           Merci de renseigner une durée pour ton entraînement
         </p>
       ) : null}
-      <textarea
-        type="text"
-        id="details"
-        name="details"
-        value={details}
-        placeholder="Enregistre les détails de ton activité ici 👌"
-        onChange={(e) => setDetails(e.target.value)}
-      />
+      <div>
+        <button type="button" onClick={handleAI} className="ai-proposition">
+          <BsStars />
+          Générer un entraînement
+        </button>
+        {loadingAi && (
+          <Box sx={{ width: "100%", margin: "0 10px", color: "var(--second)" }}>
+            <LinearProgress color="inherit" />
+          </Box>
+        )}
+        <textarea
+          type="text"
+          id="details"
+          name="details"
+          value={ai.length > 0 ? removeAsterisks(ai) : details}
+          placeholder="Enregistre les détails de ton activité ici 👌"
+          onChange={(e) => setDetails(e.target.value)}
+        />
+      </div>
       {templateId ? null : (
         <div className="save-template">
           <input
@@ -315,5 +387,5 @@ TrainingForm.propTypes = {
 TrainingForm.defaultProps = {
   id: null,
   training: undefined,
-  dayTraining: undefined
+  dayTraining: undefined,
 };

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import ReactMarkdown from "react-markdown";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IoMdFitness } from "react-icons/io";
@@ -205,6 +206,7 @@ export default function FeedbackDetails() {
             <h1 className="feedback-training-details">
               Détails de l'entraînement
             </h1>
+            <ReactMarkdown>{feedback?.training_details}</ReactMarkdown>
             <p>{feedback?.training_details}</p>
           </div>
         )}

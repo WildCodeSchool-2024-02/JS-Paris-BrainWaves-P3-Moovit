@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams, useOutletContext } from "react-router-dom";
 import { IoMdFitness } from "react-icons/io";
 import { CiClock2 } from "react-icons/ci";
@@ -127,70 +128,80 @@ function TrainingDetails() {
   )?.name;
 
   return (
-    <section className="training-details-page">
-      <motion.div
-        className="training-details-container"
-        variants={variants}
-        animate="open"
-        initial="closed"
-      >
-        <section className="trainingCard-title">
-          <h1>{training?.title}</h1>
-          <CardMenu
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            anchorEl={anchorEl}
-            setAnchorEl={setAnchorEl}
-            id={id}
-          />
-        </section>
-        <section className="feedbackdetail-type-training">
-          <IoMdFitness className="training-details-logo-type" />
-          <p>
-            Entraînement |{" "}
-            {idSport
-              ? idSport.charAt(0).toUpperCase() + idSport.slice(1)
-              : idSport}
-          </p>
-        </section>
-        <section className="training-details-time-training">
-          <CiClock2 className="training-details-logo-type" />
-          {training?.time_of_day === "Matin" ? <p>Matin</p> : null}
-          {training?.time_of_day === "Après-midi" ? <p>Après-midi</p> : null}
-          {training?.time_of_day === "Soir" ? <p>Soir</p> : null}
-          <p>| {training?.duration}</p>
-        </section>
-        <p className="feedbackdetail-duration">{training?.details}</p>
-
-        <section className="training-details-footer">
-          {training?.is_completed === 0 ? (
+    <>
+      <section className="training-details-page">
+        <motion.div
+          className="training-details-container"
+          variants={variants}
+          animate="open"
+          initial="closed"
+        >
+          <section className="trainingCard-title">
+            <h1>{training?.title}</h1>
+            <CardMenu
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              anchorEl={anchorEl}
+              setAnchorEl={setAnchorEl}
+              id={id}
+            />
+          </section>
+          <section className="feedbackdetail-type-training">
+            <IoMdFitness className="training-details-logo-type" />
+            <p>
+              Entraînement |{" "}
+              {idSport
+                ? idSport.charAt(0).toUpperCase() + idSport.slice(1)
+                : idSport}
+            </p>
+          </section>
+          <section className="training-details-time-training">
+            <CiClock2 className="training-details-logo-type" />
+            {training?.time_of_day === "Matin" ? <p>Matin</p> : null}
+            {training?.time_of_day === "Après-midi" ? <p>Après-midi</p> : null}
+            {training?.time_of_day === "Soir" ? <p>Soir</p> : null}
+            <p>| {training?.duration}</p>
+          </section>
+          <ReactMarkdown>{training?.details}</ReactMarkdown>
+          <section className="training-details-footer">
+            {training?.is_completed === 0 ? (
+              <button
+                type="button"
+                className="card-button-validate"
+                onClick={handleOpenFeedback}
+              >
+                Valider
+              </button>
+            ) : (
+              <p>Feeback enregistré</p>
+            )}
             <button
               type="button"
               className="card-button-validate"
-              onClick={handleOpenFeedback}
+              onClick={() => navigate("/journal")}
             >
-              Valider
+              Revenir au journal
             </button>
-          ) : (
-            <p>Feeback enregistré</p>
-          )}
-          <button
-            type="button"
-            className="card-button-validate"
-            onClick={() => navigate("/journal")}
-          >
-            Revenir au journal
-          </button>
-        </section>
-      </motion.div>
-      <PopUp
-        setOpen={setOpen}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-        open={open}
-        id={parseInt(id, 10)}
-        training={training}
-      />
+          </section>
+        </motion.div>
+        <PopUp
+          setOpen={setOpen}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          id={parseInt(id, 10)}
+          training={training}
+        />
+        <Toaster />
+        <SideBar />
+        <Feedback
+          handleClose={handleCloseFeedback}
+          open={openFeedback}
+          id={parseInt(id, 10)}
+          setStatusFeedback={setStatusFeedback}
+          statusFeedback={statusFeedback}
+        />
+      </section>
       {validation && (
         <Validation
           handleClose={handleCloseValidation}
@@ -198,16 +209,7 @@ function TrainingDetails() {
           message="Es-tu sûr de vouloir supprimer cet entraînement ?"
         />
       )}
-      <Toaster />
-      <SideBar />
-      <Feedback
-        handleClose={handleCloseFeedback}
-        open={openFeedback}
-        id={parseInt(id, 10)}
-        setStatusFeedback={setStatusFeedback}
-        statusFeedback={statusFeedback}
-      />
-    </section>
+    </>
   );
 }
 

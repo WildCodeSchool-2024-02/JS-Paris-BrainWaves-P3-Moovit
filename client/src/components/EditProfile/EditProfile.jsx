@@ -160,6 +160,7 @@ export default function EditProfile({
     }
     // Update level fetch
     try {
+      setUser((prev) => ({ ...prev, level: dataLevel }));
       const response = await fetch(`${api}/api/users/profile/level`, {
         method: "PUT",
         headers: {

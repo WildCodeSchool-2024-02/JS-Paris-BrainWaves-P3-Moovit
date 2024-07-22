@@ -146,7 +146,7 @@ export default function MonthCalendar({
                 ":hover": { backgroundColor: "var(--main)" },
               }}
             >
-              Close
+              Fermer
             </Button>
           </Box>
         </LocalizationProvider>

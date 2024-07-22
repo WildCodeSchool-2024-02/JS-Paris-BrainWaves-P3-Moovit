@@ -351,6 +351,7 @@
 }
 
 .notice-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -379,6 +380,8 @@
 .svg {
   position: absolute;
   top: 50px;
+  left: 50%;
+  transform: translateX(-25%);
 }
 
 .notice-items button {
@@ -388,7 +391,7 @@
 }
 
 .landing-footer {
-  padding: 20px 0;
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -397,6 +400,27 @@
 
 .landing-footer a {
   color: white;
+}
+
+.logo1 {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  width: 150px;
+}
+
+.logo2 {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  width: 100px;
+}
+
+.logo3 {
+  position: absolute;
+  top: -120px;
+  left: 0;
+  width: 180px;
 }
 
 @media (min-width: 768px) {
@@ -414,6 +438,19 @@
   }
   .notice-card {
     width: 50%;
+  }
+  .logo1 {
+    width: 200px;
+    top: -80px;
+  }
+  .logo2 {
+    top: -100px;
+    right: 0;
+    width: 150px;
+  }
+  .logo3 {
+    top: -160px;
+    width: 220px;
   }
 }
 
@@ -511,5 +548,8 @@
   .advantages p {
     text-align: center;
     font-size: 1em;
+  }
+  .logo1 {
+    width: 200px;
   }
 }

@@ -4,6 +4,9 @@ import { GiBlackBook, GiProgression } from "react-icons/gi";
 import { FaLightbulb } from "react-icons/fa";
 import { IoFitnessSharp } from "react-icons/io5";
 import Logo from "../../assets/images/Logo.svg";
+import landing1 from "../../assets/images/landing1.svg";
+import landing2 from "../../assets/images/landing2.svg";
+import landing3 from "../../assets/images/landing3.svg";
 import "./landing.css";
 import DarkModeContext from "../../services/DarkModeContext";
 
@@ -158,12 +161,14 @@ export default function Landing() {
           </svg>
           <div className="notice-subscription">
             <div className="notice-card">
+              <img className="logo1" src={landing1} alt="landing1" />
               <h1>Commence par te créer un compte</h1>
               <p>Pour accéder à ton journal personnalisé</p>
             </div>
           </div>
           <div className="notice-training">
             <div className="notice-card">
+              <img className="logo2" src={landing2} alt="landing2" />
               <h1>Crée ensuite ton premier entraînement</h1>
               <p>
                 Pour pouvoir plannifier ta séance et détailler les étapes de ton
@@ -173,6 +178,7 @@ export default function Landing() {
           </div>
           <div className="notice-model">
             <div className="notice-card">
+              <img className="logo3" src={landing3} alt="landing3" />
               <h1>Crée ton premier modèle d'entraînement</h1>
               <p>
                 Pour paramétrer tes entraînements récurrents et te faire gagner

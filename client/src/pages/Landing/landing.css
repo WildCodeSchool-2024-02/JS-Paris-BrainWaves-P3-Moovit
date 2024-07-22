@@ -398,10 +398,6 @@
   align-items: center;
 }
 
-.landing-footer a {
-  color: white;
-}
-
 .logo1 {
   position: absolute;
   top: -60px;
@@ -421,6 +417,14 @@
   top: -120px;
   left: 0;
   width: 180px;
+}
+
+.link-credit-dark {
+  color: white;
+}
+
+.link-credit-light {
+  color: black;
 }
 
 @media (min-width: 768px) {

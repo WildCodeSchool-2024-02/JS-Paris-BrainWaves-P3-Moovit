@@ -92,7 +92,7 @@ const getRatioValidateTraining = async (req, res, next) => {
     const ratio = Math.floor(
       (totalValidate.total_validate / totalTraining.total_training) * 100
     );
-    if (totalTraining) {
+    if (ratio > 0) {
       res.status(200).json(ratio);
     } else {
       res.sendStatus(404);

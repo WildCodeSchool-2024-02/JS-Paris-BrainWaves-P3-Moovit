@@ -5,8 +5,9 @@
   justify-content: space-between;
   align-items: center;
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
   z-index: 2;
+  overflow-x: hidden;
 }
 
 .training-details-container {
@@ -84,6 +85,7 @@
 
 @media (min-width: 1025px) {
   .training-details-page {
+    overflow-y: scroll;
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;

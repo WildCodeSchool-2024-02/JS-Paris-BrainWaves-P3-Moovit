@@ -163,28 +163,37 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
   }
 
   const handleAI = async () => {
-    setLoadingAi(true);
-    try {
-      const response = await fetch(`${api}/api/groq`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify({
-          duration,
-          sportId: findSport(sport).name,
-          userLevel: user.level,
-        }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setAi(data);
+    if (!sport) {
+      setError({ sport_id: "Renseignez un sport" });
+    }
+    if (!duration) {
+      setError((prev) => ({ ...prev, duration: "Renseignez une durée" }));
+    }
+    if (sport && duration) {
+      setError({});
+      setLoadingAi(true);
+      try {
+        const response = await fetch(`${api}/api/groq`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            duration,
+            sportId: findSport(sport).name,
+            userLevel: user.level,
+          }),
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setAi(data);
+          setLoadingAi(false);
+        }
+      } catch (err) {
+        console.error(err);
         setLoadingAi(false);
       }
-    } catch (err) {
-      console.error(err);
-      setLoadingAi(false);
     }
   };
 

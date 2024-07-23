@@ -130,10 +130,6 @@ export default function Profile() {
             <p className="parameters-value">Tu n'as pas de sport enregistré</p>
           )}
         </div>
-        <div className="container-parameters">
-          <h1 className="parameters-name">MODIFIER LE MOT DE PASSE</h1>
-          <p className="parameters-value">*********</p>
-        </div>
         <div className="container-monitor">
           <div className="container-logout">
             <FaPenToSquare className="sidebar-logout" />

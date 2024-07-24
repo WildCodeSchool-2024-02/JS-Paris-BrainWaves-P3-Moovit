@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  gap: 100px;
+  gap: 70px;
   z-index: 2;
   height: 100vh;
   width: 100vw;
@@ -17,6 +17,7 @@
   align-items: center;
   width: 60vw;
   text-align: center;
+  gap: 20px;
 }
 
 .name-input-container {

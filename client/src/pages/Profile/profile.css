@@ -13,11 +13,19 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  overflow-y: scroll;
   padding: 20px;
+  min-height: 100vh;
+  width: 75%;
   gap: 20px;
 }
 
+.container-parameters {
+  width: 30%;
+}
+
 .parameters-name {
+  display: flex;
   font-size: 1em;
 }
 

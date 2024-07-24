@@ -194,11 +194,19 @@ export default function Landing() {
       <footer className="landing-footer">
         <p className="sidebar-credit">
           Un site réalisé avec amour par{" "}
-          <a href="https://github.com/Hamsolovski" target="blank" className={`link-credit-${mode}`}>
+          <a
+            href="https://github.com/Hamsolovski"
+            target="blank"
+            className={`link-credit-${mode}`}
+          >
             Antoine Delalande
           </a>{" "}
           et{" "}
-          <a href="https://github.com/WildAntho" target="blank" className={`link-credit-${mode}`}>
+          <a
+            href="https://github.com/WildAntho"
+            target="blank"
+            className={`link-credit-${mode}`}
+          >
             Anthony Dufrenot
           </a>
         </p>

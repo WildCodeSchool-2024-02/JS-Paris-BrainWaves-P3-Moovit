@@ -5,7 +5,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { DayCalendarSkeleton } from "@mui/x-date-pickers/DayCalendarSkeleton";
 import * as datefns from "date-fns";
 import { Button, Box, Modal } from "@mui/material";
-import { de } from "date-fns/locale";
+import { fr } from "date-fns/locale";
 import "./monthcalendar.css";
 import { useEffect, useState } from "react";
 import { useUser } from "../../contexts/User/User";
@@ -88,7 +88,7 @@ export default function MonthCalendar({
   return (
     <Modal open={open} onClose={handleClose}>
       <section className="calendar-month-container">
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={de}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fr}>
           <Box
             sx={{
               position: "relative",

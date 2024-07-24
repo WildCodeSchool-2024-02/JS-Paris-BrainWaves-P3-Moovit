@@ -24,10 +24,13 @@ function TrainingDetails() {
 
   const [training, setTraining] = useState();
   const { id } = useParams();
-
+  const [statusTraining, setStatusTraining] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setStatusTraining(!statusTraining);
+    setOpen(false);
+  };
   const [anchorEl, setAnchorEl] = useState(null);
   const [statusFeedback, setStatusFeedback] = useState(false);
 
@@ -121,7 +124,7 @@ function TrainingDetails() {
     })
       .then((res) => res.json())
       .then((data) => setTraining(data));
-  }, [training]);
+  }, [statusTraining]);
 
   const idSport = sports?.find(
     (value) => training?.sport_id === value.id

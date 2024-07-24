@@ -11,7 +11,7 @@ async function getGroqChatCompletion(duration, sport, userLevel) {
     messages: [
       {
         role: "user",
-        content: `Crée moi une séance en français de ${sport} qui durera ${duration} pour un pratiquant ${level} en markdown`,
+        content: `Crée moi une séance en français de ${sport} qui durera ${duration} pour un pratiquant ${level} en markdown sans lui donner de titre`,
       },
     ],
     model: "mixtral-8x7b-32768",

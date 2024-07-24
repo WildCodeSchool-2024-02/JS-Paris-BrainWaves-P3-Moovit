@@ -90,6 +90,20 @@ const intervalWeek = async (req, res, next) => {
   }
 };
 
+const totalGamification = async (req, res, next) => {
+  try {
+    const [result] = await tables.training.totalValidate(req.auth.id)
+    if (result.total > 0){
+      const data = result.total * 10
+      res.status(200).json(data)
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   browse,
   readById,
@@ -98,4 +112,5 @@ module.exports = {
   destroy,
   readDay,
   intervalWeek,
+  totalGamification
 };

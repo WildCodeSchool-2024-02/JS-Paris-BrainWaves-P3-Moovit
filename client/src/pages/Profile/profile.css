@@ -58,6 +58,19 @@
   cursor: pointer;
 }
 
+.score-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 80px;
+}
+
+.score-container button {
+  font-weight: 700;
+  font-size: 2.5em;
+  background-color: var(--second);
+}
+
 @media (min-width: 769px) {
   .my-profile {
     gap: 35px;

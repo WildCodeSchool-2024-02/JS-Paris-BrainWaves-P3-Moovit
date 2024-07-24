@@ -17,6 +17,7 @@ export default function Profile() {
   const [newUser, setNewUser] = useState({});
   const [update, setUpdate] = useState(false);
   const [error, setError] = useState(false);
+  const [points, setPoints] = useState(0);
   const navigate = useNavigate();
 
   // Async function to update user information
@@ -54,6 +55,23 @@ export default function Profile() {
     }
   };
 
+  // Async function to get the total points of the user
+  const getPoints = async () => {
+    try {
+      const response = await fetch(`${api}/api/trainings/totalpoint`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setPoints(data);
+      }
+    } catch (err) {
+      toast.error("Une erreur est survenue");
+    }
+  };
+
   // Managing opening & closing editing modal
   const handleCloseEdit = () => {
     setOpenEdit(false);
@@ -67,6 +85,7 @@ export default function Profile() {
   useEffect(() => {
     getSports();
     getUser();
+    getPoints();
   }, [update]);
 
   // Function to logout
@@ -92,6 +111,12 @@ export default function Profile() {
       <div className="my-profile">
         <div className="title-my-profile">
           <h1>MON PROFIL</h1>
+        </div>
+        <div className="score-container">
+          <h1>Score</h1>
+          <button type="button" className="primary-button">
+            {points}
+          </button>
         </div>
         <div className="container-paramaters">
           <h1 className="parameters-name">PRENOM</h1>

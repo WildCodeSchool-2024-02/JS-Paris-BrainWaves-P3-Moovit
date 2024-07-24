@@ -15,6 +15,7 @@ const {
   destroy,
   readDay,
   intervalWeek,
+  totalGamification,
 } = require("../../../controllers/trainingActions");
 const { verifyToken } = require("../../../services/verifyToken");
 const { validateSchema, training } = require("../../../services/validateData");
@@ -23,6 +24,9 @@ router.get("/", browse); // get all trainings for all users
 
 // Authentification Wall 
 router.use(verifyToken);
+
+// Get the point for the user
+router.get("/totalpoint", totalGamification)
 
 // get a training by id
 router.get("/:id", readById);

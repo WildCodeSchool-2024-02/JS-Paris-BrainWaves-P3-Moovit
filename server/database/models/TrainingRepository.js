@@ -37,6 +37,13 @@ class TrainingRepository extends AbstractRepository {
     );
     return interval
   }
+
+  async totalValidate(id) {
+    const [total] = await this.database.query(`SELECT COUNT(*) AS total FROM ${this.table} WHERE user_id = ? AND is_completed = 1`,
+      [id]
+    )
+    return total
+  }
 }
 
 module.exports = TrainingRepository;

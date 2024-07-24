@@ -44,7 +44,7 @@ function TrainingForm({ id, training, handleClose, open, dayTraining }) {
       body: JSON.stringify({
         title,
         duration,
-        details,
+        details: ai.length > 0 ? ai : details,
         sport_id: sport,
       }),
     });

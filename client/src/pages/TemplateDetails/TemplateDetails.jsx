@@ -1,4 +1,5 @@
 /* eslint-disable import/no-unresolved */
+import ReactMarkdown from "react-markdown";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -14,13 +15,17 @@ import { useUser } from "../../contexts/User/User";
 
 function TemplateDetails() {
   const api = import.meta.env.VITE_API_URL;
-  const [training, setTraining] = useState(null);
+  const [training, setTraining] = useState([]);
+  const [statusTraining, setStatusTraining] = useState(false);
   const { id } = useParams();
   const { user } = useUser();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setStatusTraining(!statusTraining);
+    setOpen(false);
+  };
   const [anchorEl, setAnchorEl] = useState(null);
 
   const navigate = useNavigate();
@@ -34,7 +39,7 @@ function TemplateDetails() {
     })
       .then((res) => res.json())
       .then((data) => setTraining(data));
-  }, [training]);
+  }, [statusTraining]);
 
   // Validation modal managing
   const [validation, setValidation] = useState(false);
@@ -134,8 +139,8 @@ function TemplateDetails() {
           <h2 className="feedback-training-details">
             Détails de l'entraînement
           </h2>
-          <p>{training?.details}</p>
-
+          {/* <p>{training?.details}</p> */}
+          <ReactMarkdown>{training?.details}</ReactMarkdown>
           <section className="trainingCard-title">
             <button
               type="button"

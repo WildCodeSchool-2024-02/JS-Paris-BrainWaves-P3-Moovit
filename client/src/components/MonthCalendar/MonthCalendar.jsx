@@ -63,8 +63,9 @@ export default function MonthCalendar({
         const data = await response.json();
         const newData = [];
         data.forEach((t) => {
-          if (!newData.includes(t.date)) {
-            newData.push(parseInt(t.date.slice(8, 10), 10) + 1);
+          const d = datefns.format(t.date, "yyyy-MM-dd");
+          if (!newData.includes(d.slice(8, 10))) {
+            newData.push(parseInt(d.slice(8, 10), 10));
           }
         });
         setIsLoading(false);

@@ -207,7 +207,6 @@ export default function FeedbackDetails() {
               Détails de l'entraînement
             </h1>
             <ReactMarkdown>{feedback?.training_details}</ReactMarkdown>
-            <p>{feedback?.training_details}</p>
           </div>
         )}
         <button

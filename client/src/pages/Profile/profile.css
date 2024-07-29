@@ -1,0 +1,112 @@
+.profile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  max-width: 100vw;
+  z-index: 2;
+}
+
+.my-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow-y: scroll;
+  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  gap: 20px;
+}
+
+.parameters-name {
+  display: flex;
+  font-size: 1em;
+}
+
+.parameters-value {
+  font-size: 1em;
+}
+
+.title-my-profile {
+  width: 100%;
+  margin-bottom: 30px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-my-profile h1 {
+  font-size: 1.7em;
+}
+
+.edit-profile:hover {
+  text-decoration: underline;
+}
+
+.container-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 15px;
+}
+
+.container-logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.score-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 80px;
+}
+
+.score-container button {
+  font-weight: 700;
+  font-size: 2.5em;
+  background-color: var(--second);
+}
+
+@media (min-width: 769px) {
+  .my-profile {
+    gap: 35px;
+    width: 100%;
+    padding: 20px 20px 20px 50px;
+  }
+  .parameters-name {
+    font-size: 1.3em;
+  }
+
+  .parameters-value {
+    font-size: 1.3em;
+  }
+}
+
+@media (min-width: 1025px) {
+  .profile {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    height: 100vh;
+    width: 100vw;
+  }
+  .my-profile {
+    gap: 20px;
+    width: 75%;
+  }
+  .parameters-name {
+    font-size: 1.1em;
+  }
+
+  .parameters-value {
+    font-size: 1.1em;
+  }
+}

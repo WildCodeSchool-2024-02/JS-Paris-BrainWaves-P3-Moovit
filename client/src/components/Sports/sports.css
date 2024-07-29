@@ -1,0 +1,58 @@
+.section-sport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 70vw;
+  gap: 0;
+}
+
+.sport-container-light p {
+  font-size: 0.7em;
+  color: black;
+}
+
+.sport-container-dark p {
+  font-size: 0.7em;
+}
+
+.sport-container-dark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: solid var(--second);
+  border-width: thin;
+  background-color: var(--dark);
+  color: white;
+}
+
+.active-sport {
+  background-color: var(--second);
+  border-color: white;
+  color: black;
+}
+
+.sport-container-light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: solid var(--second);
+  border-width: thin;
+}
+
+@media (max-width: 768px) {
+  .sport-container-light,
+  .sport-container-dark {
+    width: 80px;
+    height: 80px;
+    font-size: 1em;
+  }
+
+  .welcoming-message-container h1 {
+    line-height: 1em;
+  }
+}

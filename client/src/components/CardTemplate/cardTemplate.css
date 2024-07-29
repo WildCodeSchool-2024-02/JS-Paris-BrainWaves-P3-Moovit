@@ -1,0 +1,131 @@
+#card-template-light {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background-color: var(--template-light);
+  border-radius: 10px;
+  border: solid var(--template-dark);
+  border-width: 0.5px;
+  padding: 20px;
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  width: 60vw;
+  a {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.4);
+    margin: 5px;
+    padding: 10px 20px;
+    border-width: 0.5px;
+    background-color: var(--template-dark);
+    color: white;
+    border: none;
+    font-size: 0.8em;
+    align-self: center;
+  }
+}
+
+#card-template-dark {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  background-color: rgb(228, 211, 228, 0.2);
+  border-radius: 10px;
+  border: var(--template-light);
+  border-width: 0.5px;
+  padding: 20px;
+  width: 60vw;
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+  a {
+    text-decoration: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.4);
+    margin: 5px;
+    padding: 10px 20px;
+    border-width: 0.5px;
+    background-color: var(--template-dark);
+    color: white;
+    border: none;
+    font-size: 0.8em;
+    align-self: center;
+  }
+}
+
+.card-title {
+  font-size: 1.4em;
+}
+
+.template-card-title {
+  margin: 0;
+}
+
+.card-button-validate {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--second);
+  color: white;
+  border: none;
+  font-size: 0.8em;
+}
+
+.card-type-training {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.card-time-training {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 50px;
+}
+
+.card-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-points {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.3em;
+}
+
+.trainingCard-title {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  #card-template-light {
+    width: 90vw;
+  }
+  #card-template-dark {
+    width: 90vw;
+  }
+}

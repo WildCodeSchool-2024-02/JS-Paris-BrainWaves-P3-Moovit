@@ -1,0 +1,13 @@
+.trainingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--light);
+  min-height: 100vh;
+  padding: 5vh 0;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,100 @@
+.training-details-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  overflow-x: hidden;
+}
+
+.training-details-container {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  width: 90%;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px 0;
+  background-color: rgba(102, 217, 224, 0.2);
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.training-details-logo-type {
+  font-size: 1.4em;
+  color: var(--second);
+}
+
+.training-details-footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.card-button-validate {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--second);
+  color: white;
+  border: none;
+  font-size: 0.8em;
+}
+
+.card-type-training {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.training-details-time-training {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.trainingCardbutton {
+  align-self: center;
+}
+
+.card-plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-points {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.3em;
+}
+
+#long-button {
+  box-shadow: none;
+  align-self: flex-end;
+}
+
+@media (min-width: 1025px) {
+  .training-details-page {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100vw;
+  }
+
+  .training-details-container {
+    width: 70%;
+    margin: 20px 20px 20px 0;
+  }
+}

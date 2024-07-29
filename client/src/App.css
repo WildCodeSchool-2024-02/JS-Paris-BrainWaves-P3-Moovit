@@ -1,165 +1,164 @@
-body {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #eee;
+@import url("https://fonts.googleapis.com/css2?family=Yaldevi:wght@200..700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
   margin: 0;
 }
 
-.container {
-  height: 100vh;
-  background-image: url("./assets/images/background.webp");
-  background-size: cover;
-  background-position: top;
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 30px;
+#root {
+  isolation: isolate;
 }
 
-.logo {
-  font-size: 20px;
-  margin-top: 16px;
-}
-
-.navbar ul {
-  display: flex;
-  gap: 20px;
-  list-style: none;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: #eee;
-  display: flex;
-  gap: 5px;
-  justify-content: end;
-  margin-top: auto;
-  font-size: 15px;
-}
-
-.navbar a:hover {
-  scale: 110%;
-}
-
-.text-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.block-primary {
-  text-transform: uppercase;
-  margin-bottom: 30px;
-}
-
-.block-primary-main {
-  font-size: 50px;
-  font-weight: 400;
-  letter-spacing: 5px;
-  animation: blink 12s infinite;
-}
-
-.block-primary-sub {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 7px;
+  max-width: 100%;
 }
 
-.btn:link,
-.btn:visited {
-  text-transform: uppercase;
-  text-decoration: none;
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.blocked {
+  overflow-y: hidden;
+}
+
+:root {
+  --font: "Yaldevi", sans serif;
+  --dark: #0d1117;
+  --light: #f9f6f6;
+  --main: #f45f22;
+  --second: #66d9e0;
+  --third: #91e1a6;
+  --grey: #c3c3c3;
+  --template-dark: rgb(114, 37, 114, 0.2);
+  --template-light: rgb(228, 211, 228, 0.5);
+}
+
+a,
+h1,
+h2,
+h3,
+p,
+li,
+button,
+input,
+label,
+select,
+textarea {
+  font-family: "Yaldevi", serif;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+p,
+li {
+  font-size: 1em;
+  text-wrap: pretty;
+}
+
+input,
+select,
+textarea {
   padding: 10px 20px;
-  display: inline-block;
-  border-radius: 100px;
-  transition: all 0.2s;
+  margin: 10px;
+  border-radius: 10px;
+  width: 90vw;
+  border: solid var(--second);
+  border-width: 0.5px;
+}
+
+.input-error {
+  border: solid red;
+  transition: all 0.1s ease-in-out;
+  border-width: thin;
+}
+
+.error-message {
+  font-size: 0.7em;
+  color: red;
+  margin: -10px 0 10px 0;
+}
+
+button {
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+  margin: 5px;
+  padding: 10px 20px;
+  border-width: 0.5px;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.03);
+}
+
+.primary-button {
+  color: white;
+  border: none;
+  background-color: var(--main);
+}
+
+.second-button {
+  color: var(--dark);
+  background-color: white;
+  border-color: var(--second);
+}
+
+.dark {
   position: relative;
+  background-color: rgb(41, 41, 49);
+  color: white;
+  transition: all 0.3s ease-in-out;
+  z-index: -2;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+.light {
+  position: relative;
+  background-color: white;
+  color: black;
+  transition: all 0.3s ease-in-out;
+  z-index: -2;
 }
 
-.btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-
-.btn-white {
-  background-color: #fff;
-  color: #777;
-  font-size: 14px;
-}
-
-footer {
+.darkmode-button {
   position: absolute;
-  top: 85%;
-  left: 75%;
+  top: 0;
+  right: 0;
+  z-index: 5;
 }
 
-.wcs {
-  text-decoration: none;
-  color: #ff1493ad;
-}
-
-.wcs:hover {
-  border-bottom: solid 1px #ff1493ad;
-}
-
-@media screen and (max-width: 760px) {
-  .logo {
-    display: none;
-  }
-
-  .container {
-    justify-content: center;
-  }
-
-  footer {
-    position: absolute;
-    top: 85%;
-    left: 20%;
-  }
-}
-
-@media screen and (min-width: 761px) and (max-width: 960px) {
-  footer {
-    position: absolute;
-    top: 85%;
-    left: 60%;
-  }
-}
-
-@keyframes blink {
-  20%,
-  24%,
-  55% {
-    color: #111;
-    text-shadow: none;
-  }
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
-  100% {
-    text-shadow:
-      0 0 5px #ff1493ad,
-      0 0 15px #eee,
-      0 0 20px #ff1493ad,
-      0 0 40px #a00ac9,
-      0 0 60px #ff0000,
-      0 0 10px #970dc5,
-      0 0 98px #ff0000;
-    color: #fff;
+@media (min-width: 1025px) {
+  input,
+  select,
+  textarea {
+    width: 70vw;
   }
 }

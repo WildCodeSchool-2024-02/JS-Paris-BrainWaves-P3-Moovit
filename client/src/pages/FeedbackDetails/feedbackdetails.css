@@ -1,0 +1,112 @@
+.feedbackdetail-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  z-index: 2;
+}
+
+.feedbackdetail-container {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  width: 90%;
+  min-height: 90%;
+  border-radius: 10px;
+  padding: 30px;
+  margin: 20px 10px;
+  background-color: rgba(145, 225, 166, 0.2);
+  box-shadow: 4px 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+.feedbackdetail-title {
+  font-size: 1.4em;
+  color: #34a853;
+}
+
+.feedbackdetail-type-training {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.feedbackdetail-type-training p {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.feedbackdetail-logo-type {
+  font-size: 1.4em;
+  color: #34a853;
+}
+
+.feedbackdetail-duration-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.feedbackdetail-duration-title {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.feedbackdetail-question {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.response {
+  font-weight: 400;
+  margin-left: 20px;
+}
+
+.feedbackdetail-feeling {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+}
+
+.feedbackdetail-button {
+  background-color: #34a853;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: white;
+  border: none;
+  font-size: 0.8em;
+}
+
+.feedback-training-details {
+  font-size: 1em;
+}
+
+.feedback-training-detail-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+@media (min-width: 1025px) {
+  .feedbackdetail-page {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .feedbackdetail-container {
+    width: 70%;
+  }
+}

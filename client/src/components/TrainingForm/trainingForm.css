@@ -1,0 +1,83 @@
+.trainingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--light);
+  padding: 5vh 0;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input::placeholder {
+    color: black;
+  }
+
+  textarea::placeholder {
+    color: black;
+  }
+}
+
+.trainingForm h1 {
+  text-align: center;
+}
+
+#save-label {
+  font-size: 1em;
+  font-weight: 700;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  align-self: flex-end;
+}
+
+.save-template {
+  display: flex;
+  width: 70vw;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#save-button {
+  width: 2em;
+  margin: 0;
+}
+
+.ai-proposition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8em;
+  box-shadow: 1px 3px 3px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  margin: 10px;
+}
+
+#use-template {
+  margin-bottom: 2em;
+  padding: 5px;
+  width: 50vw;
+  text-align: center;
+  border-color: var(--template-dark);
+}
+
+
+@media (max-width: 1024px) {
+  .save-template {
+    width: 90vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .trainingForm h1 {
+    font-size: 1.3em;
+  }
+  .save-template {
+    display: flex;
+    width: 90vw;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
